@@ -1,8 +1,24 @@
 {
  "fecha": "17-08-2026",
- "edicion": null,
- "total_publicaciones": 0,
- "georreferenciadas": 0,
- "por_tipo": {},
- "sin_georreferenciar": []
+ "edicion": "44526",
+ "total_publicaciones": 66,
+ "georreferenciadas": 64,
+ "por_tipo": {
+  "manifestacion": 46,
+  "mensura": 18
+ },
+ "sin_georreferenciar": [
+  {
+   "cve": "2856681",
+   "tipo": "manifestacion",
+   "archivo": "gm_manifestacion_2856681.pdf",
+   "motivo": "rectificacion_sin_geometria"
+  },
+  {
+   "cve": "2854329",
+   "tipo": "mensura",
+   "archivo": "gm_mensura_2854329.pdf",
+   "motivo": "geometria invalida o area cero"
+  }
+ ]
 }
