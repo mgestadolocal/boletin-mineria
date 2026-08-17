@@ -29,6 +29,9 @@ jobs:
       - name: Instalar dependencias
         run: pip install -r requirements.txt
 
+      - name: Instalar navegador Chromium (Playwright)
+        run: python -m playwright install --with-deps chromium
+
       - name: Ejecutar pipeline
         env:
           DEBUG_SCRAPER: ${{ github.event.inputs.debug }}
