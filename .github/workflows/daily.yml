@@ -5,7 +5,12 @@ on:
     # 13:00 hora de Chile continental (UTC-4 en invierno). Ver README sobre
     # el desfase de 1 hora durante horario de verano en Chile.
     - cron: '0 17 * * *'
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      debug:
+        description: 'Activar logs de depuracion del scraper'
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -25,6 +30,8 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Ejecutar pipeline
+        env:
+          DEBUG_SCRAPER: ${{ github.event.inputs.debug }}
         run: python run_pipeline.py
 
       - name: Commit y push de resultados

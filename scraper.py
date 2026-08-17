@@ -15,6 +15,7 @@ Confirmado por inspeccion en vivo (agosto 2026):
   numeros de subseccion de Sentencias de Exploracion/Explotacion (rara vez
   activas) ni de Oposiciones de Mensura: se descubren dinamicamente cada dia.
 """
+import os
 import re
 import time
 import requests
@@ -49,7 +50,7 @@ def discover_active_sections(session, date_str, edition=None):
     url = f"{BASE}?date={date_str}"
     if edition:
         url += f"&edition={edition}"
-    r = session.get(url, timeout=30)
+    r = session.get(url, timeout=30, allow_redirects=True)
     r.raise_for_status()
     soup = BeautifulSoup(r.text, "html.parser")
 
@@ -58,14 +59,23 @@ def discover_active_sections(session, date_str, edition=None):
     resolved_edition = m_ed.group(1) if m_ed else edition
 
     active = {}
+    all_labels = []
     for a in soup.find_all("a", href=True):
         label = a.get_text(strip=True)
+        all_labels.append(label)
         tipo = CATEGORIES.get(label)
         if not tipo:
             continue
         m = re.search(r"subseccion=(\d+)", a["href"])
         if m:
             active.setdefault(m.group(1), []).append(tipo)
+
+    if os.environ.get("DEBUG_SCRAPER"):
+        print(f"DEBUG status={r.status_code} final_url={r.url} history={[h.url for h in r.history]}")
+        print(f"DEBUG page length={len(r.text)}")
+        print(f"DEBUG all <a> labels found ({len(all_labels)}): {all_labels[:40]}")
+        print(f"DEBUG snippet: {r.text[:500]!r}")
+
     return resolved_edition, active
 
 
