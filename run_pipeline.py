@@ -75,6 +75,8 @@ def main():
                                              archivo=item['archivo'], motivo=str(e)))
             continue
 
+        attrs['fecha'] = date_str
+        attrs['edicion'] = str(edition)
         features_by_type.setdefault(tipo, []).append((geom, attrs))
         parsed_count += 1
 
@@ -107,6 +109,36 @@ def main():
     dated_map = f"docs/data/mapa_{date_compact}.html"
     shutil.copyfile("docs/index.html", dated_map)
 
+    # --- Capa historica acumulada: suma lo de hoy a lo ya acumulado hasta
+    # ahora, deduplicando por CVE (si un CVE reaparece, gana la version mas
+    # reciente). Se guarda aparte de los archivos "latest" (que son solo del
+    # dia) para no perder el historico dia a dia. ---
+    hist_gpkg = "docs/data/boletin_mineria_historico.gpkg"
+    hist_geojson = "docs/data/boletin_mineria_historico.geojson"
+    historico_total = 0
+    historico_rows = list(all_rows)
+    if os.path.exists(hist_geojson):
+        import geopandas as gpd
+        try:
+            gdf_prev = gpd.read_file(hist_geojson)
+            historico_rows = gdf_prev.to_dict('records') + historico_rows
+        except Exception as e:
+            print(f"AVISO: no se pudo leer el historico previo ({e}); se reconstruye desde cero.")
+
+    if historico_rows:
+        import geopandas as gpd
+        dedup = {}
+        for r in historico_rows:
+            key = r.get('cve') or id(r)
+            dedup[key] = r  # las filas de hoy van al final -> prevalecen si se repite el CVE
+        historico_rows = list(dedup.values())
+
+        historico_total = G.export_gpkg_from_records(historico_rows, hist_gpkg)
+        gdf_hist = gpd.GeoDataFrame(historico_rows, geometry='geometry', crs='EPSG:4326')
+        gdf_hist.to_file(hist_geojson, driver='GeoJSON')
+        M.build_historico_html(historico_rows, "docs/historico.html")
+        print(f"Historico acumulado: {historico_total} publicaciones en total -> {hist_gpkg}")
+
     report = {
         "fecha": date_str,
         "edicion": edition,
@@ -114,6 +146,7 @@ def main():
         "georreferenciadas": parsed_count,
         "por_tipo": {t: len(f) for t, f in features_by_type.items()},
         "sin_georreferenciar": sin_georreferenciar,
+        "historico_total_acumulado": historico_total,
     }
     with open(f"docs/data/reporte_{date_compact}.json", "w", encoding="utf-8") as f:
         json.dump(report, f, ensure_ascii=False, indent=1)

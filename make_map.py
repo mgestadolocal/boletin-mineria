@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
-"""Genera un mapa Leaflet auto-contenido (HTML) a partir de una lista de
-filas (dicts con geometry shapely + atributos)."""
+"""Genera mapas Leaflet auto-contenidos (HTML) a partir de una lista de
+filas (dicts con geometry shapely + atributos): uno para la edición del día
+(build_map_html) y otro para la capa histórica acumulada (build_historico_html)."""
 import json
 from shapely.geometry import mapping
 
@@ -30,23 +31,11 @@ def rows_to_geojson(rows):
     return {"type": "FeatureCollection", "features": features}
 
 
-def build_map_html(rows, fecha, edicion, out_path):
-    geojson = rows_to_geojson(rows)
-    counts = {}
-    for row in rows:
-        counts[row['tipo_publicacion']] = counts.get(row['tipo_publicacion'], 0) + 1
-
-    legend_items = "\n".join(
-        f'<div class="legend-item"><span class="swatch" style="background:{COLORS.get(t, "#888")}"></span> '
-        f'{LABELS.get(t, t)} ({n})</div>'
-        for t, n in counts.items()
-    )
-
-    html = """<!DOCTYPE html>
+_BASE_TEMPLATE = """<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Boletin Oficial de Mineria - __FECHA__ - Edicion __EDICION__</title>
+<title>__TITLE__</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
 <style>
   html, body { margin:0; padding:0; height:100%; font-family: -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
@@ -65,20 +54,23 @@ def build_map_html(rows, fecha, edicion, out_path):
   a.pdf-link { color:#1a73e8; }
   .dl-row { margin-top:10px; }
   .dl-row a { display:inline-block; margin-right:8px; font-size:12px; color:#1a73e8; }
+  .nav-row { margin-top:8px; font-size:12px; }
+  .nav-row a { color:#1a73e8; }
 </style>
 </head>
 <body>
 <div id="map"></div>
 <div class="panel">
   <h3>Boletin Oficial de Mineria</h3>
-  <div class="stat">Edicion __EDICION__ &middot; __FECHA__</div>
+  <div class="stat">__SUBTITLE__</div>
   <div style="margin-top:10px;">
     __LEGEND__
   </div>
   <div class="dl-row">
-    <a href="data/boletin_mineria_latest.gpkg" download>Descargar GeoPackage</a>
-    <a href="data/boletin_mineria_latest.geojson" download>Descargar GeoJSON</a>
+    <a href="__GPKG_NAME__" download>Descargar GeoPackage</a>
+    <a href="__GEOJSON_NAME__" download>Descargar GeoJSON</a>
   </div>
+  <div class="nav-row">__NAV__</div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
@@ -110,6 +102,7 @@ if (data.features.length) {
         <div class="popup-title">${p.nombre || '(sin nombre)'}</div>
         <div class="popup-row"><b>Tipo:</b> ${p.tipo_publicacion}</div>
         <div class="popup-row"><b>CVE:</b> ${p.cve}</div>
+        <div class="popup-row"><b>Fecha publicacion:</b> ${p.fecha || '-'}</div>
         <div class="popup-row"><b>Solicitante:</b> ${p.solicitante || '-'}</div>
         <div class="popup-row"><b>Region:</b> ${p.region || '-'}</div>
         <div class="popup-row"><b>Provincia:</b> ${p.provincia || '-'}</div>
@@ -128,10 +121,49 @@ if (data.features.length) {
 </body>
 </html>
 """
-    html = (html.replace('__GEOJSON__', json.dumps(geojson, ensure_ascii=False))
-                .replace('__COLORS__', json.dumps(COLORS))
-                .replace('__LEGEND__', legend_items)
-                .replace('__FECHA__', fecha)
-                .replace('__EDICION__', str(edicion)))
+
+
+def _render(rows, title, subtitle, gpkg_name, geojson_name, nav_html, out_path):
+    geojson = rows_to_geojson(rows)
+    counts = {}
+    for row in rows:
+        counts[row['tipo_publicacion']] = counts.get(row['tipo_publicacion'], 0) + 1
+
+    legend_items = "\n".join(
+        f'<div class="legend-item"><span class="swatch" style="background:{COLORS.get(t, "#888")}"></span> '
+        f'{LABELS.get(t, t)} ({n})</div>'
+        for t, n in counts.items()
+    )
+
+    html = (_BASE_TEMPLATE
+            .replace('__GEOJSON__', json.dumps(geojson, ensure_ascii=False))
+            .replace('__COLORS__', json.dumps(COLORS))
+            .replace('__LEGEND__', legend_items)
+            .replace('__TITLE__', title)
+            .replace('__SUBTITLE__', subtitle)
+            .replace('__GPKG_NAME__', gpkg_name)
+            .replace('__GEOJSON_NAME__', geojson_name)
+            .replace('__NAV__', nav_html))
     with open(out_path, 'w', encoding='utf-8') as f:
         f.write(html)
+
+
+def build_map_html(rows, fecha, edicion, out_path):
+    """Mapa de la edición del día (solo lo publicado esa fecha)."""
+    title = f"Boletin Oficial de Mineria - {fecha} - Edicion {edicion}"
+    subtitle = f"Edicion {edicion} &middot; {fecha}"
+    nav = '<a href="historico.html">Ver historico completo (todas las fechas) &rarr;</a>'
+    _render(rows, title, subtitle, "data/boletin_mineria_latest.gpkg",
+            "data/boletin_mineria_latest.geojson", nav, out_path)
+
+
+def build_historico_html(rows, out_path):
+    """Mapa acumulado con todas las publicaciones georreferenciadas hasta la
+    fecha (todas las corridas diarias combinadas, sin duplicar por CVE)."""
+    fechas = sorted({r.get('fecha') for r in rows if r.get('fecha')})
+    rango = f"{fechas[0]} a {fechas[-1]}" if fechas else "sin datos"
+    title = "Boletin Oficial de Mineria - Historico completo"
+    subtitle = f"{len(rows)} publicaciones acumuladas &middot; {rango}"
+    nav = '<a href="index.html">Ver solo la edicion de hoy &rarr;</a>'
+    _render(rows, title, subtitle, "data/boletin_mineria_historico.gpkg",
+            "data/boletin_mineria_historico.geojson", nav, out_path)

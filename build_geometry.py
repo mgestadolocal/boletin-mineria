@@ -88,19 +88,22 @@ def build_feature(tipo, rec, meta):
     return geom, attrs
 
 
+LAYER_NAMES = {
+    'pedimento': 'pedimentos',
+    'manifestacion': 'manifestaciones',
+    'mensura': 'mensuras',
+    'sentencia_exploracion': 'sentencias_exploracion',
+    'sentencia_explotacion': 'sentencias_explotacion',
+}
+
+
 def export_gpkg(features_by_type, out_path):
     """features_by_type: {tipo: [ (geom, attrs), ... ]}. Escribe un .gpkg con
-    una capa por tipo que tenga al menos 1 feature. Devuelve el total exportado."""
+    una capa por tipo que tenga al menos 1 feature. Devuelve el total exportado
+    y la lista plana de filas (dicts con 'geometry' + atributos)."""
     import os
     import geopandas as gpd
 
-    layer_names = {
-        'pedimento': 'pedimentos',
-        'manifestacion': 'manifestaciones',
-        'mensura': 'mensuras',
-        'sentencia_exploracion': 'sentencias_exploracion',
-        'sentencia_explotacion': 'sentencias_explotacion',
-    }
     if os.path.exists(out_path):
         os.remove(out_path)
 
@@ -111,8 +114,34 @@ def export_gpkg(features_by_type, out_path):
             continue
         rows = [dict(**attrs, geometry=geom) for geom, attrs in feats]
         gdf = gpd.GeoDataFrame(rows, geometry='geometry', crs='EPSG:4326')
-        gdf.to_file(out_path, layer=layer_names.get(tipo, tipo), driver='GPKG')
+        gdf.to_file(out_path, layer=LAYER_NAMES.get(tipo, tipo), driver='GPKG')
         total += len(gdf)
         all_rows.extend(rows)
 
     return total, all_rows
+
+
+def export_gpkg_from_records(rows, out_path):
+    """rows: lista plana de dicts, cada uno con 'geometry' (shapely) + atributos
+    (incluyendo 'tipo_publicacion'). Agrupa por tipo y escribe un .gpkg
+    multi-capa, igual que export_gpkg pero partiendo de filas ya planas (usado
+    para la capa histórica acumulada). Devuelve el total exportado."""
+    import os
+    import geopandas as gpd
+
+    if os.path.exists(out_path):
+        os.remove(out_path)
+
+    by_type = {}
+    for r in rows:
+        by_type.setdefault(r.get('tipo_publicacion', 'sin_tipo'), []).append(r)
+
+    total = 0
+    for tipo, recs in by_type.items():
+        if not recs:
+            continue
+        gdf = gpd.GeoDataFrame(recs, geometry='geometry', crs='EPSG:4326')
+        gdf.to_file(out_path, layer=LAYER_NAMES.get(tipo, tipo), driver='GPKG')
+        total += len(gdf)
+
+    return total

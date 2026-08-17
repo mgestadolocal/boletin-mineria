@@ -16,9 +16,11 @@ Descarga automáticamente cada día los Pedimentos Mineros, Manifestaciones Mine
 ## Estructura de salida (`docs/`)
 
 - `index.html` — mapa del día más reciente (esto es lo que sirve GitHub Pages en la raíz).
-- `data/boletin_mineria_latest.gpkg` / `.geojson` — última corrida (para descargar y abrir en QGIS).
-- `data/boletin_mineria_AAAAMMDD.gpkg` / `.geojson` — histórico por fecha.
-- `data/reporte_latest.json` / `reporte_AAAAMMDD.json` — resumen de la corrida: cuántas publicaciones de cada tipo, y cuáles quedaron sin georreferenciar (con motivo).
+- `historico.html` — mapa **acumulado**: todas las publicaciones georreferenciadas hasta la fecha, de todas las corridas diarias combinadas (deduplicadas por CVE — si un CVE se repite en dos corridas, gana la versión más reciente). Cada feature incluye `fecha` y `edicion` como atributos, así que en QGIS se puede filtrar/simbolizar por fecha de publicación.
+- `data/boletin_mineria_latest.gpkg` / `.geojson` — solo lo publicado en la corrida más reciente (un día).
+- `data/boletin_mineria_historico.gpkg` / `.geojson` — **capa acumulada completa** (todas las fechas, sin duplicados). Se actualiza cada día sumando lo nuevo a lo que ya había — este es el archivo recomendado para trabajar en QGIS si se quiere el panorama completo en vez de solo el día.
+- `data/boletin_mineria_AAAAMMDD.gpkg` / `.geojson` — snapshot fijo de esa fecha específica (histórico día por día, sin combinar).
+- `data/reporte_latest.json` / `reporte_AAAAMMDD.json` — resumen de la corrida: cuántas publicaciones de cada tipo, cuántas quedaron sin georreferenciar (con motivo), y el total acumulado histórico a esa fecha.
 
 ## Limitaciones conocidas
 
