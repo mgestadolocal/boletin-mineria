@@ -49,6 +49,27 @@ CATEGORIES = {
 DEBUG = bool(os.environ.get("DEBUG_SCRAPER"))
 
 
+def _stable_content(page, timeout=45000, retries=6):
+    """page.content() con reintentos: el challenge anti-bot a veces dispara
+    una navegacion/recarga del lado del cliente justo despues de que
+    Playwright considera la pagina "cargada", y llamar a content() en ese
+    instante exacto lanza un error transitorio de Playwright ("Unable to
+    retrieve content because the page is navigating"). Reintentamos con una
+    pausa breve en vez de dejar que tumbe todo el pipeline."""
+    last_exc = None
+    for attempt in range(retries):
+        try:
+            return page.content()
+        except Exception as e:
+            last_exc = e
+            page.wait_for_timeout(1500)
+            try:
+                page.wait_for_load_state("load", timeout=timeout)
+            except Exception:
+                pass
+    raise last_exc
+
+
 def _goto_and_get_html(page, url, timeout=45000):
     """Navega con un navegador real (para pasar el challenge JS anti-bot) y
     devuelve el HTML final, esperando a que la pagina se estabilice."""
@@ -57,7 +78,7 @@ def _goto_and_get_html(page, url, timeout=45000):
         page.wait_for_load_state("networkidle", timeout=timeout)
     except Exception:
         pass
-    html = page.content()
+    html = _stable_content(page, timeout)
 
     if "TSPD" in html or "bobcmn" in html:
         # El challenge anti-bot no alcanzo a resolverse a tiempo; damos un
@@ -67,7 +88,7 @@ def _goto_and_get_html(page, url, timeout=45000):
             page.wait_for_load_state("networkidle", timeout=timeout)
         except Exception:
             pass
-        html = page.content()
+        html = _stable_content(page, timeout)
 
     if DEBUG:
         print(f"DEBUG url={url} final_url={page.url} html_len={len(html)}")
