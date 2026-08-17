@@ -1,0 +1,137 @@
+#!/usr/bin/env python3
+"""Genera un mapa Leaflet auto-contenido (HTML) a partir de una lista de
+filas (dicts con geometry shapely + atributos)."""
+import json
+from shapely.geometry import mapping
+
+COLORS = {
+    'pedimento': '#2563eb',
+    'manifestacion': '#16a34a',
+    'mensura': '#dc2626',
+    'sentencia_exploracion': '#9333ea',
+    'sentencia_explotacion': '#ea580c',
+}
+
+LABELS = {
+    'pedimento': 'Pedimentos',
+    'manifestacion': 'Manifestaciones',
+    'mensura': 'Mensuras',
+    'sentencia_exploracion': 'Sentencias de Exploración',
+    'sentencia_explotacion': 'Sentencias de Explotación',
+}
+
+
+def rows_to_geojson(rows):
+    features = []
+    for row in rows:
+        geom = row['geometry']
+        props = {k: v for k, v in row.items() if k != 'geometry'}
+        features.append({"type": "Feature", "geometry": mapping(geom), "properties": props})
+    return {"type": "FeatureCollection", "features": features}
+
+
+def build_map_html(rows, fecha, edicion, out_path):
+    geojson = rows_to_geojson(rows)
+    counts = {}
+    for row in rows:
+        counts[row['tipo_publicacion']] = counts.get(row['tipo_publicacion'], 0) + 1
+
+    legend_items = "\n".join(
+        f'<div class="legend-item"><span class="swatch" style="background:{COLORS.get(t, "#888")}"></span> '
+        f'{LABELS.get(t, t)} ({n})</div>'
+        for t, n in counts.items()
+    )
+
+    html = """<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Boletin Oficial de Mineria - __FECHA__ - Edicion __EDICION__</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+<style>
+  html, body { margin:0; padding:0; height:100%; font-family: -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+  #map { position:absolute; top:0; bottom:0; left:0; right:0; }
+  .panel {
+    position:absolute; top:10px; right:10px; z-index:1000; background:white;
+    padding:14px 16px; border-radius:8px; box-shadow:0 2px 10px rgba(0,0,0,.25);
+    max-width:280px; font-size:13px; line-height:1.5;
+  }
+  .panel h3 { margin:0 0 8px 0; font-size:15px; }
+  .legend-item { display:flex; align-items:center; margin:4px 0; }
+  .swatch { width:14px; height:14px; margin-right:8px; border-radius:2px; flex-shrink:0; }
+  .stat { color:#555; }
+  .popup-title { font-weight:600; margin-bottom:4px; }
+  .popup-row { margin:2px 0; }
+  a.pdf-link { color:#1a73e8; }
+  .dl-row { margin-top:10px; }
+  .dl-row a { display:inline-block; margin-right:8px; font-size:12px; color:#1a73e8; }
+</style>
+</head>
+<body>
+<div id="map"></div>
+<div class="panel">
+  <h3>Boletin Oficial de Mineria</h3>
+  <div class="stat">Edicion __EDICION__ &middot; __FECHA__</div>
+  <div style="margin-top:10px;">
+    __LEGEND__
+  </div>
+  <div class="dl-row">
+    <a href="data/boletin_mineria_latest.gpkg" download>Descargar GeoPackage</a>
+    <a href="data/boletin_mineria_latest.geojson" download>Descargar GeoJSON</a>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+const data = __GEOJSON__;
+
+const map = L.map('map', { zoomControl: true });
+
+const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '&copy; OpenStreetMap', maxZoom: 19
+});
+const sat = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+  attribution: 'Tiles &copy; Esri', maxZoom: 19
+});
+osm.addTo(map);
+L.control.layers({ "Calles": osm, "Satelite": sat }).addTo(map);
+
+const colors = __COLORS__;
+
+if (data.features.length) {
+  const layer = L.geoJSON(data, {
+    style: function(feature) {
+      const c = colors[feature.properties.tipo_publicacion] || '#888';
+      return { color: c, weight: 2, fillColor: c, fillOpacity: 0.25 };
+    },
+    onEachFeature: function(feature, lyr) {
+      const p = feature.properties;
+      const html = `
+        <div class="popup-title">${p.nombre || '(sin nombre)'}</div>
+        <div class="popup-row"><b>Tipo:</b> ${p.tipo_publicacion}</div>
+        <div class="popup-row"><b>CVE:</b> ${p.cve}</div>
+        <div class="popup-row"><b>Solicitante:</b> ${p.solicitante || '-'}</div>
+        <div class="popup-row"><b>Region:</b> ${p.region || '-'}</div>
+        <div class="popup-row"><b>Provincia:</b> ${p.provincia || '-'}</div>
+        <div class="popup-row"><b>Superficie:</b> ${p.superficie_ha ? p.superficie_ha + ' ha' : '-'}</div>
+        <div class="popup-row"><b>Datum origen:</b> ${p.datum_original} / Huso ${p.huso}</div>
+        <div class="popup-row"><a class="pdf-link" href="${p.fuente_pdf}" target="_blank">Ver PDF original</a></div>
+      `;
+      lyr.bindPopup(html);
+    }
+  }).addTo(map);
+  map.fitBounds(layer.getBounds(), { padding: [30, 30] });
+} else {
+  map.setView([-33.45, -70.65], 5);
+}
+</script>
+</body>
+</html>
+"""
+    html = (html.replace('__GEOJSON__', json.dumps(geojson, ensure_ascii=False))
+                .replace('__COLORS__', json.dumps(COLORS))
+                .replace('__LEGEND__', legend_items)
+                .replace('__FECHA__', fecha)
+                .replace('__EDICION__', str(edicion)))
+    with open(out_path, 'w', encoding='utf-8') as f:
+        f.write(html)

@@ -1,0 +1,4 @@
+__pycache__/
+*.pyc
+pdfs/
+manifest.json
