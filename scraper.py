@@ -63,15 +63,7 @@ CATEGORIES_NORM = {_normalize_label(k): v for k, v in CATEGORIES.items()}
 
 # ID de subseccion fijo y conocido para Pedimentos Mineros (confirmado
 # manualmente por Miguel el 18-08-2026 en la URL del sitio: .../?date=...&
-# edition=...&subseccion=7099). Se usa como respaldo directo mas abajo
-# porque el matching por texto de menu (CATEGORIES/_normalize_label) resulto
-# fragil para esta categoria en particular: el 18-08-2026 la edicion 44527
-# tenia 2 Pedimentos reales que el scraper no detecto pese al fix de
-# normalizacion de espacios, asi que la causa real es otra (posiblemente el
-# texto "Pedimentos Mineros" no vive dentro del propio <a>, o el tile tiene
-# una estructura de DOM distinta a las demas categorias) — pendiente de
-# confirmar con un log DEBUG_SCRAPER=true. Mientras tanto, buscar el 
-# href> por el numero de subseccion directamente es inmune a ese problema.
+# edition=...&subseccion=7099).
 PEDIMENTO_SUBSECCION_ID = "7099"
 
 DEBUG = bool(os.environ.get("DEBUG_SCRAPER"))
@@ -152,21 +144,24 @@ def discover_active_sections(page, date_str, edition=None):
         if m:
             active.setdefault(m.group(1), []).append(tipo)
 
-    # Respaldo: si el matching por texto no encontro Pedimentos (el bug del
-    # 18-08-2026), buscar directamente cualquier <a href> que apunte a la
-    # subseccion 7099 y marcarla activa si tiene contenido ese dia. No
-    # reemplaza el matching por texto (que sigue siendo necesario para las
-    # demas categorias, cuyo ID de subseccion varia dia a dia), solo cubre
-    # el caso en que Pedimentos especificamente no calzo por texto.
-    if PEDIMENTO_SUBSECCION_ID not in active:
-        for a in soup.find_all("a", href=True):
-            if re.search(rf"subseccion={PEDIMENTO_SUBSECCION_ID}\b", a["href"]):
-                active.setdefault(PEDIMENTO_SUBSECCION_ID, []).append("pedimento")
-                if DEBUG:
-                    print(f"DEBUG Pedimentos encontrado via respaldo por ID "
-                          f"de subseccion (no por texto de menu); label del "
-                          f"<a> era: {a.get_text(strip=True)!r}")
-                break
+    # Pedimentos Mineros SIEMPRE se agrega directo por su ID de subseccion
+    # fijo (7099), sin depender de que la portada lo muestre como tile/link
+    # navegable. Confirmado con un log DEBUG_SCRAPER el 18-08-2026: la
+    # portada de la edicion 44527 NO listaba ningun link a Pedimentos entre
+    # las 19 etiquetas <a> encontradas (solo Manifestaciones, Solicitudes de
+    # Mensura, Prorrogas, Nomina, Sumario...) pese a que esa edicion SI tenia
+    # 2 pedimentos reales -- visibles directo en .../subseccion=7099 y
+    # confirmados ademas por dos "Ver PDF (CVE-...)" sueltos en el Sumario de
+    # la Edicion con los mismos CVE. O sea: el sitio nunca expone Pedimentos
+    # como tile descubrible en la portada (a diferencia de Manifestaciones/
+    # Mensuras, que si tienen tile+subseccion propios cada dia), asi que
+    # cualquier intento de "descubrirlo" desde la portada (por texto o por
+    # href) esta condenado a fallar. fetch_index() arma su URL de forma
+    # independiente del descubrimiento por <a href> del listado de la
+    # portada, asi que no hace falta encontrar ningun link ahi: si ese dia
+    # no hay pedimentos, fetch_index() simplemente devuelve una lista vacia
+    # y no se descarga nada, igual que para cualquier otra categoria vacia.
+    active.setdefault(PEDIMENTO_SUBSECCION_ID, []).append("pedimento")
 
     if DEBUG:
         print(f"DEBUG all <a> labels found ({len(all_labels)}): {all_labels[:40]}")
