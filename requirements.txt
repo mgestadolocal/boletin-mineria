@@ -1,5 +1,5 @@
 beautifulsoup4>=4.12
-playwright>=1.44
+playwright==1.56.0
 pdfplumber>=0.11
 geopandas>=1.0
 shapely>=2.0
