@@ -61,6 +61,19 @@ def _normalize_label(s):
 
 CATEGORIES_NORM = {_normalize_label(k): v for k, v in CATEGORIES.items()}
 
+# ID de subseccion fijo y conocido para Pedimentos Mineros (confirmado
+# manualmente por Miguel el 18-08-2026 en la URL del sitio: .../?date=...&
+# edition=...&subseccion=7099). Se usa como respaldo directo mas abajo
+# porque el matching por texto de menu (CATEGORIES/_normalize_label) resulto
+# fragil para esta categoria en particular: el 18-08-2026 la edicion 44527
+# tenia 2 Pedimentos reales que el scraper no detecto pese al fix de
+# normalizacion de espacios, asi que la causa real es otra (posiblemente el
+# texto "Pedimentos Mineros" no vive dentro del propio <a>, o el tile tiene
+# una estructura de DOM distinta a las demas categorias) — pendiente de
+# confirmar con un log DEBUG_SCRAPER=true. Mientras tanto, buscar el 
+# href> por el numero de subseccion directamente es inmune a ese problema.
+PEDIMENTO_SUBSECCION_ID = "7099"
+
 DEBUG = bool(os.environ.get("DEBUG_SCRAPER"))
 
 
@@ -138,6 +151,22 @@ def discover_active_sections(page, date_str, edition=None):
         m = re.search(r"subseccion=(\d+)", a["href"])
         if m:
             active.setdefault(m.group(1), []).append(tipo)
+
+    # Respaldo: si el matching por texto no encontro Pedimentos (el bug del
+    # 18-08-2026), buscar directamente cualquier <a href> que apunte a la
+    # subseccion 7099 y marcarla activa si tiene contenido ese dia. No
+    # reemplaza el matching por texto (que sigue siendo necesario para las
+    # demas categorias, cuyo ID de subseccion varia dia a dia), solo cubre
+    # el caso en que Pedimentos especificamente no calzo por texto.
+    if PEDIMENTO_SUBSECCION_ID not in active:
+        for a in soup.find_all("a", href=True):
+            if re.search(rf"subseccion={PEDIMENTO_SUBSECCION_ID}\b", a["href"]):
+                active.setdefault(PEDIMENTO_SUBSECCION_ID, []).append("pedimento")
+                if DEBUG:
+                    print(f"DEBUG Pedimentos encontrado via respaldo por ID "
+                          f"de subseccion (no por texto de menu); label del "
+                          f"<a> era: {a.get_text(strip=True)!r}")
+                break
 
     if DEBUG:
         print(f"DEBUG all <a> labels found ({len(all_labels)}): {all_labels[:40]}")
