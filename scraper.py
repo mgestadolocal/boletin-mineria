@@ -46,6 +46,21 @@ CATEGORIES = {
     "Sentencias de Explotación": "sentencia_explotacion",
 }
 
+
+def _normalize_label(s):
+    """Colapsa TODO espacio en blanco (incluidos saltos de linea entre nodos
+    de texto separados en el DOM, ej. "Pedimentos" y "Mineros" renderizados
+    en dos lineas). Bug detectado el 18-08-2026: la edicion 44527 tenia 2
+    Pedimentos reales que el scraper no encontro porque a.get_text(strip=True)
+    no calzaba exacto contra la clave "PedimentosMineros" del dict — no se
+    habia notado antes porque el 17-08 esa categoria realmente tenia 0
+    publicaciones. Normalizar ambos lados de la comparacion la hace robusta
+    sin importar como el sitio particione el texto del link ese dia."""
+    return re.sub(r"\s+", "", s)
+
+
+CATEGORIES_NORM = {_normalize_label(k): v for k, v in CATEGORIES.items()}
+
 DEBUG = bool(os.environ.get("DEBUG_SCRAPER"))
 
 
@@ -117,7 +132,7 @@ def discover_active_sections(page, date_str, edition=None):
     for a in soup.find_all("a", href=True):
         label = a.get_text(strip=True)
         all_labels.append(label)
-        tipo = CATEGORIES.get(label)
+        tipo = CATEGORIES_NORM.get(_normalize_label(label))
         if not tipo:
             continue
         m = re.search(r"subseccion=(\d+)", a["href"])
