@@ -40,15 +40,17 @@ jobs:
         run: python run_pipeline.py
 
       - name: Commit y push de resultados
+        working-directory: ${{ github.workspace }}
         run: |
-          git config user.name "boletin-mineria-bot"
-          git config user.email "actions@users.noreply.github.com"
-          git add docs/
-          if git diff --cached --quiet; then
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          git -C "$GITHUB_WORKSPACE" config user.name "boletin-mineria-bot"
+          git -C "$GITHUB_WORKSPACE" config user.email "actions@users.noreply.github.com"
+          git -C "$GITHUB_WORKSPACE" add docs/
+          if git -C "$GITHUB_WORKSPACE" diff --cached --quiet; then
             echo "Sin cambios que commitear."
           else
-            git commit -m "Actualizacion diaria: $(date -u +%Y-%m-%d)"
-            git push
+            git -C "$GITHUB_WORKSPACE" commit -m "Actualizacion diaria: $(date -u +%Y-%m-%d)"
+            git -C "$GITHUB_WORKSPACE" push
           fi
 
       - name: Subir logs como artifact (por si algo falla)
