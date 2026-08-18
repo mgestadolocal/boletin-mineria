@@ -18,7 +18,16 @@ permissions:
 jobs:
   run:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
+    # Imagen oficial de Playwright: trae Chromium + todas las dependencias del
+    # sistema (libnss3, libatk, etc.) ya instaladas. Evita el paso
+    # "playwright install --with-deps" que dependia de apt-get contra el
+    # mirror de Ubuntu en Azure y que el 18-08-2026 se colgo ~30 min por un
+    # mirror lento, haciendo que el job superara timeout-minutes y GitHub lo
+    # cancelara automaticamente. La version de la imagen (v1.56.0-noble) debe
+    # coincidir con la version de "playwright" pineada en requirements.txt.
+    container:
+      image: mcr.microsoft.com/playwright/python:v1.56.0-noble
     steps:
       - uses: actions/checkout@v4
 
@@ -28,9 +37,6 @@ jobs:
 
       - name: Instalar dependencias
         run: pip install -r requirements.txt
-
-      - name: Instalar navegador Chromium (Playwright)
-        run: python -m playwright install --with-deps chromium
 
       - name: Ejecutar pipeline
         env:
