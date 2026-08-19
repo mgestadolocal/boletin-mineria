@@ -295,12 +295,30 @@
   .step p{ font-size:0.88rem; color:var(--ink-soft); }
 
   /* ---------- legend ---------- */
+  .legend-wrap{ display:flex; flex-direction:column; gap:10px; }
+  .legend-label{
+    font-family:var(--font-mono);
+    font-size:0.72rem;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color:var(--ink-faint);
+  }
+  .legend-label:not(:first-child){ margin-top:8px; }
   .legend{
     display:grid;
-    grid-template-columns:repeat(auto-fit, minmax(200px,1fr));
     gap:1px;
     background:var(--line);
     border:1px solid var(--line);
+  }
+  /* Conteo de columnas fijo (no auto-fit): con auto-fit, un grupo con menos
+     tarjetas que columnas-que-caben deja pistas vacías al final de la fila
+     -- se ve como un hueco en blanco junto a la ultima tarjeta. Cada grupo
+     tiene siempre exactamente tantas columnas como tarjetas, así nunca
+     queda una sola. */
+  .legend--three{ grid-template-columns:repeat(3, 1fr); }
+  .legend--two{ grid-template-columns:repeat(2, 1fr); }
+  @media (max-width:620px){
+    .legend--three, .legend--two{ grid-template-columns:1fr; }
   }
   .type{
     background:var(--paper-raised);
@@ -490,41 +508,47 @@
           </div>
           <p class="section__note">Mismos colores que el mapa interactivo, para que ambos se lean juntos.</p>
         </div>
-        <div class="legend reveal pending" data-reveal>
-          <div class="type">
-            <div class="type__top">
-              <span class="type__name"><span class="type__swatch" style="--sw:var(--c-pedi)"></span>Pedimentos</span>
+        <div class="legend-wrap reveal pending" data-reveal>
+          <span class="legend-label">Georreferenciación probada</span>
+          <div class="legend legend--three">
+            <div class="type">
+              <div class="type__top">
+                <span class="type__name"><span class="type__swatch" style="--sw:var(--c-pedi)"></span>Pedimentos</span>
+              </div>
+              <div class="type__count" id="type-pedi">30</div>
+              <div class="type__note">Georreferenciados automáticamente</div>
             </div>
-            <div class="type__count" id="type-pedi">30</div>
-            <div class="type__note">Georreferenciados automáticamente</div>
+            <div class="type">
+              <div class="type__top">
+                <span class="type__name"><span class="type__swatch" style="--sw:var(--c-manif)"></span>Manifestaciones</span>
+              </div>
+              <div class="type__count" id="type-manif">25</div>
+              <div class="type__note">Georreferenciadas automáticamente</div>
+            </div>
+            <div class="type">
+              <div class="type__top">
+                <span class="type__name"><span class="type__swatch" style="--sw:var(--c-mens)"></span>Mensuras</span>
+              </div>
+              <div class="type__count" id="type-mens">31</div>
+              <div class="type__note">Georreferenciadas automáticamente</div>
+            </div>
           </div>
-          <div class="type">
-            <div class="type__top">
-              <span class="type__name"><span class="type__swatch" style="--sw:var(--c-manif)"></span>Manifestaciones</span>
+          <span class="legend-label">Georreferenciación nueva</span>
+          <div class="legend legend--two">
+            <div class="type">
+              <div class="type__top">
+                <span class="type__name"><span class="type__swatch" style="--sw:var(--c-sexp)"></span>Sentencias de Exploración</span>
+              </div>
+              <div class="type__count" id="type-sexp">0</div>
+              <div class="type__note" id="type-sexp-note">Sin publicaciones en esta edición</div>
             </div>
-            <div class="type__count" id="type-manif">25</div>
-            <div class="type__note">Georreferenciadas automáticamente</div>
-          </div>
-          <div class="type">
-            <div class="type__top">
-              <span class="type__name"><span class="type__swatch" style="--sw:var(--c-mens)"></span>Mensuras</span>
+            <div class="type">
+              <div class="type__top">
+                <span class="type__name"><span class="type__swatch" style="--sw:var(--c-sexpl)"></span>Sentencias de Explotación</span>
+              </div>
+              <div class="type__count" id="type-sexpl">0</div>
+              <div class="type__note" id="type-sexpl-note">Sin publicaciones en esta edición</div>
             </div>
-            <div class="type__count" id="type-mens">31</div>
-            <div class="type__note">Georreferenciadas automáticamente</div>
-          </div>
-          <div class="type">
-            <div class="type__top">
-              <span class="type__name"><span class="type__swatch" style="--sw:var(--c-sexp)"></span>Sentencias de Exploración</span>
-            </div>
-            <div class="type__count" id="type-sexp">0</div>
-            <div class="type__note" id="type-sexp-note">Sin publicaciones en esta edición</div>
-          </div>
-          <div class="type">
-            <div class="type__top">
-              <span class="type__name"><span class="type__swatch" style="--sw:var(--c-sexpl)"></span>Sentencias de Explotación</span>
-            </div>
-            <div class="type__count" id="type-sexpl">0</div>
-            <div class="type__note" id="type-sexpl-note">Sin publicaciones en esta edición</div>
           </div>
         </div>
       </div>
