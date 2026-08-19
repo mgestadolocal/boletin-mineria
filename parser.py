@@ -32,9 +32,16 @@ def find_datum(t):
         datum = 'WGS84'
     else:
         datum = 'WGS84'  # default asumido
-    huso_m = re.search(r'[Zz]ona\s*(\d{1,2})\s*(?:S|Sur|N|Norte)?', t)
+    # Bug detectado el 19-08-2026: 7 mensuras de un mismo estudio (Valdivia,
+    # Huso 18) salieron georreferenciadas en Argentina porque el regex solo
+    # buscaba la palabra "Zona" -- estos documentos dicen "Huso 18 Sur", no
+    # "Zona 18 Sur". Sin matchear nada, huso caia al default (19), corriendo
+    # la longitud ~6 grados al este del valor real. Distintos estudios
+    # juridicos usan una u otra palabra para lo mismo, asi que hay que
+    # aceptar ambas.
+    huso_m = re.search(r'(?:Huso|[Zz]ona)\s*(\d{1,2})\s*(?:S|Sur|N|Norte)?', t, F)
     huso = int(huso_m.group(1)) if huso_m else 19
-    hemis_m = re.search(r'[Zz]ona\s*\d{1,2}\s*(S|Sur|N|Norte)', t, F)
+    hemis_m = re.search(r'(?:Huso|[Zz]ona)\s*\d{1,2}\s*(S|Sur|N|Norte)', t, F)
     hemis = 'S'
     if hemis_m and hemis_m.group(1).upper().startswith('N'):
         hemis = 'N'
@@ -230,7 +237,11 @@ def find_solicitante(t):
     return m.group(1).strip() if m else None
 
 def find_comuna_provincia_region(t):
-    m = re.search(r'Comuna\s+de\s+([A-ZÁÉÍÓÚÑa-záéíóúñ\s]{2,40}?),\s*Provincia\s+(?:de|del)\s+([A-ZÁÉÍÓÚÑa-záéíóúñ\s]{2,40}?),\s*Regi[oó]n\s+de\s+([A-ZÁÉÍÓÚÑa-záéíóúñ\s]{2,40}?)[\.\,]', t)
+    # Hallazgo adicional del 19-08-2026 al revisar el bug de Huso: esta
+    # busqueda exigia "Comuna" con mayuscula inicial y perdia redacciones
+    # como "...se ubican en la comuna de Valdivia..." (minuscula), dejando
+    # comuna=None aunque el dato si estaba en el texto.
+    m = re.search(r'Comuna\s+de\s+([A-ZÁÉÍÓÚÑa-záéíóúñ\s]{2,40}?),\s*Provincia\s+(?:de|del)\s+([A-ZÁÉÍÓÚÑa-záéíóúñ\s]{2,40}?),\s*Regi[oó]n\s+de\s+([A-ZÁÉÍÓÚÑa-záéíóúñ\s]{2,40}?)[\.\,]', t, F)
     if m:
         return m.group(1).strip(), m.group(2).strip(), m.group(3).strip()
     return None, None, None
