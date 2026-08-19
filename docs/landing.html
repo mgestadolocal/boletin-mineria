@@ -1,0 +1,687 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Boletín Minero</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Cada día, un pipeline en GitHub Actions lee el Boletín Oficial de Minería de Chile, georreferencia pedimentos, manifestaciones y mensuras, y publica mapas y datos descargables.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  /* ---------- tokens ---------- */
+  :root{
+    --ink:        #101a2c;
+    --ink-soft:   #4a5468;
+    --ink-faint:  #7c8598;
+    --paper:      #eef2f1;
+    --paper-raised: #ffffff;
+    --paper-sunken: #e3e9e7;
+    --line:       rgba(16,26,44,0.15);
+    --line-strong:rgba(16,26,44,0.30);
+
+    --accent:      #2258d6;
+    --accent-ink:  #16388f;
+    --accent-soft: rgba(34,88,214,0.09);
+    --accent-soft-strong: rgba(34,88,214,0.16);
+
+    --c-pedi: #2258d6;
+    --c-manif:#16874a;
+    --c-mens: #c22929;
+    --c-sexp: #7d33c2;
+    --c-sexpl:#c4600f;
+
+    --shadow: 0 1px 0 var(--line);
+    --radius: 3px;
+    --font-display: "Fraunces", "Iowan Old Style", ui-serif, Georgia, serif;
+    --font-body: "IBM Plex Sans", "Segoe UI", ui-sans-serif, system-ui, sans-serif;
+    --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
+  }
+
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ink:        #e9edf1;
+      --ink-soft:   #a7b0c2;
+      --ink-faint:  #707c92;
+      --paper:      #0a1120;
+      --paper-raised: #101a2e;
+      --paper-sunken: #0d1626;
+      --line:       rgba(233,237,241,0.14);
+      --line-strong:rgba(233,237,241,0.28);
+
+      --accent:      #6f97f2;
+      --accent-ink:  #b9cbfb;
+      --accent-soft: rgba(111,151,242,0.14);
+      --accent-soft-strong: rgba(111,151,242,0.22);
+
+      --c-pedi: #6f97f2;
+      --c-manif:#3fbf7d;
+      --c-mens: #ea6a6a;
+      --c-sexp: #b183e8;
+      --c-sexpl:#f0964f;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ink:        #e9edf1;
+    --ink-soft:   #a7b0c2;
+    --ink-faint:  #707c92;
+    --paper:      #0a1120;
+    --paper-raised: #101a2e;
+    --paper-sunken: #0d1626;
+    --line:       rgba(233,237,241,0.14);
+    --line-strong:rgba(233,237,241,0.28);
+
+    --accent:      #6f97f2;
+    --accent-ink:  #b9cbfb;
+    --accent-soft: rgba(111,151,242,0.14);
+    --accent-soft-strong: rgba(111,151,242,0.22);
+
+    --c-pedi: #6f97f2;
+    --c-manif:#3fbf7d;
+    --c-mens: #ea6a6a;
+    --c-sexp: #b183e8;
+    --c-sexpl:#f0964f;
+  }
+
+  /* ---------- reset ---------- */
+  *,*::before,*::after{ box-sizing:border-box; }
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--font-body);
+    font-size:16px;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  img,svg{ display:block; max-width:100%; }
+  a{ color:inherit; }
+  h1,h2,h3{ font-family:var(--font-display); font-weight:600; text-wrap:balance; margin:0; }
+  p{ margin:0; }
+  ul{ margin:0; padding:0; list-style:none; }
+  ::selection{ background:var(--accent-soft-strong); }
+  :focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+
+  .wrap{ max-width:1040px; margin-inline:auto; padding-inline:24px; }
+  @media (max-width:640px){ .wrap{ padding-inline:18px; } }
+
+  .reveal{ opacity:1; transform:none; transition:opacity .7s ease, transform .7s ease; }
+  .reveal.pending{ opacity:0; transform:translateY(14px); }
+  @media (prefers-reduced-motion: reduce){
+    .reveal{ transition:none !important; }
+  }
+
+  /* ---------- masthead ---------- */
+  .masthead{
+    border-bottom:1px solid var(--line);
+  }
+  .masthead__bar{
+    display:flex; justify-content:space-between; align-items:baseline;
+    padding-block:14px;
+    font-family:var(--font-mono);
+    font-size:0.72rem;
+    letter-spacing:.04em;
+    color:var(--ink-faint);
+    font-variant-numeric:tabular-nums;
+    gap:12px; flex-wrap:wrap;
+  }
+  .masthead__bar strong{ color:var(--ink-soft); font-weight:500; }
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;
+    overflow:hidden;
+    padding-block:76px 88px;
+    border-bottom:1px solid var(--line);
+  }
+  .hero__contours{
+    position:absolute;
+    top:-40px; right:-120px;
+    width:min(640px, 80vw);
+    height:auto;
+    color:var(--line);
+    opacity:1;
+    pointer-events:none;
+  }
+  @media (max-width:720px){
+    .hero__contours{ opacity:.6; }
+  }
+  .hero__inner{ position:relative; }
+  .eyebrow{
+    display:flex; align-items:center; gap:10px;
+    font-family:var(--font-mono);
+    font-size:0.72rem;
+    letter-spacing:.09em;
+    text-transform:uppercase;
+    color:var(--accent-ink);
+    margin-bottom:22px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:22px; height:1px;
+    background:var(--accent);
+  }
+  .hero h1{
+    font-size:clamp(2.1rem, 4.6vw, 3.4rem);
+    line-height:1.08;
+    max-width:16ch;
+    letter-spacing:-0.01em;
+  }
+  .hero h1 em{
+    font-style:italic;
+    color:var(--accent-ink);
+  }
+  .hero__lede{
+    margin-top:22px;
+    max-width:52ch;
+    font-size:1.08rem;
+    color:var(--ink-soft);
+  }
+  .hero__ctas{
+    display:flex; gap:14px; flex-wrap:wrap;
+    margin-top:34px;
+  }
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:var(--font-body); font-weight:500; font-size:0.92rem;
+    padding:11px 20px;
+    border-radius:var(--radius);
+    border:1px solid transparent;
+    text-decoration:none;
+    transition:background-color .15s ease, border-color .15s ease, color .15s ease;
+  }
+  .btn--primary{ background:var(--accent); color:#fff; }
+  .btn--primary:hover{ background:var(--accent-ink); }
+  .btn--ghost{ border-color:var(--line-strong); color:var(--ink); }
+  .btn--ghost:hover{ border-color:var(--ink-faint); background:var(--accent-soft); }
+
+  .hero__stats{
+    margin-top:52px;
+    display:grid;
+    grid-template-columns:repeat(4, auto);
+    gap:0;
+    border-top:1px solid var(--line);
+    max-width:640px;
+  }
+  @media (max-width:640px){ .hero__stats{ grid-template-columns:repeat(2, 1fr); } }
+  .stat{
+    padding:16px 20px 0 0;
+  }
+  .stat__n{
+    font-family:var(--font-mono);
+    font-variant-numeric:tabular-nums;
+    font-size:1.5rem;
+    color:var(--ink);
+  }
+  .stat__l{
+    margin-top:4px;
+    font-size:0.78rem;
+    color:var(--ink-faint);
+  }
+
+  /* ---------- embedded map ---------- */
+  html{ scroll-behavior:smooth; }
+  @media (prefers-reduced-motion: reduce){ html{ scroll-behavior:auto; } }
+  .mapframe{
+    position:relative;
+    aspect-ratio:16/10;
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    overflow:hidden;
+    background:var(--paper-sunken);
+  }
+  @media (max-width:640px){ .mapframe{ aspect-ratio:4/5; } }
+  .mapframe iframe{
+    width:100%; height:100%; border:0; display:block;
+    opacity:0; transition:opacity .4s ease;
+  }
+  .mapframe iframe.is-loaded{ opacity:1; }
+  .mapframe__skeleton{
+    position:absolute; inset:0;
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--font-mono); font-size:0.78rem; color:var(--ink-faint);
+    letter-spacing:.04em;
+    pointer-events:none;
+  }
+  .map__foot{
+    margin-top:14px;
+    display:flex; justify-content:space-between; align-items:baseline;
+    gap:16px; flex-wrap:wrap;
+    font-size:0.82rem; color:var(--ink-faint);
+  }
+  .map__foot a{ color:var(--accent-ink); text-decoration:underline; text-underline-offset:3px; }
+
+  /* ---------- section scaffolding ---------- */
+  section{ padding-block:64px; border-bottom:1px solid var(--line); }
+  .section__head{
+    display:flex; justify-content:space-between; align-items:flex-end;
+    gap:24px; flex-wrap:wrap;
+    margin-bottom:38px;
+  }
+  .section__kicker{
+    font-family:var(--font-mono);
+    font-size:0.72rem;
+    letter-spacing:.09em;
+    text-transform:uppercase;
+    color:var(--ink-faint);
+  }
+  .section__title{ font-size:1.6rem; margin-top:8px; max-width:32ch; }
+  .section__note{ max-width:34ch; font-size:0.92rem; color:var(--ink-soft); }
+
+  /* ---------- pipeline ---------- */
+  .pipeline{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+  }
+  @media (max-width:820px){ .pipeline{ grid-template-columns:repeat(2, 1fr); } }
+  @media (max-width:480px){ .pipeline{ grid-template-columns:1fr; } }
+  .step{
+    background:var(--paper-raised);
+    padding:26px 22px 28px;
+    display:flex; flex-direction:column; gap:12px;
+  }
+  .step__n{
+    font-family:var(--font-mono);
+    font-size:0.78rem;
+    color:var(--accent-ink);
+    font-variant-numeric:tabular-nums;
+  }
+  .step h3{ font-size:1.02rem; font-weight:600; font-family:var(--font-body); }
+  .step p{ font-size:0.88rem; color:var(--ink-soft); }
+
+  /* ---------- legend ---------- */
+  .legend{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(200px,1fr));
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+  }
+  .type{
+    background:var(--paper-raised);
+    padding:20px 20px 22px;
+    display:flex; flex-direction:column; gap:10px;
+  }
+  .type__top{ display:flex; align-items:center; justify-content:space-between; gap:10px; }
+  .type__name{ display:flex; align-items:center; gap:10px; font-size:0.94rem; font-weight:500; }
+  .type__swatch{
+    width:11px; height:11px; border-radius:2px; flex:none;
+    background:var(--sw);
+  }
+  .type__count{
+    font-family:var(--font-mono);
+    font-variant-numeric:tabular-nums;
+    font-size:1.3rem;
+    color:var(--ink);
+  }
+  .type__note{ font-size:0.78rem; color:var(--ink-faint); }
+  .type__note.manual{ color:var(--sw); }
+
+  /* ---------- downloads ---------- */
+  .files{ border-top:1px solid var(--line); }
+  .file{
+    display:flex; align-items:center; justify-content:space-between;
+    gap:16px; flex-wrap:wrap;
+    padding:18px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .file__meta{ display:flex; flex-direction:column; gap:4px; }
+  .file__name{ font-family:var(--font-mono); font-size:0.9rem; }
+  .file__desc{ font-size:0.82rem; color:var(--ink-faint); }
+  .file__links{ display:flex; gap:10px; flex-wrap:wrap; }
+  .file__links a{
+    font-size:0.82rem; text-decoration:none;
+    padding:7px 13px;
+    border:1px solid var(--line-strong);
+    border-radius:var(--radius);
+    transition:border-color .15s ease, background-color .15s ease;
+    white-space:nowrap;
+  }
+  .file__links a:hover{ background:var(--accent-soft); border-color:var(--accent); }
+
+  /* ---------- automation ---------- */
+  .automation{
+    display:grid;
+    grid-template-columns:1.1fr 0.9fr;
+    gap:48px;
+  }
+  @media (max-width:760px){ .automation{ grid-template-columns:1fr; gap:32px; } }
+  .automation p + p{ margin-top:14px; }
+  .automation__body p{ font-size:0.97rem; color:var(--ink-soft); }
+  .limits{
+    background:var(--paper-sunken);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:20px 22px;
+  }
+  .limits h3{
+    font-family:var(--font-body); font-size:0.82rem; font-weight:600;
+    text-transform:uppercase; letter-spacing:.04em; color:var(--ink-soft);
+    margin-bottom:12px;
+  }
+  .limits li{ font-size:0.88rem; color:var(--ink-soft); padding-block:6px; border-top:1px solid var(--line); }
+  .limits li:first-of-type{ border-top:none; }
+
+  /* ---------- footer ---------- */
+  footer{ padding-block:40px 56px; }
+  .footer__row{
+    display:flex; justify-content:space-between; align-items:center;
+    gap:16px; flex-wrap:wrap;
+    font-size:0.82rem; color:var(--ink-faint);
+  }
+  .footer__row a{ text-decoration:underline; text-underline-offset:3px; color:var(--ink-soft); }
+  .footer__row a:hover{ color:var(--accent-ink); }
+</style>
+</head>
+<body>
+
+  <header class="masthead">
+    <div class="wrap masthead__bar">
+      <span><strong>Boletín Oficial de Minería</strong> · Chile</span>
+      <span id="mh-edition">Edición 44528 · 19 ago 2026</span>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <svg class="hero__contours" viewBox="0 0 640 460" aria-hidden="true">
+        <g fill="none" stroke="currentColor" stroke-width="1">
+          <ellipse cx="560" cy="140" rx="55"  ry="38"  transform="rotate(-10 560 140)"/>
+          <ellipse cx="560" cy="140" rx="105" ry="72"  transform="rotate(-10 560 140)"/>
+          <ellipse cx="560" cy="140" rx="165" ry="114" transform="rotate(-10 560 140)"/>
+          <ellipse cx="560" cy="140" rx="232" ry="160" transform="rotate(-10 560 140)"/>
+          <ellipse cx="560" cy="140" rx="305" ry="212" transform="rotate(-10 560 140)"/>
+        </g>
+      </svg>
+      <div class="wrap hero__inner">
+        <div class="eyebrow">Georreferenciación diaria · Código de Minería</div>
+        <h1>El boletín minero, <em>leído por una máquina</em> cada mañana.</h1>
+        <p class="hero__lede">
+          Un pipeline en GitHub Actions descarga el Boletín Oficial de Minería, extrae las coordenadas
+          de cada pedimento, manifestación y mensura, y publica un mapa y datos descargables —
+          sin depender de que ningún computador se quede encendido.
+        </p>
+        <div class="hero__ctas">
+          <a class="btn btn--primary" href="#mapa-hoy">Ver mapa de hoy ↓</a>
+          <a class="btn btn--ghost" href="historico.html">Ver histórico completo</a>
+          <a class="btn btn--ghost" href="https://github.com/mgestadolocal/boletin-mineria" target="_blank" rel="noopener">Código en GitHub</a>
+        </div>
+        <div class="hero__stats reveal pending" data-reveal>
+          <div class="stat"><div class="stat__n" id="stat-pedi">30</div><div class="stat__l">Pedimentos</div></div>
+          <div class="stat"><div class="stat__n" id="stat-manif">25</div><div class="stat__l">Manifestaciones</div></div>
+          <div class="stat"><div class="stat__n" id="stat-mens">31</div><div class="stat__l">Mensuras</div></div>
+          <div class="stat"><div class="stat__n" id="stat-total">86</div><div class="stat__l">Georreferenciadas hoy</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="mapa-hoy">
+      <div class="wrap">
+        <div class="section__head reveal pending" data-reveal>
+          <div>
+            <div class="section__kicker">Edición de hoy</div>
+            <h2 class="section__title">El mapa, en vivo</h2>
+          </div>
+          <p class="section__note">Mismo mapa Leaflet que genera el pipeline — panel, capas satelitales y popups incluidos.</p>
+        </div>
+        <div class="reveal pending" data-reveal>
+          <div class="mapframe">
+            <span class="mapframe__skeleton" id="map-skeleton">Cargando mapa…</span>
+            <iframe
+              src="index.html"
+              title="Mapa del Boletín Oficial de Minería — edición del día"
+              loading="lazy"
+              onload="this.classList.add('is-loaded'); var s=document.getElementById('map-skeleton'); if(s) s.style.display='none';"
+            ></iframe>
+          </div>
+          <div class="map__foot">
+            <span>Se actualiza solo, cada día, tras la corrida del pipeline.</span>
+            <a href="index.html">Abrir a pantalla completa ↗</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <div class="section__head reveal pending" data-reveal>
+          <div>
+            <div class="section__kicker">Cómo funciona</div>
+            <h2 class="section__title">Cuatro pasos, sin intervención manual</h2>
+          </div>
+          <p class="section__note">Corre completo cada día en GitHub Actions, de principio a fin.</p>
+        </div>
+        <div class="pipeline reveal pending" data-reveal>
+          <div class="step">
+            <span class="step__n">01</span>
+            <h3>Scraping</h3>
+            <p>Un navegador Chromium headless (Playwright) descarga los PDF de cada categoría, sorteando la protección anti-bot F5/TrafficShield del sitio oficial.</p>
+          </div>
+          <div class="step">
+            <span class="step__n">02</span>
+            <h3>Análisis</h3>
+            <p>Expresiones regulares extraen coordenadas UTM y dimensiones, tolerando la redacción propia de cada estudio jurídico.</p>
+          </div>
+          <div class="step">
+            <span class="step__n">03</span>
+            <h3>Construcción geométrica</h3>
+            <p>Se generan los polígonos —rectángulos para pedimentos y manifestaciones, vértices directos para mensuras— y se reproyectan a WGS84.</p>
+          </div>
+          <div class="step">
+            <span class="step__n">04</span>
+            <h3>Publicación</h3>
+            <p>Se generan el mapa Leaflet y los archivos GeoPackage/GeoJSON, y se publican en GitHub Pages.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <div class="section__head reveal pending" data-reveal>
+          <div>
+            <div class="section__kicker">Qué se detecta</div>
+            <h2 class="section__title">Los cinco tipos de publicación del boletín</h2>
+          </div>
+          <p class="section__note">Mismos colores que el mapa interactivo, para que ambos se lean juntos.</p>
+        </div>
+        <div class="legend reveal pending" data-reveal>
+          <div class="type">
+            <div class="type__top">
+              <span class="type__name"><span class="type__swatch" style="--sw:var(--c-pedi)"></span>Pedimentos</span>
+            </div>
+            <div class="type__count" id="type-pedi">30</div>
+            <div class="type__note">Georreferenciados automáticamente</div>
+          </div>
+          <div class="type">
+            <div class="type__top">
+              <span class="type__name"><span class="type__swatch" style="--sw:var(--c-manif)"></span>Manifestaciones</span>
+            </div>
+            <div class="type__count" id="type-manif">25</div>
+            <div class="type__note">Georreferenciadas automáticamente</div>
+          </div>
+          <div class="type">
+            <div class="type__top">
+              <span class="type__name"><span class="type__swatch" style="--sw:var(--c-mens)"></span>Mensuras</span>
+            </div>
+            <div class="type__count" id="type-mens">31</div>
+            <div class="type__note">Georreferenciadas automáticamente</div>
+          </div>
+          <div class="type">
+            <div class="type__top">
+              <span class="type__name"><span class="type__swatch" style="--sw:var(--c-sexp)"></span>Sentencias de Exploración</span>
+            </div>
+            <div class="type__count" id="type-sexp">0</div>
+            <div class="type__note" id="type-sexp-note">Sin publicaciones en esta edición</div>
+          </div>
+          <div class="type">
+            <div class="type__top">
+              <span class="type__name"><span class="type__swatch" style="--sw:var(--c-sexpl)"></span>Sentencias de Explotación</span>
+            </div>
+            <div class="type__count" id="type-sexpl">0</div>
+            <div class="type__note" id="type-sexpl-note">Sin publicaciones en esta edición</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <div class="section__head reveal pending" data-reveal>
+          <div>
+            <div class="section__kicker">Descargas</div>
+            <h2 class="section__title">Datos geoespaciales, listos para QGIS</h2>
+          </div>
+          <p class="section__note">Cada archivo lleva atributos de fecha y edición para filtrar por rango.</p>
+        </div>
+        <div class="files reveal pending" data-reveal>
+          <div class="file">
+            <div class="file__meta">
+              <span class="file__name">boletin_mineria_latest</span>
+              <span class="file__desc">Edición del día — pedimentos, manifestaciones y mensuras</span>
+            </div>
+            <div class="file__links">
+              <a href="data/boletin_mineria_latest.gpkg">GeoPackage</a>
+              <a href="data/boletin_mineria_latest.geojson">GeoJSON</a>
+            </div>
+          </div>
+          <div class="file">
+            <div class="file__meta">
+              <span class="file__name">boletin_mineria_historico</span>
+              <span class="file__desc">Acumulado de todas las ediciones publicadas</span>
+            </div>
+            <div class="file__links">
+              <a href="data/boletin_mineria_historico.gpkg">GeoPackage</a>
+              <a href="data/boletin_mineria_historico.geojson">GeoJSON</a>
+            </div>
+          </div>
+          <div class="file">
+            <div class="file__meta">
+              <span class="file__name">reporte_latest.json</span>
+              <span class="file__desc">Estadísticas de georreferenciación de la última corrida</span>
+            </div>
+            <div class="file__links">
+              <a href="data/reporte_latest.json">JSON</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap automation reveal pending" data-reveal>
+        <div class="automation__body">
+          <div class="section__kicker">Automatización</div>
+          <h2 class="section__title" style="margin-top:8px;">Se ejecuta sola, todos los días</h2>
+          <p style="margin-top:18px;">
+            Todo el pipeline corre en GitHub Actions bajo un cron diario — nadie necesita dejar
+            un computador encendido ni ejecutar nada a mano. El scraper usa un navegador real para
+            evitar el bloqueo anti-bot del sitio oficial, y cada corrida deja un reporte con las
+            publicaciones que sí y las que no pudieron georreferenciarse.
+          </p>
+          <p>
+            El resultado se versiona directamente en el repositorio, así que el histórico completo
+            queda trazable commit a commit.
+          </p>
+        </div>
+        <div class="limits">
+          <h3>Limitaciones documentadas</h3>
+          <ul>
+            <li>Sentencias de exploración y explotación se georreferencian reusando los deslindes del expediente que resuelven; sin un caso real aún para calibrar el formato, uno puntual podría fallar la primera vez.</li>
+            <li>Cualquier documento con redacción atípica queda listado en el reporte de no-georreferenciación, en vez de forzar una geometría incorrecta.</li>
+            <li>La geometría se reconstruye desde el texto del boletín, no desde un plano catastral oficial.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap footer__row">
+      <span>Datos derivados de un boletín público · visualización no oficial, sin validez legal.</span>
+      <a href="https://github.com/mgestadolocal/boletin-mineria" target="_blank" rel="noopener">Repositorio y documentación →</a>
+    </div>
+  </footer>
+
+<script>
+  (function(){
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!reduceMotion && 'IntersectionObserver' in window) {
+      var els = document.querySelectorAll('[data-reveal]');
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if (entry.isIntersecting) {
+            entry.target.classList.remove('pending');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
+      els.forEach(function(el){ io.observe(el); });
+    } else {
+      document.querySelectorAll('.pending').forEach(function(el){ el.classList.remove('pending'); });
+    }
+
+    // Progressive enhancement: if this file is served alongside the real
+    // data/reporte_latest.json (i.e. dropped into docs/ next to the pipeline
+    // output), pull live counts. Silently keeps the static numbers otherwise.
+    fetch('data/reporte_latest.json')
+      .then(function(r){ return r.ok ? r.json() : null; })
+      .then(function(report){
+        if (!report || !report.por_tipo) return;
+        var map = {
+          'stat-pedi': report.por_tipo.pedimento, 'type-pedi': report.por_tipo.pedimento,
+          'stat-manif': report.por_tipo.manifestacion, 'type-manif': report.por_tipo.manifestacion,
+          'stat-mens': report.por_tipo.mensura, 'type-mens': report.por_tipo.mensura
+        };
+        Object.keys(map).forEach(function(id){
+          var v = map[id];
+          if (typeof v === 'number') {
+            var el = document.getElementById(id);
+            if (el) el.textContent = v;
+          }
+        });
+        var totalEl = document.getElementById('stat-total');
+        if (typeof report.georreferenciadas === 'number' && totalEl) {
+          totalEl.textContent = report.georreferenciadas;
+        }
+        if (report.edicion && report.fecha) {
+          var mh = document.getElementById('mh-edition');
+          if (mh) mh.textContent = 'Edición ' + report.edicion + ' · ' + report.fecha;
+        }
+
+        // Sentencias: a diferencia de los otros tres tipos, todavía pueden
+        // caer a revisión manual si el PDF no calza con el formato asumido
+        // (ver parser.parse_sentencia). Reflejamos ambos estados.
+        var pendientes = report.sin_georreferenciar || [];
+        ['sexp', 'sexpl'].forEach(function(key){
+          var tipo = key === 'sexp' ? 'sentencia_exploracion' : 'sentencia_explotacion';
+          var ok = report.por_tipo[tipo] || 0;
+          var pending = pendientes.filter(function(p){ return p.tipo === tipo; }).length;
+          var countEl = document.getElementById('type-' + key);
+          var noteEl = document.getElementById('type-' + key + '-note');
+          if (countEl) countEl.textContent = ok;
+          if (noteEl) {
+            if (pending > 0) {
+              noteEl.textContent = pending + (pending === 1 ? ' pendiente de revisión manual' : ' pendientes de revisión manual');
+              noteEl.classList.add('manual');
+              noteEl.style.setProperty('--sw', 'var(--c-' + key + ')');
+            } else if (ok > 0) {
+              noteEl.textContent = 'Georreferenciadas automáticamente';
+              noteEl.classList.remove('manual');
+            } else {
+              noteEl.textContent = 'Sin publicaciones en esta edición';
+              noteEl.classList.remove('manual');
+            }
+          }
+        });
+      })
+      .catch(function(){ /* static numbers stand */ });
+  })();
+</script>
+</body>
+</html>
