@@ -27,6 +27,8 @@ PARSERS = {
     'pedimento': P.parse_pedimento,
     'manifestacion': P.parse_manifestacion,
     'mensura': P.parse_mensura,
+    'sentencia_exploracion': P.parse_sentencia_exploracion,
+    'sentencia_explotacion': P.parse_sentencia_explotacion,
 }
 
 
@@ -47,7 +49,7 @@ def main():
     for item in manifest:
         tipo = item['tipo']
         if tipo not in PARSERS:
-            # Sentencias de Exploracion/Explotacion u otro tipo sin parser aun.
+            # Cualquier tipo nuevo que el scraper llegue a descubrir sin parser aun.
             sin_georreferenciar.append(dict(
                 cve=item['cve'], tipo=tipo, archivo=item['archivo'],
                 motivo=f"sin_parser_para_tipo_{tipo}_revisar_manualmente",

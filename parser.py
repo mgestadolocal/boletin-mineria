@@ -302,6 +302,52 @@ def parse_manifestacion(fname, t):
     rec['ok'] = all(v is not None for v in (norte, este, ns, eo))
     return rec
 
+def parse_sentencia(tipo, fname, t):
+    """Sentencias de Exploracion / Explotacion: fallo judicial que resuelve
+    una Manifestacion previa, concediendo el area sobre los mismos deslindes
+    ya presentados en el expediente. Reutiliza los mismos extractores de
+    coordenadas y lados que parse_manifestacion(), porque la sentencia
+    tipicamente reproduce el mismo bloque de "Punto de Interes" + lados
+    Norte-Sur/Este-Oeste del expediente que resuelve.
+
+    AVISO: sin ejemplos reales de Sentencias disponibles para calibrar el
+    regex contra boletines historicos (categoria poco frecuente). Si el
+    formato real difiere de lo asumido aqui, 'ok' queda en False y el
+    registro cae a sin_georreferenciar para revision manual -- igual que
+    pasaba antes de agregar este parser, nunca se fuerza una geometria
+    dudosa hacia el mapa.
+    """
+    tt = norm(t)
+    norte, este = find_first_coord_pair(tt)
+    ns, eo = find_sides(tt)
+    datum, huso, hemis = find_datum(tt)
+    comuna, provincia, region = find_comuna_provincia_region(tt)
+    sup_text = find_superficie(tt)
+    sup_calc = round(ns * eo / 10000, 4) if (ns and eo) else None
+    superficie = sup_calc if sup_calc is not None else sup_text
+    rec = dict(
+        tipo=tipo, archivo=fname,
+        punto_interes_norte=norte, punto_interes_este=este,
+        lado_ns=ns, lado_eo=eo,
+        datum=datum, huso=huso, hemisferio=hemis,
+        comuna=comuna, provincia=provincia, region=region,
+        superficie_ha=superficie, superficie_ha_texto=sup_text,
+        solicitante=find_solicitante(tt),
+    )
+    rec['ok'] = all(v is not None for v in (norte, este, ns, eo))
+    if not rec['ok']:
+        rec['motivo'] = 'formato_sentencia_no_reconocido'
+    return rec
+
+
+def parse_sentencia_exploracion(fname, t):
+    return parse_sentencia('sentencia_exploracion', fname, t)
+
+
+def parse_sentencia_explotacion(fname, t):
+    return parse_sentencia('sentencia_explotacion', fname, t)
+
+
 def parse_mensura(fname, t):
     tt = norm(t)
     verts, pi = parse_mensura_vertices(tt)

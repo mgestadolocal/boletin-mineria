@@ -52,6 +52,11 @@ def build_feature(tipo, rec, meta):
     elif tipo == 'manifestacion':
         geom = build_rect_manifestacion(tf, rec['punto_interes_norte'], rec['punto_interes_este'],
                                          rec['lado_ns'], rec['lado_eo'])
+    elif tipo in ('sentencia_exploracion', 'sentencia_explotacion'):
+        # Misma construccion que manifestacion: la sentencia se resuelve sobre
+        # el mismo Punto de Interes + lados Norte-Sur/Este-Oeste del expediente.
+        geom = build_rect_manifestacion(tf, rec['punto_interes_norte'], rec['punto_interes_este'],
+                                         rec['lado_ns'], rec['lado_eo'])
     elif tipo == 'mensura':
         if len(rec.get('vertices', [])) < 3:
             raise ValueError('menos de 3 vertices')
