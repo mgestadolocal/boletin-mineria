@@ -10,8 +10,13 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 
 <style>
+  /* Cross-document fade entre landing/historico cuando el navegador lo soporta;
+     no-op silencioso en el resto. */
+  @view-transition{ navigation:auto; }
+
   /* ---------- tokens ---------- */
   :root{
+    --live: #16a34a;
     --ink:        #101a2c;
     --ink-soft:   #4a5468;
     --ink-faint:  #7c8598;
@@ -41,6 +46,7 @@
 
   @media (prefers-color-scheme: dark){
     :root:not([data-theme="light"]){
+      --live: #4ade80;
       --ink:        #e9edf1;
       --ink-soft:   #a7b0c2;
       --ink-faint:  #707c92;
@@ -63,6 +69,7 @@
     }
   }
   :root[data-theme="dark"]{
+    --live: #4ade80;
     --ink:        #e9edf1;
     --ink-soft:   #a7b0c2;
     --ink-faint:  #707c92;
@@ -107,11 +114,31 @@
   .wrap{ max-width:1040px; margin-inline:auto; padding-inline:24px; }
   @media (max-width:640px){ .wrap{ padding-inline:18px; } }
 
-  .reveal{ opacity:1; transform:none; transition:opacity .7s ease, transform .7s ease; }
+  .reveal{ opacity:1; transform:none; transition:opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1); }
   .reveal.pending{ opacity:0; transform:translateY(14px); }
+  .reveal-item{ opacity:1; transform:none; transition:opacity .6s cubic-bezier(.16,1,.3,1), transform .6s cubic-bezier(.16,1,.3,1); }
+  .reveal-item.pending{ opacity:0; transform:translateY(12px); }
   @media (prefers-reduced-motion: reduce){
-    .reveal{ transition:none !important; }
+    .reveal, .reveal-item{ transition:none !important; }
   }
+
+  /* ---------- scroll progress ---------- */
+  .scrollbar{ position:fixed; top:0; left:0; width:100%; height:2px; z-index:200; pointer-events:none; background:transparent; }
+  .scrollbar__fill{ height:100%; width:0%; background:var(--accent); box-shadow:0 0 8px var(--accent-soft-strong); }
+  @media (prefers-reduced-motion: reduce){ .scrollbar{ display:none; } }
+
+  /* ---------- cursor spotlight (tarjetas interactivas) ---------- */
+  .spot{ position:relative; isolation:isolate; }
+  .spot::after{
+    content:"";
+    position:absolute; inset:0;
+    background:radial-gradient(220px circle at var(--mx,50%) var(--my,50%), var(--accent-soft-strong), transparent 70%);
+    opacity:0; transition:opacity .3s ease;
+    pointer-events:none; z-index:0;
+  }
+  .spot:hover::after, .spot:focus-within::after{ opacity:1; }
+  .spot > *{ position:relative; z-index:1; }
+  @media (hover:none){ .spot::after{ display:none; } }
 
   /* ---------- masthead ---------- */
   .masthead{
@@ -128,6 +155,21 @@
     gap:12px; flex-wrap:wrap;
   }
   .masthead__bar strong{ color:var(--ink-soft); font-weight:500; }
+  .live-badge{
+    display:inline-flex; align-items:center; gap:6px;
+    font-family:var(--font-mono); font-size:0.68rem; letter-spacing:.08em;
+    color:var(--ink-faint); margin-left:10px;
+  }
+  .live-dot{
+    width:6px; height:6px; border-radius:50%; background:var(--live); flex:none;
+    animation:live-pulse 2.2s ease-out infinite;
+  }
+  @keyframes live-pulse{
+    0%{ box-shadow:0 0 0 0 color-mix(in srgb, var(--live) 55%, transparent); }
+    70%{ box-shadow:0 0 0 7px color-mix(in srgb, var(--live) 0%, transparent); }
+    100%{ box-shadow:0 0 0 0 color-mix(in srgb, var(--live) 0%, transparent); }
+  }
+  @media (prefers-reduced-motion: reduce){ .live-dot{ animation:none; } }
 
   /* ---------- hero ---------- */
   .hero{
@@ -135,6 +177,18 @@
     overflow:hidden;
     padding-block:76px 88px;
     border-bottom:1px solid var(--line);
+  }
+  .hero::before{
+    content:"";
+    position:absolute; inset:0;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size:44px 44px;
+    opacity:.4;
+    -webkit-mask-image:linear-gradient(to bottom, black, transparent 85%);
+    mask-image:linear-gradient(to bottom, black, transparent 85%);
+    pointer-events:none;
   }
   .hero__contours{
     position:absolute;
@@ -149,6 +203,20 @@
     .hero__contours{ opacity:.6; }
   }
   .hero__inner{ position:relative; }
+  .geo-ticker{
+    position:absolute; right:0; bottom:-4px;
+    display:flex; flex-direction:column; align-items:flex-end; gap:4px;
+    font-family:var(--font-mono); text-align:right;
+    pointer-events:none;
+  }
+  .geo-ticker__label{
+    font-size:0.62rem; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-faint);
+  }
+  .geo-ticker__coord{
+    font-size:0.78rem; color:var(--accent-ink); font-variant-numeric:tabular-nums;
+    transition:opacity .35s ease;
+  }
+  @media (max-width:900px){ .geo-ticker{ display:none; } }
   .eyebrow{
     display:flex; align-items:center; gap:10px;
     font-family:var(--font-mono);
@@ -190,12 +258,13 @@
     border-radius:var(--radius);
     border:1px solid transparent;
     text-decoration:none;
-    transition:background-color .15s ease, border-color .15s ease, color .15s ease;
+    transition:background-color .15s ease, border-color .15s ease, color .15s ease, box-shadow .25s ease, transform .15s ease;
   }
   .btn--primary{ background:var(--accent); color:#fff; }
-  .btn--primary:hover{ background:var(--accent-ink); }
+  .btn--primary:hover{ background:var(--accent-ink); box-shadow:0 0 26px var(--accent-soft-strong); transform:translateY(-1px); }
   .btn--ghost{ border-color:var(--line-strong); color:var(--ink); }
-  .btn--ghost:hover{ border-color:var(--ink-faint); background:var(--accent-soft); }
+  .btn--ghost:hover{ border-color:var(--accent); background:var(--accent-soft); box-shadow:0 0 18px var(--accent-soft); transform:translateY(-1px); }
+  @media (prefers-reduced-motion: reduce){ .btn{ transition:background-color .15s ease, border-color .15s ease, color .15s ease; transform:none !important; } }
 
   .hero__stats{
     margin-top:52px;
@@ -294,7 +363,15 @@
     font-family:var(--font-mono); font-size:0.78rem; color:var(--ink-faint);
     letter-spacing:.04em;
     pointer-events:none;
+    background:linear-gradient(100deg, transparent 35%, var(--accent-soft-strong) 50%, transparent 65%);
+    background-size:220% 100%;
+    animation:shimmer 1.7s ease-in-out infinite;
   }
+  @keyframes shimmer{
+    0%{ background-position:140% 0; }
+    100%{ background-position:-60% 0; }
+  }
+  @media (prefers-reduced-motion: reduce){ .mapframe__skeleton{ animation:none; background:none; } }
   .map__foot{
     margin-top:14px;
     display:flex; justify-content:space-between; align-items:baseline;
@@ -407,10 +484,10 @@
     padding:7px 13px;
     border:1px solid var(--line-strong);
     border-radius:var(--radius);
-    transition:border-color .15s ease, background-color .15s ease;
+    transition:border-color .15s ease, background-color .15s ease, box-shadow .25s ease;
     white-space:nowrap;
   }
-  .file__links a:hover{ background:var(--accent-soft); border-color:var(--accent); }
+  .file__links a:hover{ background:var(--accent-soft); border-color:var(--accent); box-shadow:0 0 14px var(--accent-soft); }
 
   /* ---------- automation ---------- */
   .automation{
@@ -448,10 +525,15 @@
 </head>
 <body>
 
+  <div class="scrollbar" aria-hidden="true"><div class="scrollbar__fill" id="scrollbar-fill"></div></div>
+
   <header class="masthead">
     <div class="wrap masthead__bar">
       <span><strong>Boletín Oficial de Minería</strong> · Chile</span>
-      <span id="mh-edition">Edición 44528 · 19 ago 2026</span>
+      <span>
+        <span id="mh-edition">Edición 44528 · 19 ago 2026</span>
+        <span class="live-badge"><span class="live-dot"></span>PIPELINE ACTIVO</span>
+      </span>
     </div>
   </header>
 
@@ -479,12 +561,16 @@
           <a class="btn btn--ghost" href="historico.html">Ver histórico completo</a>
           <a class="btn btn--ghost" href="https://github.com/mgestadolocal/boletin-mineria" target="_blank" rel="noopener">Código en GitHub</a>
         </div>
-        <div class="hero__stats reveal pending" data-reveal>
-          <div class="stat"><div class="stat__n" id="stat-pedi">30</div><div class="stat__l">Pedimentos</div></div>
-          <div class="stat"><div class="stat__n" id="stat-manif">25</div><div class="stat__l">Manifestaciones</div></div>
-          <div class="stat"><div class="stat__n" id="stat-mens">31</div><div class="stat__l">Mensuras</div></div>
-          <div class="stat"><div class="stat__n" id="stat-total">86</div><div class="stat__l">Georreferenciadas hoy</div></div>
+        <div class="hero__stats" data-reveal-group>
+          <div class="stat reveal-item pending"><div class="stat__n" id="stat-pedi">30</div><div class="stat__l">Pedimentos</div></div>
+          <div class="stat reveal-item pending"><div class="stat__n" id="stat-manif">25</div><div class="stat__l">Manifestaciones</div></div>
+          <div class="stat reveal-item pending"><div class="stat__n" id="stat-mens">31</div><div class="stat__l">Mensuras</div></div>
+          <div class="stat reveal-item pending"><div class="stat__n" id="stat-total">86</div><div class="stat__l">Georreferenciadas hoy</div></div>
         </div>
+      </div>
+      <div class="geo-ticker" aria-hidden="true">
+        <span class="geo-ticker__label">Última coordenada procesada</span>
+        <span class="geo-ticker__coord" id="geo-ticker-coord">-39.9900, -73.0770</span>
       </div>
     </section>
 
@@ -557,23 +643,23 @@
           </div>
           <p class="section__note">Corre completo cada día en GitHub Actions, de principio a fin.</p>
         </div>
-        <div class="pipeline reveal pending" data-reveal>
-          <div class="step">
+        <div class="pipeline" data-reveal-group>
+          <div class="step spot reveal-item pending">
             <span class="step__n">01</span>
             <h3>Scraping</h3>
             <p>Un navegador Chromium headless (Playwright) descarga los PDF de cada categoría, sorteando la protección anti-bot F5/TrafficShield del sitio oficial.</p>
           </div>
-          <div class="step">
+          <div class="step spot reveal-item pending">
             <span class="step__n">02</span>
             <h3>Análisis</h3>
             <p>Expresiones regulares extraen coordenadas UTM y dimensiones, tolerando la redacción propia de cada estudio jurídico.</p>
           </div>
-          <div class="step">
+          <div class="step spot reveal-item pending">
             <span class="step__n">03</span>
             <h3>Construcción geométrica</h3>
             <p>Se generan los polígonos —rectángulos para pedimentos y manifestaciones, vértices directos para mensuras— y se reproyectan a WGS84.</p>
           </div>
-          <div class="step">
+          <div class="step spot reveal-item pending">
             <span class="step__n">04</span>
             <h3>Publicación</h3>
             <p>Se generan el mapa Leaflet y los archivos GeoPackage/GeoJSON, y se publican en GitHub Pages.</p>
@@ -593,22 +679,22 @@
         </div>
         <div class="legend-wrap reveal pending" data-reveal>
           <span class="legend-label">Georreferenciación probada</span>
-          <div class="legend legend--three">
-            <div class="type">
+          <div class="legend legend--three" data-reveal-group>
+            <div class="type spot reveal-item pending">
               <div class="type__top">
                 <span class="type__name"><span class="type__swatch" style="--sw:var(--c-pedi)"></span>Pedimentos</span>
               </div>
               <div class="type__count" id="type-pedi">30</div>
               <div class="type__note">Georreferenciados automáticamente</div>
             </div>
-            <div class="type">
+            <div class="type spot reveal-item pending">
               <div class="type__top">
                 <span class="type__name"><span class="type__swatch" style="--sw:var(--c-manif)"></span>Manifestaciones</span>
               </div>
               <div class="type__count" id="type-manif">25</div>
               <div class="type__note">Georreferenciadas automáticamente</div>
             </div>
-            <div class="type">
+            <div class="type spot reveal-item pending">
               <div class="type__top">
                 <span class="type__name"><span class="type__swatch" style="--sw:var(--c-mens)"></span>Mensuras</span>
               </div>
@@ -617,15 +703,15 @@
             </div>
           </div>
           <span class="legend-label">Georreferenciación nueva</span>
-          <div class="legend legend--two">
-            <div class="type">
+          <div class="legend legend--two" data-reveal-group>
+            <div class="type spot reveal-item pending">
               <div class="type__top">
                 <span class="type__name"><span class="type__swatch" style="--sw:var(--c-sexp)"></span>Sentencias de Exploración</span>
               </div>
               <div class="type__count" id="type-sexp">0</div>
               <div class="type__note" id="type-sexp-note">Sin publicaciones en esta edición</div>
             </div>
-            <div class="type">
+            <div class="type spot reveal-item pending">
               <div class="type__top">
                 <span class="type__name"><span class="type__swatch" style="--sw:var(--c-sexpl)"></span>Sentencias de Explotación</span>
               </div>
@@ -646,8 +732,8 @@
           </div>
           <p class="section__note">Cada archivo lleva atributos de fecha y edición para filtrar por rango.</p>
         </div>
-        <div class="files reveal pending" data-reveal>
-          <div class="file">
+        <div class="files" data-reveal-group>
+          <div class="file spot reveal-item pending">
             <div class="file__meta">
               <span class="file__name">boletin_mineria_latest</span>
               <span class="file__desc">Edición del día — pedimentos, manifestaciones y mensuras</span>
@@ -657,7 +743,7 @@
               <a href="data/boletin_mineria_latest.geojson">GeoJSON</a>
             </div>
           </div>
-          <div class="file">
+          <div class="file spot reveal-item pending">
             <div class="file__meta">
               <span class="file__name">boletin_mineria_historico</span>
               <span class="file__desc">Acumulado de todas las ediciones publicadas</span>
@@ -667,7 +753,7 @@
               <a href="data/boletin_mineria_historico.geojson">GeoJSON</a>
             </div>
           </div>
-          <div class="file">
+          <div class="file spot reveal-item pending">
             <div class="file__meta">
               <span class="file__name">reporte_latest.json</span>
               <span class="file__desc">Estadísticas de georreferenciación de la última corrida</span>
@@ -718,7 +804,9 @@
 <script>
   (function(){
     var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
     if (!reduceMotion && 'IntersectionObserver' in window) {
+      // Bloques enteros (secciones, headers) que aparecen de una.
       var els = document.querySelectorAll('[data-reveal]');
       var io = new IntersectionObserver(function(entries){
         entries.forEach(function(entry){
@@ -729,8 +817,93 @@
         });
       }, { threshold: 0.15 });
       els.forEach(function(el){ io.observe(el); });
+
+      // Grupos (stats, pasos del pipeline, tarjetas de tipo, descargas) cuyos
+      // hijos .reveal-item aparecen en cascada, no todos de golpe.
+      var groups = document.querySelectorAll('[data-reveal-group]');
+      var groupIo = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if (entry.isIntersecting) {
+            var items = entry.target.querySelectorAll('.reveal-item');
+            items.forEach(function(item, i){
+              setTimeout(function(){ item.classList.remove('pending'); }, i * 70);
+            });
+            groupIo.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
+      groups.forEach(function(el){ groupIo.observe(el); });
     } else {
       document.querySelectorAll('.pending').forEach(function(el){ el.classList.remove('pending'); });
+    }
+
+    // Spotlight que sigue el cursor dentro de tarjetas .spot.
+    if (window.matchMedia('(hover: hover)').matches) {
+      document.querySelectorAll('.spot').forEach(function(el){
+        el.addEventListener('mousemove', function(e){
+          var r = el.getBoundingClientRect();
+          el.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+          el.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
+        });
+      });
+    }
+
+    // Barra de progreso de scroll, arriba de todo.
+    var fill = document.getElementById('scrollbar-fill');
+    if (fill && !reduceMotion) {
+      var onScroll = function(){
+        var h = document.documentElement;
+        var max = h.scrollHeight - h.clientHeight;
+        var pct = max > 0 ? (h.scrollTop / max) * 100 : 0;
+        fill.style.width = pct + '%';
+      };
+      document.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    }
+
+    // Ticker de coordenadas reales ya procesadas por el pipeline (rota entre
+    // publicaciones reales de la última corrida, solo decorativo).
+    var tickerEl = document.getElementById('geo-ticker-coord');
+    if (tickerEl) {
+      var coords = [
+        '-39.9900, -73.0770',
+        '-29.4812, -70.9131',
+        '-28.0940, -70.3891',
+        '-29.4161, -70.7030',
+        '-26.9795, -70.0468'
+      ];
+      if (reduceMotion) {
+        tickerEl.textContent = coords[0];
+      } else {
+        var ci = 0;
+        setInterval(function(){
+          ci = (ci + 1) % coords.length;
+          tickerEl.style.opacity = 0;
+          setTimeout(function(){
+            tickerEl.textContent = coords[ci];
+            tickerEl.style.opacity = 1;
+          }, 350);
+        }, 3200);
+      }
+    }
+
+    // Cuenta hacia arriba en vez de saltar de golpe al número final.
+    function animateNumber(el, to){
+      if (!el) return;
+      to = Math.round(to);
+      if (reduceMotion) { el.textContent = to; return; }
+      var from = parseInt(el.textContent, 10);
+      if (isNaN(from)) from = 0;
+      if (from === to) { el.textContent = to; return; }
+      var dur = 700, start = null;
+      function ease(t){ return t === 1 ? 1 : 1 - Math.pow(2, -10 * t); }
+      function step(ts){
+        if (!start) start = ts;
+        var p = Math.min((ts - start) / dur, 1);
+        el.textContent = Math.round(from + (to - from) * ease(p));
+        if (p < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
     }
 
     // Carrusel de fotos: scroll nativo con snap, los botones solo desplazan
@@ -764,13 +937,12 @@
         Object.keys(map).forEach(function(id){
           var v = map[id];
           if (typeof v === 'number') {
-            var el = document.getElementById(id);
-            if (el) el.textContent = v;
+            animateNumber(document.getElementById(id), v);
           }
         });
         var totalEl = document.getElementById('stat-total');
         if (typeof report.georreferenciadas === 'number' && totalEl) {
-          totalEl.textContent = report.georreferenciadas;
+          animateNumber(totalEl, report.georreferenciadas);
         }
         if (report.edicion && report.fecha) {
           var mh = document.getElementById('mh-edition');
@@ -787,7 +959,7 @@
           var pending = pendientes.filter(function(p){ return p.tipo === tipo; }).length;
           var countEl = document.getElementById('type-' + key);
           var noteEl = document.getElementById('type-' + key + '-note');
-          if (countEl) countEl.textContent = ok;
+          animateNumber(countEl, ok);
           if (noteEl) {
             if (pending > 0) {
               noteEl.textContent = pending + (pending === 1 ? ' pendiente de revisión manual' : ' pendientes de revisión manual');
