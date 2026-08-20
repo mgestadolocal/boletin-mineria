@@ -120,8 +120,14 @@ def _goto_and_get_html(page, url, timeout=45000):
 
 
 def discover_active_sections(page, date_str, edition=None):
-    """Visita la portada del dia y devuelve (edicion_resuelta, {subseccion_id: [tipo,...]})
-    solo para las categorias que tienen contenido ese dia (con href en el menu)."""
+    """Visita la portada del dia y devuelve (edicion_resuelta, {subseccion_id: [tipo,...]}).
+
+    Intenta descubrir el ID de subseccion de cada categoria de dos formas
+    (ver bug detectado el 20-08-2026 mas abajo), y trata cada categoria
+    encontrada como potencialmente activa -- si ese dia no tiene contenido,
+    fetch_index() simplemente devuelve una lista vacia para esa subseccion
+    (no hay forma fiable de saber "tiene contenido" solo mirando el menu, asi
+    que probamos todas las categorias reconocidas en vez de adivinar)."""
     url = f"{BASE}?date={date_str}"
     if edition:
         url += f"&edition={edition}"
@@ -134,6 +140,16 @@ def discover_active_sections(page, date_str, edition=None):
 
     active = {}
     all_labels = []
+
+    # Via 1 (formato viejo, se mantiene por compatibilidad si el sitio
+    # revierte el cambio): <a href="...subseccion=X"> -- confirmado en vivo
+    # que a partir del 20-08-2026 el sitio SOLO deja este href en la pestana
+    # actualmente activa/pre-cargada del menu (la que corresponde al
+    # subseccion con el que se cargo la pagina); todas las demas pestanas
+    # quedan como <a> SIN atributo href, asi que este metodo por si solo deja
+    # de encontrar casi todas las categorias (incl. Manifestaciones Mineras
+    # -- bug reportado por Miguel el 20-08-2026, edicion 44529: 11
+    # manifestaciones reales en subseccion=7100 vs 0 encontradas).
     for a in soup.find_all("a", href=True):
         label = a.get_text(strip=True)
         all_labels.append(label)
@@ -143,6 +159,39 @@ def discover_active_sections(page, date_str, edition=None):
         m = re.search(r"subseccion=(\d+)", a["href"])
         if m:
             active.setdefault(m.group(1), []).append(tipo)
+
+    # Via 2 (formato nuevo, confirmado en vivo el 20-08-2026 inspeccionando
+    # el DOM real con un navegador): cada <li> del menu trae un
+    # <span class="icon_bom_big bomNNNN"> -- el numero "NNNN" es el ID de
+    # subseccion de esa categoria, y este span SI esta presente para TODAS
+    # las categorias del menu sin importar si tienen contenido ese dia o si
+    # son la pestana activa. Es la fuente fiable ahora; via 1 queda como
+    # respaldo por si el sitio vuelve a exponer hrefs normales.
+    for li in soup.select("ul.menu li"):
+        direct_a = li.find("a", recursive=False)
+        if not direct_a:
+            continue
+        label = direct_a.get_text(strip=True)
+        tipo = CATEGORIES_NORM.get(_normalize_label(label))
+        if not tipo:
+            continue
+        bom_span = direct_a.find("span", class_=re.compile(r"^bom\d+$"))
+        if not bom_span:
+            # La clase bomNNNN puede no ser la primera; buscamos entre todas
+            # las clases de cualquier span dentro del <a>.
+            for s in direct_a.find_all("span"):
+                for c in (s.get("class") or []):
+                    if re.match(r"^bom\d+$", c):
+                        bom_span = s
+                        break
+                if bom_span:
+                    break
+        if not bom_span:
+            continue
+        classes = bom_span.get("class") or []
+        bom_id = next((c[3:] for c in classes if re.match(r"^bom\d+$", c)), None)
+        if bom_id:
+            active.setdefault(bom_id, []).append(tipo)
 
     # Pedimentos Mineros SIEMPRE se agrega directo por su ID de subseccion
     # fijo (7099), sin depender de que la portada lo muestre como tile/link

@@ -1,11 +1,19 @@
 {
  "fecha": "20-08-2026",
  "edicion": "44529",
- "total_publicaciones": 3,
- "georreferenciadas": 3,
+ "total_publicaciones": 15,
+ "georreferenciadas": 14,
  "por_tipo": {
-  "mensura": 3
+  "mensura": 3,
+  "manifestacion": 11
  },
- "sin_georreferenciar": [],
- "historico_total_acumulado": 180
+ "sin_georreferenciar": [
+  {
+   "cve": "2856654",
+   "tipo": "manifestacion",
+   "archivo": "gm_manifestacion_2856654.pdf",
+   "motivo": "parseo_incompleto"
+  }
+ ],
+ "historico_total_acumulado": 191
 }
