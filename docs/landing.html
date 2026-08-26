@@ -235,15 +235,49 @@
   }
   @media (max-width:560px){ .geo-ticker{ display:none; } }
 
-  /* mapa en vivo, dentro del hero */
-  .hero__map{ position:relative; min-width:0; }
-  .hero__map::before{
+  /* globo decorativo del hero -- ventana fija al espacio, independiente
+     del tema claro/oscuro de la pagina (siempre es "afuera", de noche). */
+  .hero__globe-col{ min-width:0; }
+  .hero__globe{
+    position:relative;
+    aspect-ratio:16/10;
+    border-radius:var(--radius);
+    border:1px solid var(--line);
+    overflow:hidden;
+    background:#050914;
+    display:flex; align-items:center; justify-content:center;
+  }
+  @media (max-width:640px){ .hero__globe{ aspect-ratio:4/5; } }
+  .hero__globe::before{
     content:"";
-    position:absolute; inset:-14%;
-    background:radial-gradient(circle at 50% 38%, var(--accent-soft-strong), transparent 68%);
-    filter:blur(14px);
-    z-index:-1;
+    position:absolute; inset:0;
+    background-image:
+      radial-gradient(1.5px 1.5px at 20% 30%, #fff, transparent),
+      radial-gradient(1.5px 1.5px at 70% 15%, #fff, transparent),
+      radial-gradient(1px 1px at 40% 70%, #cbd5e1, transparent),
+      radial-gradient(1px 1px at 85% 55%, #fff, transparent),
+      radial-gradient(1.5px 1.5px at 55% 85%, #cbd5e1, transparent),
+      radial-gradient(1px 1px at 10% 80%, #fff, transparent),
+      radial-gradient(1px 1px at 90% 85%, #cbd5e1, transparent),
+      radial-gradient(1.5px 1.5px at 30% 55%, #fff, transparent),
+      radial-gradient(1px 1px at 60% 25%, #cbd5e1, transparent);
+    opacity:.85;
     pointer-events:none;
+  }
+  #hero-globe-canvas, .hero__globe-fallback{
+    position:relative; z-index:1;
+    width:64%; aspect-ratio:1; border-radius:50%;
+    box-shadow:
+      0 0 0 1px rgba(150,200,255,.55),
+      0 0 50px 10px rgba(90,170,255,.55),
+      inset -14px -14px 40px rgba(0,0,0,.55);
+  }
+  .hero__globe-fallback{ object-fit:cover; }
+  .hero__globe-fallback[hidden]{ display:none; }
+  .hero__globe-credit{
+    margin-top:10px;
+    font-family:var(--font-mono); font-size:0.68rem; letter-spacing:.02em;
+    color:var(--ink-faint);
   }
   .eyebrow{
     display:flex; align-items:center; gap:10px;
@@ -502,6 +536,33 @@
   }
   .step h3{ font-size:1.02rem; font-weight:600; font-family:var(--font-body); }
   .step p{ font-size:0.88rem; color:var(--ink-soft); }
+  .step{ transition:box-shadow .2s ease, transform .15s ease; }
+  .step:hover, .step:focus-within{ box-shadow:0 10px 28px color-mix(in srgb, var(--ink) 10%, transparent); transform:translateY(-2px); }
+  @media (prefers-reduced-motion: reduce){ .step{ transition:box-shadow .2s ease; transform:none !important; } }
+  /* La "transcripcion de la maquina": un dato real de la corrida de hoy por
+     paso (reporte_latest.json, via fetch mas abajo), en colores invertidos
+     respecto al tema -- siempre lee como su propia ventanita de consola,
+     sea cual sea el tema de la pagina. */
+  .step__log{
+    margin-top:auto;
+    display:block;
+    font-family:var(--font-mono);
+    font-size:0.74rem;
+    background:var(--ink);
+    color:var(--paper);
+    padding:8px 10px;
+    border-radius:2px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  .step__log::after{
+    content:"▍";
+    margin-left:2px;
+    animation:log-blink 1s steps(1) infinite;
+  }
+  @keyframes log-blink{ 50%{ opacity:0; } }
+  @media (prefers-reduced-motion: reduce){ .step__log::after{ animation:none; } }
 
   /* ---------- legend ---------- */
   .legend-wrap{ display:flex; flex-direction:column; gap:10px; }
@@ -533,6 +594,15 @@
     background:var(--paper-raised);
     padding:20px 20px 22px;
     display:flex; flex-direction:column; gap:10px;
+    border:1px solid transparent;
+    transition:border-color .2s ease, box-shadow .2s ease;
+  }
+  /* Al pasar el mouse, el borde toma el color propio del tipo (--sw, seteado
+     inline por tarjeta) en vez del accent generico -- refuerza la misma
+     conexion de color que ya existe con la leyenda del mapa real. */
+  .type:hover, .type:focus-within{
+    border-color:var(--sw);
+    box-shadow:inset 0 0 0 1px var(--sw), 0 8px 24px color-mix(in srgb, var(--sw) 18%, transparent);
   }
   .type__top{ display:flex; align-items:center; justify-content:space-between; gap:10px; }
   .type__name{ display:flex; align-items:center; gap:10px; font-size:0.94rem; font-weight:500; }
@@ -561,11 +631,15 @@
   .file__name{ font-family:var(--font-mono); font-size:0.9rem; }
   .file__desc{ font-size:0.82rem; color:var(--ink-faint); }
   .file__links{ display:flex; gap:10px; flex-wrap:wrap; }
+  /* Etiquetas de formato compactas (pill + mono), no botones -- se leen
+     como un tag de tipo de archivo, distinto a los CTA cuadrados del resto
+     del sitio. */
   .file__links a{
-    font-size:0.82rem; text-decoration:none;
-    padding:7px 13px;
+    font-family:var(--font-mono); font-size:0.76rem; font-weight:500; letter-spacing:.03em;
+    text-decoration:none;
+    padding:6px 14px;
     border:1px solid var(--line-strong);
-    border-radius:var(--radius);
+    border-radius:999px;
     transition:border-color .15s ease, background-color .15s ease, box-shadow .25s ease;
     white-space:nowrap;
   }
@@ -668,7 +742,27 @@
             <span class="geo-ticker__coord" id="geo-ticker-coord">-39.9900, -73.0770</span>
           </div>
         </div>
-        <div class="hero__map" id="mapa-hoy">
+        <div class="hero__globe-col">
+          <div class="hero__globe">
+            <canvas id="hero-globe-canvas" role="img" aria-label="Globo terráqueo girando, vista satelital de la Tierra desde el espacio"></canvas>
+            <img class="hero__globe-fallback" id="hero-globe-fallback" src="images/earth-equirectangular.jpg" alt="Vista satelital de la Tierra" hidden>
+            <noscript><style>#hero-globe-canvas{display:none} #hero-globe-fallback{display:block !important}</style></noscript>
+          </div>
+          <p class="hero__globe-credit">Imagen: NASA Blue Marble (dominio público), reproyección de Mdf — vía Wikimedia Commons.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="mapa-hoy">
+      <div class="wrap">
+        <div class="section__head reveal pending" data-reveal>
+          <div>
+            <div class="section__kicker">Edición de hoy</div>
+            <h2 class="section__title">El mapa, en vivo</h2>
+          </div>
+          <p class="section__note">Mismo mapa Leaflet que genera el pipeline — panel, capas satelitales y popups incluidos.</p>
+        </div>
+        <div class="reveal pending" data-reveal>
           <div class="mapframe">
             <span class="mapframe__skeleton" id="map-skeleton">Cargando mapa…</span>
             <iframe
@@ -726,21 +820,25 @@
             <span class="step__n">01</span>
             <h3>Scraping</h3>
             <p>Un navegador Chromium headless (Playwright) descarga los PDF de cada categoría, sorteando la protección anti-bot F5/TrafficShield del sitio oficial.</p>
+            <code class="step__log" id="step-log-1">› 35 PDFs descargados · edición 44534</code>
           </div>
           <div class="step spot reveal-item pending">
             <span class="step__n">02</span>
             <h3>Análisis</h3>
             <p>Expresiones regulares extraen coordenadas UTM y dimensiones, tolerando la redacción propia de cada estudio jurídico.</p>
+            <code class="step__log" id="step-log-2">› 35/35 documentos parseados</code>
           </div>
           <div class="step spot reveal-item pending">
             <span class="step__n">03</span>
             <h3>Construcción geométrica</h3>
             <p>Se generan los polígonos —rectángulos para pedimentos y manifestaciones, vértices directos para mensuras— y se reproyectan a WGS84.</p>
+            <code class="step__log" id="step-log-3">› 35 polígonos construidos · WGS84</code>
           </div>
           <div class="step spot reveal-item pending">
             <span class="step__n">04</span>
             <h3>Publicación</h3>
             <p>Se generan el mapa Leaflet y los archivos GeoPackage/GeoJSON, y se publican en GitHub Pages.</p>
+            <code class="step__log" id="step-log-4">› edición 44534 · 26-08-2026</code>
           </div>
         </div>
       </div>
@@ -817,8 +915,8 @@
               <span class="file__desc">Edición del día — pedimentos, manifestaciones y mensuras</span>
             </div>
             <div class="file__links">
-              <a href="data/boletin_mineria_latest.gpkg">GeoPackage</a>
-              <a href="data/boletin_mineria_latest.geojson">GeoJSON</a>
+              <a href="data/boletin_mineria_latest.gpkg">GPKG</a>
+              <a href="data/boletin_mineria_latest.geojson">GEOJSON</a>
             </div>
           </div>
           <div class="file spot reveal-item pending">
@@ -827,8 +925,8 @@
               <span class="file__desc">Acumulado de todas las ediciones publicadas</span>
             </div>
             <div class="file__links">
-              <a href="data/boletin_mineria_historico.gpkg">GeoPackage</a>
-              <a href="data/boletin_mineria_historico.geojson">GeoJSON</a>
+              <a href="data/boletin_mineria_historico.gpkg">GPKG</a>
+              <a href="data/boletin_mineria_historico.geojson">GEOJSON</a>
             </div>
           </div>
           <div class="file spot reveal-item pending">
@@ -1040,6 +1138,21 @@
           if (mh) mh.textContent = 'Edición ' + report.edicion + ' · ' + report.fecha;
         }
 
+        // "Transcripcion de la maquina" en cada paso del pipeline: un dato
+        // real de ESTA corrida, no texto generico de feature.
+        var totalDocs = report.total_publicaciones;
+        var okDocs = report.georreferenciadas;
+        var logLines = {
+          'step-log-1': typeof totalDocs === 'number' ? '› ' + totalDocs + ' PDFs descargados · edición ' + report.edicion : null,
+          'step-log-2': typeof okDocs === 'number' && typeof totalDocs === 'number' ? '› ' + okDocs + '/' + totalDocs + ' documentos parseados' : null,
+          'step-log-3': typeof okDocs === 'number' ? '› ' + okDocs + ' polígonos construidos · WGS84' : null,
+          'step-log-4': report.edicion && report.fecha ? '› edición ' + report.edicion + ' · ' + report.fecha : null
+        };
+        Object.keys(logLines).forEach(function(id){
+          var el = document.getElementById(id);
+          if (el && logLines[id]) el.textContent = logLines[id];
+        });
+
         // Sentencias: a diferencia de los otros tres tipos, todavía pueden
         // caer a revisión manual si el PDF no calza con el formato asumido
         // (ver parser.parse_sentencia). Reflejamos ambos estados.
@@ -1068,6 +1181,110 @@
       })
       .catch(function(){ /* static numbers stand */ });
   })();
+</script>
+
+<script type="module">
+  // Globo decorativo del hero. Puramente visual -- sin popups, sin datos,
+  // sin interaccion (drag/zoom); el mapa real con los datos vive en su
+  // propia seccion (#mapa-hoy). Se degrada con gracia: sin WebGL o sin JS,
+  // se ve la misma foto satelital como imagen estatica dentro del mismo
+  // marco con halo y estrellas.
+  var canvas = document.getElementById('hero-globe-canvas');
+  var fallbackImg = document.getElementById('hero-globe-fallback');
+
+  function showGlobeFallback(){
+    if (canvas) canvas.style.display = 'none';
+    if (fallbackImg) fallbackImg.hidden = false;
+  }
+
+  if (!canvas || !('WebGLRenderingContext' in window)) {
+    showGlobeFallback();
+  } else {
+    try {
+      var THREE = await import('https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.min.js');
+
+      var renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
+      if (!renderer.getContext()) throw new Error('sin contexto WebGL');
+      renderer.outputColorSpace = THREE.SRGBColorSpace;
+
+      var scene = new THREE.Scene();
+      var camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+      camera.position.z = 3.3;
+
+      var texture = new THREE.TextureLoader().load('images/earth-equirectangular.jpg');
+      texture.colorSpace = THREE.SRGBColorSpace;
+
+      var globe = new THREE.Mesh(
+        new THREE.SphereGeometry(1, 64, 64),
+        new THREE.MeshPhongMaterial({ map: texture, shininess: 5 })
+      );
+      scene.add(globe);
+
+      var sun = new THREE.DirectionalLight(0xffffff, 1.7);
+      sun.position.set(4, 2, 5);
+      scene.add(sun);
+      scene.add(new THREE.AmbientLight(0xffffff, 0.5));
+
+      // Marcador en la posicion real de Santiago/Chile (-33.45, -70.65),
+      // como hijo del globo para que rote junto con la esfera.
+      function latLonToVec3(lat, lon, radius){
+        var phi = (90 - lat) * Math.PI / 180;
+        var theta = (lon + 180) * Math.PI / 180;
+        return new THREE.Vector3(
+          -radius * Math.sin(phi) * Math.cos(theta),
+          radius * Math.cos(phi),
+          radius * Math.sin(phi) * Math.sin(theta)
+        );
+      }
+      var markerLocal = latLonToVec3(-33.45, -70.65, 1.01);
+      var marker = new THREE.Mesh(
+        new THREE.SphereGeometry(0.018, 12, 12),
+        new THREE.MeshBasicMaterial({ color: 0xffffff })
+      );
+      marker.position.copy(markerLocal);
+      globe.add(marker);
+      var markerGlow = new THREE.Sprite(new THREE.SpriteMaterial({
+        color: 0x8fd0ff, transparent: true, opacity: 0.6, depthWrite: false
+      }));
+      markerGlow.scale.set(0.13, 0.13, 1);
+      markerGlow.position.copy(markerLocal);
+      globe.add(markerGlow);
+
+      // Orienta el globo al arrancar para que Chile mire hacia la camara
+      // (calculado, no adivinado a ojo -- rota el punto local hasta el eje +Z).
+      globe.rotation.y = Math.atan2(markerLocal.x, markerLocal.z);
+
+      var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      function resize(){
+        var w = canvas.clientWidth, h = canvas.clientHeight;
+        if (!w || !h) return;
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+        renderer.setSize(w, h, false);
+        camera.aspect = w / h;
+        camera.updateProjectionMatrix();
+        renderer.render(scene, camera);
+      }
+
+      if ('ResizeObserver' in window) {
+        new ResizeObserver(resize).observe(canvas);
+      } else {
+        window.addEventListener('resize', resize);
+      }
+      resize();
+
+      if (!reduceMotion) {
+        var clock = new THREE.Clock();
+        (function animate(){
+          requestAnimationFrame(animate);
+          globe.rotation.y += clock.getDelta() * 0.08;
+          renderer.render(scene, camera);
+        })();
+      }
+    } catch (e) {
+      showGlobeFallback();
+    }
+  }
 </script>
 </body>
 </html>
