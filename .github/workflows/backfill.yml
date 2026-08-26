@@ -36,6 +36,15 @@ permissions:
 
 jobs:
   backfill:
+    # Grupo compartido con backfill-drip.yml: si se disparan varias corridas
+    # de cualquiera de los dos workflows casi al mismo tiempo (ej. un loop
+    # de "gh workflow run" lanzando muchas fechas de una), GitHub las hace
+    # cola y las corre DE A UNA en vez de en paralelo -- asi nunca se
+    # termina golpeando el sitio con varias sesiones simultaneas, aunque
+    # el disparo en si sea rapido.
+    concurrency:
+      group: boletin-mineria-backfill
+      cancel-in-progress: false
     runs-on: ubuntu-latest
     # Backfill completo estimado en 3-5 horas (dias habiles x descarga+
     # parseo+georreferenciacion de cada edicion). 340 min deja margen bajo

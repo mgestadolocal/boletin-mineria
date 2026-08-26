@@ -47,6 +47,12 @@ permissions:
 
 jobs:
   backfill-drip:
+    # Mismo grupo que backfill.yml -- ver el comentario ahi. Asegura que
+    # nunca corran dos backfills (drip + manual, o dos manuales) al mismo
+    # tiempo contra el sitio, aunque se disparen muchos casi juntos.
+    concurrency:
+      group: boletin-mineria-backfill
+      cancel-in-progress: false
     runs-on: ubuntu-latest
     timeout-minutes: 30
     container:
