@@ -32,8 +32,12 @@ PARSERS = {
 }
 
 
-def main():
-    date_str = sys.argv[1] if len(sys.argv) > 1 else time.strftime("%d-%m-%Y")
+def process_date(date_str, update_latest=True):
+    """Corre el pipeline completo para UNA fecha (DD-MM-AAAA) y devuelve el
+    dict de reporte. Si update_latest es False, no toca docs/mapa.html ni los
+    archivos *_latest.* (uso: backfill.py rellenando fechas pasadas, donde
+    "la mas reciente" sigue siendo la que ya esta publicada en el sitio, no
+    la fecha que se esta reprocesando)."""
     print(f"=== Boletin Oficial de Mineria — {date_str} ===")
 
     import scraper as S
@@ -103,15 +107,19 @@ def main():
         gdf_all = gpd.GeoDataFrame(all_rows, geometry='geometry', crs='EPSG:4326')
         gdf_all.to_file(geojson_dated, driver='GeoJSON')
 
-    shutil.copyfile(gpkg_dated, gpkg_latest) if os.path.exists(gpkg_dated) else None
-    if os.path.exists(geojson_dated):
-        shutil.copyfile(geojson_dated, geojson_latest)
+    if update_latest:
+        shutil.copyfile(gpkg_dated, gpkg_latest) if os.path.exists(gpkg_dated) else None
+        if os.path.exists(geojson_dated):
+            shutil.copyfile(geojson_dated, geojson_latest)
 
     # docs/index.html es la landing (pagina de entrada del sitio, estatica,
     # no generada) -- el mapa del dia vive en su propia pagina.
-    M.build_map_html(all_rows, date_str, edition, "docs/mapa.html")
     dated_map = f"docs/data/mapa_{date_compact}.html"
-    shutil.copyfile("docs/mapa.html", dated_map)
+    if update_latest:
+        M.build_map_html(all_rows, date_str, edition, "docs/mapa.html")
+        shutil.copyfile("docs/mapa.html", dated_map)
+    else:
+        M.build_map_html(all_rows, date_str, edition, dated_map)
 
     # --- Capa historica acumulada: suma lo de hoy a lo ya acumulado hasta
     # ahora, deduplicando por CVE (si un CVE reaparece, gana la version mas
@@ -154,8 +162,9 @@ def main():
     }
     with open(f"docs/data/reporte_{date_compact}.json", "w", encoding="utf-8") as f:
         json.dump(report, f, ensure_ascii=False, indent=1)
-    with open("docs/data/reporte_latest.json", "w", encoding="utf-8") as f:
-        json.dump(report, f, ensure_ascii=False, indent=1)
+    if update_latest:
+        with open("docs/data/reporte_latest.json", "w", encoding="utf-8") as f:
+            json.dump(report, f, ensure_ascii=False, indent=1)
 
     print("\n=== Resumen ===")
     print(json.dumps({k: v for k, v in report.items() if k != "sin_georreferenciar"},
@@ -168,6 +177,13 @@ def main():
     # Limpieza: no versionamos los PDFs originales en git (pesan y no aportan
     # al repo; el link al PDF oficial queda en cada feature).
     shutil.rmtree(pdf_dir, ignore_errors=True)
+
+    return report
+
+
+def main():
+    date_str = sys.argv[1] if len(sys.argv) > 1 else time.strftime("%d-%m-%Y")
+    process_date(date_str)
 
 
 if __name__ == "__main__":

@@ -3,3 +3,4 @@ __pycache__/
 pdfs/
 manifest.json
 .superpowers/
+.backfill_state.json
