@@ -18,6 +18,15 @@ name: Boletin Mineria - backfill historico 2026 (goteo)
 # fecha puntual atascada, ver RETRY_LIMIT en backfill.py), bajar la
 # frecuencia de nuevo. Se puede parar en cualquier momento (Actions ->
 # Disable workflow) y retomar despues sin perder nada -- es resumible.
+#
+# Prioridad (26-08-2026, pedido explicito): las corridas de cron (sin
+# inputs) arrancan en 04-06-2026 en vez de 01-01-2026 -- cierra primero
+# junio-agosto (lo mas reciente / mas util). OJO: mientras el default de
+# este 'start' siga siendo 04-06-2026, el cron NUNCA va a tocar
+# enero-mayo (aunque backfill.py los tenga en su rango por defecto,
+# --start los excluye explicitamente) -- una vez que junio-agosto quede
+# completo, hay que volver a cambiar el default de 'start' a 01-01-2026
+# aca para que el cron siga con el resto del año.
 
 on:
   schedule:
@@ -28,6 +37,10 @@ on:
         description: 'Cuantas fechas nuevas procesar en esta corrida'
         type: string
         default: '1'
+      start:
+        description: 'Desde que fecha priorizar (DD-MM-AAAA)'
+        type: string
+        default: '04-06-2026'
 
 permissions:
   contents: write
@@ -51,4 +64,7 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Procesar una fecha atrasada
-        run: python backfill.py --max-days "${{ inputs.max_days || '1' }}"
+        run: >
+          python backfill.py
+          --max-days "${{ inputs.max_days || '1' }}"
+          --start "${{ inputs.start || '04-06-2026' }}"
