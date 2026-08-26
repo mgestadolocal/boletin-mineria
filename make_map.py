@@ -3,6 +3,7 @@
 filas (dicts con geometry shapely + atributos): uno para la edición del día
 (build_map_html) y otro para la capa histórica acumulada (build_historico_html)."""
 import json
+from datetime import datetime
 from shapely.geometry import mapping
 
 COLORS = {
@@ -184,7 +185,14 @@ def build_map_html(rows, fecha, edicion, out_path):
 def build_historico_html(rows, out_path):
     """Mapa acumulado con todas las publicaciones georreferenciadas hasta la
     fecha (todas las corridas diarias combinadas, sin duplicar por CVE)."""
-    fechas = sorted({r.get('fecha') for r in rows if r.get('fecha')})
+    # Ordenar por fecha real, NO como texto: las fechas vienen en formato
+    # DD-MM-AAAA, y un sort de string compara el dia primero -- una vez que
+    # el historico mezcla varios meses (ej. tras el backfill de 2026), eso
+    # da un rango "primera a ultima" incorrecto (ej. "26-01-2026" ordenaba
+    # despues de "05-06-2026" como texto, aunque enero sea cronologicamente
+    # anterior). Bug detectado el 26-08-2026 al revisar el backfill.
+    fechas_unicas = {r.get('fecha') for r in rows if r.get('fecha')}
+    fechas = sorted(fechas_unicas, key=lambda f: datetime.strptime(f, '%d-%m-%Y'))
     rango = f"{fechas[0]} a {fechas[-1]}" if fechas else "sin datos"
     title = "Boletin Oficial de Mineria - Historico completo"
     subtitle = f"{len(rows)} publicaciones acumuladas &middot; {rango}"
