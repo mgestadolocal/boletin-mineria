@@ -75,17 +75,26 @@ def has_staged_changes():
 
 
 def commit_month(month_label, total_new, push):
-    subprocess.run(["git", "add", "-A", "--",
-                     "docs/data", "docs/historico.html"], check=True)
-    if not has_staged_changes():
-        print(f"  (nada nuevo que commitear para {month_label})")
-        return
-    msg = f"Backfill historico: {month_label} — {total_new} publicaciones georreferenciadas"
-    subprocess.run(["git", "commit", "-m", msg], check=True)
-    print(f"  commit creado: {msg}")
-    if push:
-        subprocess.run(["git", "push", "origin", "main"], check=True)
-        print("  push OK")
+    """Commitea (y opcionalmente pushea) lo acumulado de un mes. Un fallo
+    aca (red caida, push rechazado, etc.) se reporta pero NO debe tumbar el
+    backfill completo -- si el commit ya se hizo localmente, el push se
+    puede reintentar despues a mano sin perder nada; los datos siguen
+    seguros en el working tree/commit local de todos modos."""
+    try:
+        subprocess.run(["git", "add", "-A", "--",
+                         "docs/data", "docs/historico.html"], check=True)
+        if not has_staged_changes():
+            print(f"  (nada nuevo que commitear para {month_label})")
+            return
+        msg = f"Backfill historico: {month_label} — {total_new} publicaciones georreferenciadas"
+        subprocess.run(["git", "commit", "-m", msg], check=True)
+        print(f"  commit creado: {msg}")
+        if push:
+            subprocess.run(["git", "push", "origin", "main"], check=True)
+            print("  push OK")
+    except subprocess.CalledProcessError as e:
+        print(f"  AVISO: fallo git add/commit/push para {month_label} ({e}); "
+              f"se sigue con el backfill, revisar y pushear a mano despues.")
 
 
 def main():

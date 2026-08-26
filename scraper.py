@@ -292,6 +292,19 @@ def scrape_day(date_str, edition=None, out_dir="pdfs", sleep_between_pdfs=0.3):
         page = context.new_page()
 
         resolved_edition, active = discover_active_sections(page, date_str, edition)
+        if not resolved_edition:
+            # Bug detectado en el backfill de ago-2026: si la portada no
+            # redirige con "edition=" en la URL final (p.ej. bloqueo del
+            # anti-bot, o pagina de error del navegador), seguir adelante
+            # arma URLs invalidas tipo "...&edition=None&..." en fetch_index,
+            # que el servidor resetea -- mejor fallar rapido con un mensaje
+            # claro que decir "0 publicaciones" o gastar reintentos en una
+            # URL que nunca va a funcionar.
+            raise RuntimeError(
+                f"No se pudo resolver la edicion para {date_str} "
+                f"(la portada no redirigio con 'edition=' en la URL final: "
+                f"{page.url!r}) -- posible bloqueo del sitio o fecha invalida."
+            )
         print(f"Edicion resuelta: {resolved_edition}")
         print(f"Secciones activas hoy: {active}")
 
