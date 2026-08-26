@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Boletin Oficial de Mineria - 16-06-2026 - Edicion 44476</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+<style>
+  html, body { margin:0; padding:0; height:100%; font-family: -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+  #map { position:absolute; top:0; bottom:0; left:0; right:0; }
+  .panel {
+    position:absolute; top:8px; right:8px; z-index:1000; background:white;
+    padding:9px 11px; border-radius:6px; box-shadow:0 2px 10px rgba(0,0,0,.25);
+    max-width:158px; font-size:10.5px; line-height:1.35;
+  }
+  .panel h3 { margin:0 0 4px 0; font-size:11.5px; }
+  .legend-item { display:flex; align-items:center; margin:2px 0; }
+  .swatch { width:9px; height:9px; margin-right:5px; border-radius:2px; flex-shrink:0; }
+  .stat { color:#555; }
+  .popup-title { font-weight:600; margin-bottom:4px; }
+  .popup-row { margin:2px 0; }
+  a.pdf-link { color:#1a73e8; }
+  .dl-row { margin-top:6px; }
+  .dl-row a { display:inline-block; margin-right:6px; font-size:9.5px; color:#1a73e8; }
+  .nav-row { margin-top:5px; font-size:9.5px; }
+  .nav-row a { color:#1a73e8; }
+  /* Cuando el mapa vive embebido en un iframe (la vista previa de la
+     landing), el panel pierde los links de descarga/nav -- ahi solo
+     importa mostrar el mapa y una leyenda legible; para los links esta el
+     boton "abrir a pantalla completa" de la landing, que carga esta misma
+     pagina sin iframe y con el panel completo. */
+  .panel.panel--compact { max-width:146px; padding:8px 10px; }
+  .panel.panel--compact .dl-row, .panel.panel--compact .nav-row { display:none; }
+</style>
+</head>
+<body>
+<div id="map"></div>
+<div class="panel">
+  <h3>Boletin Oficial de Mineria</h3>
+  <div class="stat">Edicion 44476 &middot; 16-06-2026</div>
+  <div style="margin-top:10px;">
+    <div class="legend-item"><span class="swatch" style="background:#16a34a"></span> Manifestaciones (9)</div>
+  </div>
+  <div class="dl-row">
+    <a href="data/boletin_mineria_latest.gpkg" download>Descargar GeoPackage</a>
+    <a href="data/boletin_mineria_latest.geojson" download>Descargar GeoJSON</a>
+  </div>
+  <div class="nav-row"><a href="historico.html">Ver historico completo (todas las fechas) &rarr;</a></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+const data = {"type": "FeatureCollection", "features": [{"type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[-71.08707215789855, -29.866984781734942], [-71.08293310503232, -29.867050178238102], [-71.08312054232688, -29.876068957713496], [-71.08725996699629, -29.876003537489563], [-71.08707215789855, -29.866984781734942]]]}, "properties": {"cve": "2823866", "nombre": "MINA NUEVA VICTORIA 1 AL 40", "solicitante": "García Cortés Orlando Álex", "region": "REGIÓN DE COQUIMBO", "provincia": "Provincia de Elqui", "comuna": null, "superficie_ha": 40.0, "datum_original": "PSAD56", "huso": 19, "epsg_origen": 24879, "tipo_publicacion": "manifestacion", "fuente_pdf": "http://www.diariooficial.interior.gob.cl/publicaciones/2026/06/16/44476/07/2823866.pdf", "archivo": "gm_manifestacion_2823866.pdf", "fecha": "16-06-2026", "edicion": "44476"}}, {"type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[-71.23055314633156, -29.52182041303497], [-71.22024176765296, -29.521993083197383], [-71.22043878181385, -29.531011521007056], [-71.23075107363175, -29.530838787763333], [-71.23055314633156, -29.52182041303497]]]}, "properties": {"cve": "2823865", "nombre": "PROYECTO 1, 1 AL 100", "solicitante": "Onell Onell Iván del Rosario", "region": "REGIÓN DE COQUIMBO", "provincia": "Provincia de Elqui", "comuna": null, "superficie_ha": 100.0, "datum_original": "PSAD56", "huso": 19, "epsg_origen": 24879, "tipo_publicacion": "manifestacion", "fuente_pdf": "http://www.diariooficial.interior.gob.cl/publicaciones/2026/06/16/44476/07/2823865.pdf", "archivo": "gm_manifestacion_2823865.pdf", "fecha": "16-06-2026", "edicion": "44476"}}, {"type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[-70.59350376410596, -30.45081980018886], [-70.58309205881622, -30.450946562203104], [-70.58323792470458, -30.459967087868744], [-70.59365058834095, -30.459840280404734], [-70.59350376410596, -30.45081980018886]]]}, "properties": {"cve": "2824132", "nombre": "LA FORTUNA 1 AL 20", "solicitante": "Rojas Rojas Héctor Gracielo", "region": "REGIÓN DE COQUIMBO", "provincia": "Provincia de Limarí", "comuna": "Rio Hurtado", "superficie_ha": 100.0, "datum_original": "WGS84", "huso": 19, "epsg_origen": 32719, "tipo_publicacion": "manifestacion", "fuente_pdf": "http://www.diariooficial.interior.gob.cl/publicaciones/2026/06/16/44476/07/2824132.pdf", "archivo": "gm_manifestacion_2824132.pdf", "fecha": "16-06-2026", "edicion": "44476"}}, {"type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[-70.68796758045082, -31.091793857649765], [-70.67748712706461, -31.09193068756732], [-70.67764566683769, -31.10094989657747], [-70.68812710959138, -31.100813018204843], [-70.68796758045082, -31.091793857649765]]]}, "properties": {"cve": "2824125", "nombre": "LA REBELDE 1 AL 20", "solicitante": "David Alfonso Maya Vega y otros", "region": "REGIÓN DE COQUIMBO", "provincia": "Provincia de Limarí", "comuna": "Monte Patria", "superficie_ha": 100.0, "datum_original": "WGS84", "huso": 19, "epsg_origen": 32719, "tipo_publicacion": "manifestacion", "fuente_pdf": "http://www.diariooficial.interior.gob.cl/publicaciones/2026/06/16/44476/07/2824125.pdf", "archivo": "gm_manifestacion_2824125.pdf", "fecha": "16-06-2026", "edicion": "44476"}}, {"type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[-71.35643417770913, -30.811796927813614], [-71.35434506719277, -30.811834914370067], [-71.35438906024855, -30.813638076548788], [-71.35647820971377, -30.813600087288805], [-71.35643417770913, -30.811796927813614]]]}, "properties": {"cve": "2824123", "nombre": "LA ROSITA 1", "solicitante": "Bugueño Araya Jorge Ernesto", "region": "REGIÓN DE COQUIMBO", "provincia": "Provincia de Limarí", "comuna": null, "superficie_ha": 4.0, "datum_original": "PSAD56", "huso": 19, "epsg_origen": 24879, "tipo_publicacion": "manifestacion", "fuente_pdf": "http://www.diariooficial.interior.gob.cl/publicaciones/2026/06/16/44476/07/2824123.pdf", "archivo": "gm_manifestacion_2824123.pdf", "fecha": "16-06-2026", "edicion": "44476"}}, {"type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[-70.66955993934998, -33.40742636193716], [-70.66740996296781, -33.407455278418944], [-70.66744442018152, -33.40925845744561], [-70.66959444094292, -33.40922953899494], [-70.66955993934998, -33.40742636193716]]]}, "properties": {"cve": "2824091", "nombre": "ENERGY CHILE del 1 al 4", "solicitante": "Servicios Mineros Tierra Alta SpA", "region": "REGIÓN METROPOLITANA DE SANTIAGO", "provincia": "Provincia de Santiago", "comuna": null, "superficie_ha": 4.0, "datum_original": "PSAD56", "huso": 19, "epsg_origen": 24879, "tipo_publicacion": "manifestacion", "fuente_pdf": "http://www.diariooficial.interior.gob.cl/publicaciones/2026/06/16/44476/07/2824091.pdf", "archivo": "gm_manifestacion_2824091.pdf", "fecha": "16-06-2026", "edicion": "44476"}}, {"type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[-70.85275107897222, -32.96127688572376], [-70.84205656139312, -32.96143508399195], [-70.84228115885364, -32.97225391779525], [-70.85297697857571, -32.972095654446676], [-70.85275107897222, -32.96127688572376]]]}, "properties": {"cve": "2823990", "nombre": "LA FORTUNA DEL 1 AL 24", "solicitante": "Molina Tapia Elizabeth Alejandra", "region": "REGIÓN METROPOLITANA DE SANTIAGO", "provincia": "Provincia de Chacabuco", "comuna": null, "superficie_ha": 120.0, "datum_original": "PSAD56", "huso": 19, "epsg_origen": 24879, "tipo_publicacion": "manifestacion", "fuente_pdf": "http://www.diariooficial.interior.gob.cl/publicaciones/2026/06/16/44476/07/2823990.pdf", "archivo": "gm_manifestacion_2823990.pdf", "fecha": "16-06-2026", "edicion": "44476"}}, {"type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[-70.92759479627978, -33.31532914807102], [-70.91685771801751, -33.315495307375606], [-70.91699588648999, -33.321805663278155], [-70.92773373752338, -33.32163946432396], [-70.92759479627978, -33.31532914807102]]]}, "properties": {"cve": "2824028", "nombre": "LOS GONZALEZ 1 DEL 1 AL 10", "solicitante": "González Tapia Juan Pablo", "region": "REGIÓN METROPOLITANA DE SANTIAGO", "provincia": "Provincia de Chacabuco", "comuna": null, "superficie_ha": 70.0, "datum_original": "PSAD56", "huso": 19, "epsg_origen": 24879, "tipo_publicacion": "manifestacion", "fuente_pdf": "http://www.diariooficial.interior.gob.cl/publicaciones/2026/06/16/44476/07/2824028.pdf", "archivo": "gm_manifestacion_2824028.pdf", "fecha": "16-06-2026", "edicion": "44476"}}, {"type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[-72.71206089613484, -36.06106296242112], [-72.7009658870347, -36.06085059928271], [-72.70017882947957, -36.08787625489643], [-72.71127762877285, -36.08808882733222], [-72.71206089613484, -36.06106296242112]]]}, "properties": {"cve": "2824012", "nombre": "ELENA 19, 1 AL 300", "solicitante": "Neore SpA", "region": "REGIÓN DE ÑUBLE", "provincia": "Provincia de Itata", "comuna": "Cobquecura", "superficie_ha": 300.0, "datum_original": "PSAD56", "huso": 18, "epsg_origen": 24878, "tipo_publicacion": "manifestacion", "fuente_pdf": "http://www.diariooficial.interior.gob.cl/publicaciones/2026/06/16/44476/07/2824012.pdf", "archivo": "gm_manifestacion_2824012.pdf", "fecha": "16-06-2026", "edicion": "44476"}}]};
+
+const map = L.map('map', { zoomControl: true });
+
+// Embebido en un iframe (preview de la landing) vs. pagina abierta directo:
+// el panel flotante se achica bastante mas cuando esta embebido, para que
+// el mapa mismo se alcance a ver en un recuadro chico.
+const embedded = window.self !== window.top;
+if (embedded) document.querySelector('.panel').classList.add('panel--compact');
+
+const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '&copy; OpenStreetMap', maxZoom: 19
+});
+const sat = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+  attribution: 'Tiles &copy; Esri', maxZoom: 19
+});
+osm.addTo(map);
+L.control.layers({ "Calles": osm, "Satelite": sat }).addTo(map);
+
+const colors = {"pedimento": "#2563eb", "manifestacion": "#16a34a", "mensura": "#dc2626", "sentencia_exploracion": "#9333ea", "sentencia_explotacion": "#ea580c"};
+
+if (data.features.length) {
+  const layer = L.geoJSON(data, {
+    style: function(feature) {
+      const c = colors[feature.properties.tipo_publicacion] || '#888';
+      return { color: c, weight: 2, fillColor: c, fillOpacity: 0.25 };
+    },
+    onEachFeature: function(feature, lyr) {
+      const p = feature.properties;
+      const html = `
+        <div class="popup-title">${p.nombre || '(sin nombre)'}</div>
+        <div class="popup-row"><b>Tipo:</b> ${p.tipo_publicacion}</div>
+        <div class="popup-row"><b>CVE:</b> ${p.cve}</div>
+        <div class="popup-row"><b>Fecha publicacion:</b> ${p.fecha || '-'}</div>
+        <div class="popup-row"><b>Solicitante:</b> ${p.solicitante || '-'}</div>
+        <div class="popup-row"><b>Region:</b> ${p.region || '-'}</div>
+        <div class="popup-row"><b>Provincia:</b> ${p.provincia || '-'}</div>
+        <div class="popup-row"><b>Superficie:</b> ${p.superficie_ha ? p.superficie_ha + ' ha' : '-'}</div>
+        <div class="popup-row"><b>Datum origen:</b> ${p.datum_original} / Huso ${p.huso}</div>
+        <div class="popup-row"><a class="pdf-link" href="${p.fuente_pdf}" target="_blank">Ver PDF original</a></div>
+      `;
+      lyr.bindPopup(html);
+    }
+  }).addTo(map);
+  // El encuadre inicial es un cajon fijo (calibrado a mano contra una
+  // captura de referencia: norte de Chile con contexto del NO argentino
+  // de fondo) en vez de ajustarse a los limites exactos de ESTE dia. Un
+  // caso aislado en un extremo (ej. una mensura puntual en Magallanes,
+  // mucho mas al sur que el resto) no debe forzar un zoom abierto que
+  // empequeñezca todo lo demas -- esos puntos siguen en el mapa (clic,
+  // popup), solo no entran en el encuadre inicial.
+  const CHILE_MINERO = [[-40.5, -84.0], [-22.3, -55.0]];
+  // Padding asimetrico: reserva espacio en la esquina superior derecha para
+  // el panel/leyenda flotante, asi el zoom no deja el territorio ni los
+  // datos tapados detras del panel.
+  map.fitBounds(CHILE_MINERO, { paddingTopLeft: [24, 24], paddingBottomRight: [embedded ? 170 : 190, 24] });
+} else {
+  map.setView([-33.45, -70.65], 5);
+}
+</script>
+</body>
+</html>

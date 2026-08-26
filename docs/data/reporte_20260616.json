@@ -1,0 +1,42 @@
+{
+ "fecha": "16-06-2026",
+ "edicion": "44476",
+ "total_publicaciones": 14,
+ "georreferenciadas": 9,
+ "por_tipo": {
+  "manifestacion": 9
+ },
+ "sin_georreferenciar": [
+  {
+   "cve": "2824033",
+   "tipo": "mensura",
+   "archivo": "gm_mensura_2824033.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2824003",
+   "tipo": "mensura",
+   "archivo": "gm_mensura_2824003.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2823892",
+   "tipo": "manifestacion",
+   "archivo": "gm_manifestacion_2823892.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2824163",
+   "tipo": "manifestacion",
+   "archivo": "gm_manifestacion_2824163.pdf",
+   "motivo": "rectificacion_sin_geometria"
+  },
+  {
+   "cve": "2823975",
+   "tipo": "manifestacion",
+   "archivo": "gm_manifestacion_2823975.pdf",
+   "motivo": "parseo_incompleto"
+  }
+ ],
+ "historico_total_acumulado": 715
+}
