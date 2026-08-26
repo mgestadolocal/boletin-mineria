@@ -71,7 +71,7 @@ def main():
     lineas += [
         "",
         "Detalle completo en docs/data/reporte_latest.json.",
-        "Sitio: https://mgestadolocal.github.io/boletin-mineria/landing.html",
+        "Sitio: https://mgestadolocal.github.io/boletin-mineria/",
     ]
     body = "\n".join(lineas)
 

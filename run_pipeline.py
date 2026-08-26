@@ -107,9 +107,11 @@ def main():
     if os.path.exists(geojson_dated):
         shutil.copyfile(geojson_dated, geojson_latest)
 
-    M.build_map_html(all_rows, date_str, edition, "docs/index.html")
+    # docs/index.html es la landing (pagina de entrada del sitio, estatica,
+    # no generada) -- el mapa del dia vive en su propia pagina.
+    M.build_map_html(all_rows, date_str, edition, "docs/mapa.html")
     dated_map = f"docs/data/mapa_{date_compact}.html"
-    shutil.copyfile("docs/index.html", dated_map)
+    shutil.copyfile("docs/mapa.html", dated_map)
 
     # --- Capa historica acumulada: suma lo de hoy a lo ya acumulado hasta
     # ahora, deduplicando por CVE (si un CVE reaparece, gana la version mas

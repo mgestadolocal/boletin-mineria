@@ -188,6 +188,6 @@ def build_historico_html(rows, out_path):
     rango = f"{fechas[0]} a {fechas[-1]}" if fechas else "sin datos"
     title = "Boletin Oficial de Mineria - Historico completo"
     subtitle = f"{len(rows)} publicaciones acumuladas &middot; {rango}"
-    nav = '<a href="index.html">Ver solo la edicion de hoy &rarr;</a>'
+    nav = '<a href="mapa.html">Ver solo la edicion de hoy &rarr;</a>'
     _render(rows, title, subtitle, "data/boletin_mineria_historico.gpkg",
             "data/boletin_mineria_historico.geojson", nav, out_path)
