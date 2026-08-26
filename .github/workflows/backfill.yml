@@ -1,0 +1,63 @@
+name: Boletin Mineria - backfill historico 2026
+
+# Job manual (no corre solo) para rellenar el historico con fechas pasadas.
+# Corre en la infraestructura de GitHub (misma que el job diario), no
+# depende de que ningun computador este prendido, y usa una IP distinta a
+# la de cualquier maquina local -- ver docs/superpowers si existiera spec,
+# o el historial de commits del 26-08-2026: el sitio bloqueo temporalmente
+# los requests de backfill hechos desde una red domestica (403 / connection
+# reset incluso para la fecha del dia), asi que este job es la forma
+# recomendada de correr el backfill.
+#
+# backfill.py es resumible: si el job se corta o llega al timeout a mitad
+# de camino, basta con volver a lanzar el workflow (mismos start/end, o
+# ninguno para usar los defaults) -- salta las fechas que ya quedaron
+# commiteadas en docs/data/reporte_<AAAAMMDD>.json y sigue donde quedo.
+
+on:
+  workflow_dispatch:
+    inputs:
+      start:
+        description: 'Fecha de inicio (DD-MM-AAAA)'
+        type: string
+        default: '01-01-2026'
+      end:
+        description: 'Fecha de fin (DD-MM-AAAA)'
+        type: string
+        default: '16-08-2026'
+
+permissions:
+  contents: write
+
+jobs:
+  backfill:
+    runs-on: ubuntu-latest
+    # Backfill completo estimado en 3-5 horas (dias habiles x descarga+
+    # parseo+georreferenciacion de cada edicion). 340 min deja margen bajo
+    # el limite de 360 min (6h) de GitHub para runners hosteados. Si no
+    # alcanza a terminar, relanzar el workflow retoma donde quedo.
+    timeout-minutes: 340
+    container:
+      image: mcr.microsoft.com/playwright/python:v1.56.0-noble
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configurar identidad de git para los commits incrementales
+        run: |
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          git config --global user.name "boletin-mineria-bot"
+          git config --global user.email "actions@users.noreply.github.com"
+
+      - name: Instalar dependencias
+        run: pip install -r requirements.txt
+
+      - name: Correr backfill (commitea y pushea por mes procesado)
+        run: python backfill.py --start "${{ inputs.start }}" --end "${{ inputs.end }}"
+
+      - name: Subir estado del backfill como artifact (para revisar fechas con error)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: backfill-state
+          path: .backfill_state.json
+          retention-days: 30

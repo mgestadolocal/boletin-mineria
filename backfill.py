@@ -13,9 +13,11 @@ Uso:
 Por defecto: 01-01-2026 -> 16-08-2026 (el hueco anterior a que el historico
 en vivo empezara a cubrirse dia a dia, el 17-08-2026).
 
-Resumible: guarda progreso en .backfill_state.json (fecha -> resultado). Si
-el proceso se corta a mitad de camino, correr de nuevo salta lo que ya quedo
-marcado "ok" y sigue donde se quedo -- no reprocesa nada de mas.
+Resumible: guarda progreso en .backfill_state.json (fecha -> resultado) Y
+ademas detecta fechas ya hechas mirando si existe
+docs/data/reporte_<AAAAMMDD>.json (ya commiteado). Esto ultimo es lo que
+permite resumir en un checkout limpio de CI, donde el archivo de estado
+local no persiste entre corridas del workflow.
 
 Publica (git add + commit + push de docs/data/ y docs/historico.html) al
 terminar cada mes calendario procesado, para que el sitio se vaya
@@ -33,7 +35,9 @@ import run_pipeline as RP
 STATE_PATH = ".backfill_state.json"
 DEFAULT_START = "01-01-2026"
 DEFAULT_END = "16-08-2026"
-SLEEP_BETWEEN_DAYS = 2.0  # cortesia con el sitio, ademas del delay entre PDFs
+SLEEP_BETWEEN_DAYS = 6.0  # cortesia con el sitio, ademas del delay entre PDFs
+                          # (subido de 2.0 a 6.0 tras el bloqueo anti-bot del
+                          # 26-08-2026 -- ver commit fcc3d92)
 MAX_ATTEMPTS_PER_DAY = 2  # 1 intento + 1 reintento
 
 MESES = ["", "enero", "febrero", "marzo", "abril", "mayo", "junio", "julio",
@@ -57,11 +61,41 @@ def business_days(start, end):
         d += timedelta(days=1)
 
 
+def date_compact(date_str):
+    d, m, y = date_str.split("-")
+    return f"{y}{m}{d}"
+
+
 def load_state():
     if os.path.exists(STATE_PATH):
         with open(STATE_PATH, "r", encoding="utf-8") as f:
             return json.load(f)
     return {}
+
+
+def already_done(date_str, state):
+    """True si esta fecha ya se proceso con exito. Ademas del estado local
+    (.backfill_state.json, gitignored) revisa si ya existe el reporte
+    commiteado docs/data/reporte_<AAAAMMDD>.json -- asi un checkout limpio
+    en CI (donde el archivo de estado no persiste entre corridas) tambien
+    puede resumir sin reprocesar fechas que ya quedaron en el historico."""
+    prev = state.get(date_str)
+    if prev and prev.get("status") == "ok":
+        return True
+    reporte_path = f"docs/data/reporte_{date_compact(date_str)}.json"
+    if os.path.exists(reporte_path):
+        try:
+            with open(reporte_path, "r", encoding="utf-8") as f:
+                r = json.load(f)
+            state[date_str] = {
+                "status": "ok",
+                "total_publicaciones": r.get("total_publicaciones"),
+                "georreferenciadas": r.get("georreferenciadas"),
+            }
+            return True
+        except Exception:
+            pass
+    return False
 
 
 def save_state(state):
@@ -133,8 +167,7 @@ def main():
                 flush_month()
             current_month = ym
 
-            prev = state.get(date_str)
-            if prev and prev.get("status") == "ok":
+            if already_done(date_str, state):
                 total_skipped += 1
                 continue
 
