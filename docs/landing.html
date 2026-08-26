@@ -184,7 +184,7 @@
      se queda en 1040px, buen largo de linea para texto de lectura) -- asi
      el mapa en vivo tiene mas espacio real para crecer sin volver a achicar
      la columna de texto. */
-  .hero .wrap{ max-width:1280px; }
+  .hero .wrap{ max-width:1340px; }
   .hero::before{
     content:"";
     position:absolute; inset:0;
@@ -399,7 +399,10 @@
   @media (prefers-reduced-motion: reduce){ html{ scroll-behavior:auto; } }
   .mapframe{
     position:relative;
-    aspect-ratio:16/10;
+    /* Chile es mucho mas alto que ancho -- una relacion menos panoramica
+       (4:3 en vez de 16:10) deja ver mejor la silueta completa del pais
+       en el recuadro chico del hero. */
+    aspect-ratio:4/3;
     border:1px solid var(--line);
     border-radius:var(--radius);
     overflow:hidden;

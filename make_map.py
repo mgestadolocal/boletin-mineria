@@ -41,28 +41,27 @@ _BASE_TEMPLATE = """<!DOCTYPE html>
   html, body { margin:0; padding:0; height:100%; font-family: -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
   #map { position:absolute; top:0; bottom:0; left:0; right:0; }
   .panel {
-    position:absolute; top:6px; right:6px; z-index:1000; background:white;
-    padding:6px 8px; border-radius:5px; box-shadow:0 2px 10px rgba(0,0,0,.25);
-    max-width:132px; font-size:9px; line-height:1.3;
+    position:absolute; top:8px; right:8px; z-index:1000; background:white;
+    padding:9px 11px; border-radius:6px; box-shadow:0 2px 10px rgba(0,0,0,.25);
+    max-width:158px; font-size:10.5px; line-height:1.35;
   }
-  .panel h3 { margin:0 0 3px 0; font-size:9.5px; }
-  .legend-item { display:flex; align-items:center; margin:1.5px 0; }
-  .swatch { width:7px; height:7px; margin-right:4px; border-radius:2px; flex-shrink:0; }
+  .panel h3 { margin:0 0 4px 0; font-size:11.5px; }
+  .legend-item { display:flex; align-items:center; margin:2px 0; }
+  .swatch { width:9px; height:9px; margin-right:5px; border-radius:2px; flex-shrink:0; }
   .stat { color:#555; }
   .popup-title { font-weight:600; margin-bottom:4px; }
   .popup-row { margin:2px 0; }
   a.pdf-link { color:#1a73e8; }
-  .dl-row { margin-top:5px; }
-  .dl-row a { display:inline-block; margin-right:5px; font-size:8.5px; color:#1a73e8; }
-  .nav-row { margin-top:4px; font-size:8.5px; }
+  .dl-row { margin-top:6px; }
+  .dl-row a { display:inline-block; margin-right:6px; font-size:9.5px; color:#1a73e8; }
+  .nav-row { margin-top:5px; font-size:9.5px; }
   .nav-row a { color:#1a73e8; }
   /* Cuando el mapa vive embebido en un iframe (la vista previa de la
-     landing), el panel se achica aun mas y pierde los links de descarga/nav
-     -- ahi solo importa mostrar el mapa; para eso esta el boton "abrir a
-     pantalla completa" de la landing, que carga esta misma pagina sin
-     iframe y con el panel completo. */
-  .panel.panel--compact { max-width:92px; padding:5px 6px; font-size:7.5px; }
-  .panel.panel--compact h3 { font-size:8px; margin-bottom:2px; }
+     landing), el panel pierde los links de descarga/nav -- ahi solo
+     importa mostrar el mapa y una leyenda legible; para los links esta el
+     boton "abrir a pantalla completa" de la landing, que carga esta misma
+     pagina sin iframe y con el panel completo. */
+  .panel.panel--compact { max-width:146px; padding:8px 10px; }
   .panel.panel--compact .dl-row, .panel.panel--compact .nav-row { display:none; }
 </style>
 </head>
@@ -127,11 +126,19 @@ if (data.features.length) {
       lyr.bindPopup(html);
     }
   }).addTo(map);
+  // El encuadre inicial es un cajon fijo sobre el corredor minero real
+  // (calibrado con el historico acumulado real: norte a centro-sur de
+  // Chile, donde vive la gran mayoria de las publicaciones) en vez de
+  // ajustarse a los limites exactos de ESTE dia. Un caso aislado en un
+  // extremo (ej. una mensura puntual en Magallanes, mucho mas al sur que
+  // el resto) no debe forzar un zoom abierto que empequeñezca todo lo
+  // demas -- esos puntos siguen en el mapa (clic, popup), solo no entran
+  // en el encuadre inicial.
+  const CHILE_MINERO = [[-40.0, -73.1], [-17.8, -67.0]];
   // Padding asimetrico: reserva espacio en la esquina superior derecha para
-  // el panel/leyenda flotante, asi el ajuste de zoom no deja el territorio
-  // ni los datos tapados detras del panel. Con el panel compacto (embebido)
-  // hay que reservar bastante menos.
-  map.fitBounds(layer.getBounds(), { paddingTopLeft: [24, 24], paddingBottomRight: [embedded ? 70 : 150, 24] });
+  // el panel/leyenda flotante, asi el zoom no deja el territorio ni los
+  // datos tapados detras del panel.
+  map.fitBounds(CHILE_MINERO, { paddingTopLeft: [24, 24], paddingBottomRight: [embedded ? 170 : 190, 24] });
 } else {
   map.setView([-33.45, -70.65], 5);
 }
