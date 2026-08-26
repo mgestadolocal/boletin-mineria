@@ -30,7 +30,10 @@ import subprocess
 import time
 from datetime import date, timedelta
 
+from playwright.sync_api import sync_playwright
+
 import run_pipeline as RP
+import scraper as S
 
 STATE_PATH = ".backfill_state.json"
 DEFAULT_START = "01-01-2026"
@@ -159,48 +162,58 @@ def main():
         commit_month(label, month_new_pubs, push)
         month_new_pubs = 0
 
-    try:
-        for d in days:
-            date_str = fmt_ddmmyyyy(d)
-            ym = (d.year, d.month)
-            if current_month is not None and ym != current_month:
-                flush_month()
-            current_month = ym
+    # UNA sola sesion de Playwright (un solo challenge anti-bot resuelto)
+    # reusada para TODAS las fechas del rango -- ver scrape_day_with_page()
+    # en scraper.py para el porque: abrir un browser nuevo por fecha fue lo
+    # que hizo fallar el 97% del backfill del 26-08-2026.
+    with sync_playwright() as p:
+        browser = p.chromium.launch(headless=True)
+        context = browser.new_context(user_agent=S.USER_AGENT)
+        page = context.new_page()
+        try:
+            for d in days:
+                date_str = fmt_ddmmyyyy(d)
+                ym = (d.year, d.month)
+                if current_month is not None and ym != current_month:
+                    flush_month()
+                current_month = ym
 
-            if already_done(date_str, state):
-                total_skipped += 1
-                continue
+                if already_done(date_str, state):
+                    total_skipped += 1
+                    continue
 
-            print(f"\n--- {date_str} ---")
-            attempt = 0
-            while True:
-                attempt += 1
-                try:
-                    report = RP.process_date(date_str, update_latest=False)
-                    state[date_str] = {
-                        "status": "ok",
-                        "total_publicaciones": report["total_publicaciones"],
-                        "georreferenciadas": report["georreferenciadas"],
-                    }
-                    month_new_pubs += report["georreferenciadas"]
-                    total_ok += 1
-                    save_state(state)
-                    break
-                except Exception as e:
-                    print(f"  ERROR (intento {attempt}/{MAX_ATTEMPTS_PER_DAY}): {e}")
-                    if attempt >= MAX_ATTEMPTS_PER_DAY:
-                        state[date_str] = {"status": "error", "error": str(e)}
-                        total_failed += 1
+                print(f"\n--- {date_str} ---")
+                attempt = 0
+                while True:
+                    attempt += 1
+                    try:
+                        report = RP.process_date(date_str, update_latest=False,
+                                                  page=page, context=context)
+                        state[date_str] = {
+                            "status": "ok",
+                            "total_publicaciones": report["total_publicaciones"],
+                            "georreferenciadas": report["georreferenciadas"],
+                        }
+                        month_new_pubs += report["georreferenciadas"]
+                        total_ok += 1
                         save_state(state)
                         break
-                    time.sleep(5)
+                    except Exception as e:
+                        print(f"  ERROR (intento {attempt}/{MAX_ATTEMPTS_PER_DAY}): {e}")
+                        if attempt >= MAX_ATTEMPTS_PER_DAY:
+                            state[date_str] = {"status": "error", "error": str(e)}
+                            total_failed += 1
+                            save_state(state)
+                            break
+                        time.sleep(5)
 
-            time.sleep(SLEEP_BETWEEN_DAYS)
+                time.sleep(SLEEP_BETWEEN_DAYS)
 
-        flush_month()
+            flush_month()
 
-    finally:
-        save_state(state)
+        finally:
+            save_state(state)
+            browser.close()
 
     print("\n=== Backfill terminado ===")
     print(f"OK: {total_ok}  saltados (ya hechos): {total_skipped}  fallidos: {total_failed}")

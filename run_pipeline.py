@@ -32,17 +32,26 @@ PARSERS = {
 }
 
 
-def process_date(date_str, update_latest=True):
+def process_date(date_str, update_latest=True, page=None, context=None):
     """Corre el pipeline completo para UNA fecha (DD-MM-AAAA) y devuelve el
     dict de reporte. Si update_latest es False, no toca docs/mapa.html ni los
     archivos *_latest.* (uso: backfill.py rellenando fechas pasadas, donde
     "la mas reciente" sigue siendo la que ya esta publicada en el sitio, no
-    la fecha que se esta reprocesando)."""
+    la fecha que se esta reprocesando).
+
+    Si se pasan page/context (de Playwright, ya creados por el caller), los
+    reusa en vez de abrir un browser nuevo -- uso: backfill.py reusando UNA
+    sesion (con el challenge anti-bot ya resuelto) para muchas fechas
+    seguidas. Sin esto, el job diario (una fecha por corrida) sigue abriendo
+    su propio browser de un solo uso como siempre."""
     print(f"=== Boletin Oficial de Mineria — {date_str} ===")
 
     import scraper as S
     pdf_dir = "pdfs"
-    edition, manifest = S.scrape_day(date_str, out_dir=pdf_dir)
+    if page is not None:
+        edition, manifest = S.scrape_day_with_page(page, context, date_str, out_dir=pdf_dir)
+    else:
+        edition, manifest = S.scrape_day(date_str, out_dir=pdf_dir)
 
     print(f"\n{len(manifest)} PDFs descargados. Extrayendo texto y parseando...")
 

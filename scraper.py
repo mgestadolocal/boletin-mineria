@@ -280,60 +280,80 @@ def download_pdf(context, href, dest_path, retries=3, sleep_between=1.0):
     raise RuntimeError(f"No se pudo descargar {href}: {last_exc}")
 
 
-def scrape_day(date_str, edition=None, out_dir="pdfs", sleep_between_pdfs=0.3):
-    """Punto de entrada principal. date_str formato DD-MM-AAAA.
-    Devuelve (edition_resuelta, manifest) donde manifest es una lista de
-    dicts con toda la metadata de indice + tipo + ruta local del PDF."""
+def scrape_day_with_page(page, context, date_str, edition=None, out_dir="pdfs",
+                          sleep_between_pdfs=0.3):
+    """Igual que scrape_day(), pero recibe un page/context de Playwright ya
+    creados en vez de abrir su propio browser. Pensado para reusar UNA
+    sesion (con sus cookies del challenge anti-bot ya resueltas) a lo largo
+    de muchas fechas seguidas -- ver backfill.py.
+
+    Detectado en vivo el 26-08-2026: scrape_day() abria un browser context
+    NUEVO (cookies vacias) por cada fecha, lo que obligaba a resolver el
+    challenge anti-bot (F5/TrafficShield) desde cero en cada una -- cientos
+    de "sesiones nuevas" seguidas desde la misma IP es exactamente el patron
+    que un WAF anti-scraping esta disenado para bloquear (confirmado: un
+    backfill de 162 fechas con este patron tuvo 158 fallos). Un usuario real
+    resuelve el challenge una vez y navega varias paginas con esa misma
+    sesion -- por eso el job diario (una sola fecha por corrida) nunca tuvo
+    este problema."""
     os.makedirs(out_dir, exist_ok=True)
 
+    resolved_edition, active = discover_active_sections(page, date_str, edition)
+    if not resolved_edition:
+        # Bug detectado en el backfill de ago-2026: si la portada no
+        # redirige con "edition=" en la URL final (p.ej. bloqueo del
+        # anti-bot, o pagina de error del navegador), seguir adelante
+        # arma URLs invalidas tipo "...&edition=None&..." en fetch_index,
+        # que el servidor resetea -- mejor fallar rapido con un mensaje
+        # claro que decir "0 publicaciones" o gastar reintentos en una
+        # URL que nunca va a funcionar.
+        raise RuntimeError(
+            f"No se pudo resolver la edicion para {date_str} "
+            f"(la portada no redirigio con 'edition=' en la URL final: "
+            f"{page.url!r}) -- posible bloqueo del sitio o fecha invalida."
+        )
+    print(f"Edicion resuelta: {resolved_edition}")
+    print(f"Secciones activas hoy: {active}")
+
+    manifest = []
+    for subseccion, tipos in active.items():
+        tipo = tipos[0]  # Solicitudes/Oposiciones de Mensura ambas -> 'mensura'
+        items = fetch_index(page, date_str, resolved_edition, subseccion)
+        print(f"  subseccion {subseccion} ({tipo}): {len(items)} publicaciones")
+        for it in items:
+            if not it["cve"] or not it["href"]:
+                continue
+            fname = f"gm_{tipo}_{it['cve']}.pdf"
+            dest = os.path.join(out_dir, fname)
+            try:
+                download_pdf(context, it["href"], dest)
+            except Exception as e:
+                print(f"    ERROR descargando CVE {it['cve']}: {e}")
+                continue
+            manifest.append(dict(
+                tipo=tipo, cve=it["cve"], region=it["region"],
+                provincia=it["provincia"],
+                nombre_solicitante=it["nombre_solicitante"],
+                href=it["href"], archivo=fname, local_path=dest,
+            ))
+            time.sleep(sleep_between_pdfs)
+
+    return resolved_edition, manifest
+
+
+def scrape_day(date_str, edition=None, out_dir="pdfs", sleep_between_pdfs=0.3):
+    """Punto de entrada de una sola fecha (uso: job diario). Abre su propio
+    browser/context de un solo uso y lo cierra al terminar -- para reusar
+    sesion entre muchas fechas seguidas, ver scrape_day_with_page()."""
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True)
         context = browser.new_context(user_agent=USER_AGENT)
         page = context.new_page()
-
-        resolved_edition, active = discover_active_sections(page, date_str, edition)
-        if not resolved_edition:
-            # Bug detectado en el backfill de ago-2026: si la portada no
-            # redirige con "edition=" en la URL final (p.ej. bloqueo del
-            # anti-bot, o pagina de error del navegador), seguir adelante
-            # arma URLs invalidas tipo "...&edition=None&..." en fetch_index,
-            # que el servidor resetea -- mejor fallar rapido con un mensaje
-            # claro que decir "0 publicaciones" o gastar reintentos en una
-            # URL que nunca va a funcionar.
-            raise RuntimeError(
-                f"No se pudo resolver la edicion para {date_str} "
-                f"(la portada no redirigio con 'edition=' en la URL final: "
-                f"{page.url!r}) -- posible bloqueo del sitio o fecha invalida."
-            )
-        print(f"Edicion resuelta: {resolved_edition}")
-        print(f"Secciones activas hoy: {active}")
-
-        manifest = []
-        for subseccion, tipos in active.items():
-            tipo = tipos[0]  # Solicitudes/Oposiciones de Mensura ambas -> 'mensura'
-            items = fetch_index(page, date_str, resolved_edition, subseccion)
-            print(f"  subseccion {subseccion} ({tipo}): {len(items)} publicaciones")
-            for it in items:
-                if not it["cve"] or not it["href"]:
-                    continue
-                fname = f"gm_{tipo}_{it['cve']}.pdf"
-                dest = os.path.join(out_dir, fname)
-                try:
-                    download_pdf(context, it["href"], dest)
-                except Exception as e:
-                    print(f"    ERROR descargando CVE {it['cve']}: {e}")
-                    continue
-                manifest.append(dict(
-                    tipo=tipo, cve=it["cve"], region=it["region"],
-                    provincia=it["provincia"],
-                    nombre_solicitante=it["nombre_solicitante"],
-                    href=it["href"], archivo=fname, local_path=dest,
-                ))
-                time.sleep(sleep_between_pdfs)
-
-        browser.close()
-
-    return resolved_edition, manifest
+        try:
+            return scrape_day_with_page(page, context, date_str, edition,
+                                         out_dir, sleep_between_pdfs)
+        finally:
+            browser.close()
 
 
 if __name__ == "__main__":
