@@ -235,44 +235,31 @@
   }
   @media (max-width:560px){ .geo-ticker{ display:none; } }
 
-  /* globo decorativo del hero -- ventana fija al espacio, independiente
-     del tema claro/oscuro de la pagina (siempre es "afuera", de noche). */
+  /* globo decorativo del hero -- sin marco/tarjeta, solo la esfera flotando
+     con su propio halo atmosferico (el halo Y es el borde, no una caja). */
   .hero__globe-col{ min-width:0; }
   .hero__globe{
     position:relative;
-    aspect-ratio:16/10;
-    border-radius:var(--radius);
-    border:1px solid var(--line);
-    overflow:hidden;
-    background:#050914;
+    aspect-ratio:1;
     display:flex; align-items:center; justify-content:center;
   }
-  @media (max-width:640px){ .hero__globe{ aspect-ratio:4/5; } }
-  .hero__globe::before{
-    content:"";
-    position:absolute; inset:0;
-    background-image:
-      radial-gradient(1.5px 1.5px at 20% 30%, #fff, transparent),
-      radial-gradient(1.5px 1.5px at 70% 15%, #fff, transparent),
-      radial-gradient(1px 1px at 40% 70%, #cbd5e1, transparent),
-      radial-gradient(1px 1px at 85% 55%, #fff, transparent),
-      radial-gradient(1.5px 1.5px at 55% 85%, #cbd5e1, transparent),
-      radial-gradient(1px 1px at 10% 80%, #fff, transparent),
-      radial-gradient(1px 1px at 90% 85%, #cbd5e1, transparent),
-      radial-gradient(1.5px 1.5px at 30% 55%, #fff, transparent),
-      radial-gradient(1px 1px at 60% 25%, #cbd5e1, transparent);
-    opacity:.85;
-    pointer-events:none;
-  }
   #hero-globe-canvas, .hero__globe-fallback{
-    position:relative; z-index:1;
-    width:64%; aspect-ratio:1; border-radius:50%;
+    width:82%; aspect-ratio:1; border-radius:50%;
     box-shadow:
       0 0 0 1px rgba(150,200,255,.55),
-      0 0 50px 10px rgba(90,170,255,.55),
+      0 0 55px 12px rgba(90,170,255,.5);
+  }
+  /* La esfera 3D ya tiene su propia sombra real (iluminacion Phong) --
+     agregarle ademas una sombra CSS encima solo la oscurecia de mas y
+     sumaba al efecto de "marco". La imagen de respaldo (plana, sin
+     iluminacion propia) si la necesita para leerse con algo de volumen. */
+  .hero__globe-fallback{
+    object-fit:cover;
+    box-shadow:
+      0 0 0 1px rgba(150,200,255,.55),
+      0 0 55px 12px rgba(90,170,255,.5),
       inset -14px -14px 40px rgba(0,0,0,.55);
   }
-  .hero__globe-fallback{ object-fit:cover; }
   .hero__globe-fallback[hidden]{ display:none; }
   .hero__globe-credit{
     margin-top:10px;
@@ -748,7 +735,7 @@
             <img class="hero__globe-fallback" id="hero-globe-fallback" src="images/earth-equirectangular.jpg" alt="Vista satelital de la Tierra" hidden>
             <noscript><style>#hero-globe-canvas{display:none} #hero-globe-fallback{display:block !important}</style></noscript>
           </div>
-          <p class="hero__globe-credit">Imagen: NASA Blue Marble (dominio público), reproyección de Mdf — vía Wikimedia Commons.</p>
+          <p class="hero__globe-credit">Imagen: NASA Blue Marble Next Generation (dominio público) — Reto Stöckli/NASA Earth Observatory, edición de NordNordWest — vía Wikimedia Commons.</p>
         </div>
       </div>
     </section>
@@ -1184,11 +1171,12 @@
 </script>
 
 <script type="module">
-  // Globo decorativo del hero. Puramente visual -- sin popups, sin datos,
-  // sin interaccion (drag/zoom); el mapa real con los datos vive en su
-  // propia seccion (#mapa-hoy). Se degrada con gracia: sin WebGL o sin JS,
-  // se ve la misma foto satelital como imagen estatica dentro del mismo
-  // marco con halo y estrellas.
+  // Globo decorativo del hero: estatico, orientado a la zona donde hoy hay
+  // datos reales (Chile), con un punto brillante por cada publicacion
+  // georreferenciada de la corrida actual -- mismos colores que la leyenda
+  // del mapa real. Sin drag/zoom/popups (para eso esta #mapa-hoy). Se
+  // degrada con gracia: sin WebGL o sin JS, se ve la misma foto satelital
+  // como imagen estatica con el mismo halo.
   var canvas = document.getElementById('hero-globe-canvas');
   var fallbackImg = document.getElementById('hero-globe-fallback');
 
@@ -1196,6 +1184,16 @@
     if (canvas) canvas.style.display = 'none';
     if (fallbackImg) fallbackImg.hidden = false;
   }
+
+  // Mismos colores fijos que usa make_map.py para el mapa real -- no son
+  // libres, son la leyenda oficial de los 5 tipos de publicacion.
+  var TYPE_COLORS = {
+    pedimento: 0x2563eb,
+    manifestacion: 0x16a34a,
+    mensura: 0xdc2626,
+    sentencia_exploracion: 0x9333ea,
+    sentencia_explotacion: 0xea580c
+  };
 
   if (!canvas || !('WebGLRenderingContext' in window)) {
     showGlobeFallback();
@@ -1206,27 +1204,36 @@
       var renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
       if (!renderer.getContext()) throw new Error('sin contexto WebGL');
       renderer.outputColorSpace = THREE.SRGBColorSpace;
+      // alpha:true en el contexto no alcanza -- el color de limpieza por
+      // defecto de Three.js sigue siendo negro opaco. Sin esto, el area del
+      // canvas que no es la esfera se pinta negra solida (se ve como un
+      // "marco" oscuro entre el halo CSS y la esfera) en vez de dejar ver
+      // el fondo real de la pagina detras.
+      renderer.setClearColor(0x000000, 0);
 
       var scene = new THREE.Scene();
       var camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
-      camera.position.z = 3.3;
+      // Mas cerca que un globo "de vitrina" completo: a esta distancia la
+      // esfera llena el circulo entero (nada de hueco alrededor -- eso era
+      // la otra mitad del efecto "marco") y de paso acerca la zona con
+      // datos reales en vez de dejarla como un punto chico en medio del
+      // planeta completo.
+      camera.position.z = 2.5;
 
       var texture = new THREE.TextureLoader().load('images/earth-equirectangular.jpg');
       texture.colorSpace = THREE.SRGBColorSpace;
 
       var globe = new THREE.Mesh(
         new THREE.SphereGeometry(1, 64, 64),
-        new THREE.MeshPhongMaterial({ map: texture, shininess: 5 })
+        new THREE.MeshPhongMaterial({ map: texture, shininess: 4 })
       );
       scene.add(globe);
 
       var sun = new THREE.DirectionalLight(0xffffff, 1.7);
       sun.position.set(4, 2, 5);
       scene.add(sun);
-      scene.add(new THREE.AmbientLight(0xffffff, 0.5));
+      scene.add(new THREE.AmbientLight(0xffffff, 0.65));
 
-      // Marcador en la posicion real de Santiago/Chile (-33.45, -70.65),
-      // como hijo del globo para que rote junto con la esfera.
       function latLonToVec3(lat, lon, radius){
         var phi = (90 - lat) * Math.PI / 180;
         var theta = (lon + 180) * Math.PI / 180;
@@ -1236,23 +1243,52 @@
           radius * Math.sin(phi) * Math.sin(theta)
         );
       }
-      var markerLocal = latLonToVec3(-33.45, -70.65, 1.01);
-      var marker = new THREE.Mesh(
-        new THREE.SphereGeometry(0.018, 12, 12),
-        new THREE.MeshBasicMaterial({ color: 0xffffff })
-      );
-      marker.position.copy(markerLocal);
-      globe.add(marker);
-      var markerGlow = new THREE.Sprite(new THREE.SpriteMaterial({
-        color: 0x8fd0ff, transparent: true, opacity: 0.6, depthWrite: false
-      }));
-      markerGlow.scale.set(0.13, 0.13, 1);
-      markerGlow.position.copy(markerLocal);
-      globe.add(markerGlow);
 
-      // Orienta el globo al arrancar para que Chile mire hacia la camara
-      // (calculado, no adivinado a ojo -- rota el punto local hasta el eje +Z).
-      globe.rotation.y = Math.atan2(markerLocal.x, markerLocal.z);
+      // Centro real de donde se concentran las publicaciones (Antofagasta
+      // a Coquimbo, segun los datos reales) -- con la camara mas cerca,
+      // este punto queda literalmente al centro del circulo.
+      // Girar solo en el eje Y (como antes) mueve el punto en horizontal
+      // pero no en vertical -- por eso Chile quedaba abajo, con Norteamerica
+      // dominando arriba. Hacen falta DOS rotaciones en ejes del mundo,
+      // en orden (primero Y, despues X sobre el resultado), para centrar
+      // el punto en ambos ejes sin inclinar el globo de costado (el polo
+      // norte se mantiene arriba, como un globo normal).
+      var p0 = latLonToVec3(-28, -70.5, 1);
+      var thetaY = Math.atan2(-p0.x, p0.z);
+      var z1 = Math.sqrt(p0.x * p0.x + p0.z * p0.z); // z del punto tras rotar en Y
+      var phiX = Math.atan2(p0.y, z1);
+      globe.rotateOnWorldAxis(new THREE.Vector3(0, 1, 0), thetaY);
+      globe.rotateOnWorldAxis(new THREE.Vector3(1, 0, 0), phiX);
+
+      // Puntos: dos esferas por marcador (nucleo solido + halo translucido)
+      // en vez de un sprite -- un sprite plano se corta contra la curva de
+      // la esfera desde ciertos angulos; una esfera chica no.
+      var markers = [];
+      function addMarker(lat, lon, colorHex){
+        var pos = latLonToVec3(lat, lon, 1.008);
+        var core = new THREE.Mesh(
+          new THREE.SphereGeometry(0.009, 8, 8),
+          new THREE.MeshBasicMaterial({ color: colorHex })
+        );
+        var glow = new THREE.Mesh(
+          new THREE.SphereGeometry(0.022, 8, 8),
+          new THREE.MeshBasicMaterial({ color: colorHex, transparent: true, opacity: 0.4, depthWrite: false })
+        );
+        core.position.copy(pos);
+        glow.position.copy(pos);
+        globe.add(core);
+        globe.add(glow);
+        markers.push({ glow: glow, phase: Math.random() * Math.PI * 2 });
+      }
+
+      function centroidLonLat(geometry){
+        var sx = 0, sy = 0, n = 0;
+        (function walk(c){
+          if (typeof c[0] === 'number') { sx += c[0]; sy += c[1]; n++; }
+          else c.forEach(walk);
+        })(geometry.coordinates);
+        return n ? [sx / n, sy / n] : null;
+      }
 
       var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -1265,7 +1301,6 @@
         camera.updateProjectionMatrix();
         renderer.render(scene, camera);
       }
-
       if ('ResizeObserver' in window) {
         new ResizeObserver(resize).observe(canvas);
       } else {
@@ -1273,13 +1308,38 @@
       }
       resize();
 
-      if (!reduceMotion) {
-        var clock = new THREE.Clock();
-        (function animate(){
-          requestAnimationFrame(animate);
-          globe.rotation.y += clock.getDelta() * 0.08;
+      // Publicaciones reales de la corrida actual, como puntos en el globo
+      // (mismo archivo que ya sirve al mapa real). Si falla, el globo sigue
+      // andando sin puntos -- no es fatal.
+      try {
+        var geoRes = await fetch('data/boletin_mineria_latest.geojson');
+        if (geoRes.ok) {
+          var geo = await geoRes.json();
+          (geo.features || []).forEach(function(f){
+            var c = centroidLonLat(f.geometry);
+            var color = TYPE_COLORS[f.properties && f.properties.tipo_publicacion];
+            if (c && typeof color === 'number') addMarker(c[1], c[0], color);
+          });
+        }
+      } catch (e) { /* el globo sigue sin puntos */ }
+
+      if (!reduceMotion && markers.length) {
+        // Unico movimiento del globo: un titileo suave en los puntos
+        // reales, no una rotacion decorativa -- representa "esto se sigue
+        // georreferenciando", no gira porque si.
+        var t0 = performance.now();
+        (function pulse(now){
+          requestAnimationFrame(pulse);
+          var t = (now - t0) / 1000;
+          markers.forEach(function(m){
+            var s = 1 + Math.sin(t * 1.6 + m.phase) * 0.35;
+            m.glow.scale.setScalar(s);
+            m.glow.material.opacity = 0.25 + Math.sin(t * 1.6 + m.phase) * 0.15;
+          });
           renderer.render(scene, camera);
-        })();
+        })(performance.now());
+      } else {
+        renderer.render(scene, camera);
       }
     } catch (e) {
       showGlobeFallback();
