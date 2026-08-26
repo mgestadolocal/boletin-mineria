@@ -177,9 +177,14 @@
   .hero{
     position:relative;
     overflow:hidden;
-    padding-block:76px 88px;
+    padding-block:96px 112px;
     border-bottom:1px solid var(--line);
   }
+  /* El hero respira en un contenedor mas ancho que el resto del sitio (que
+     se queda en 1040px, buen largo de linea para texto de lectura) -- asi
+     el mapa en vivo tiene mas espacio real para crecer sin volver a achicar
+     la columna de texto. */
+  .hero .wrap{ max-width:1280px; }
   .hero::before{
     content:"";
     position:absolute; inset:0;
@@ -207,8 +212,8 @@
   .hero__inner{
     position:relative;
     display:grid;
-    grid-template-columns:1.05fr 1fr;
-    gap:52px;
+    grid-template-columns:0.85fr 1.2fr;
+    gap:40px;
     align-items:center;
   }
   @media (max-width:960px){
@@ -255,24 +260,30 @@
     background:var(--accent);
   }
   .hero h1{
-    font-size:clamp(2.1rem, 4.6vw, 3.4rem);
-    line-height:1.08;
+    font-size:clamp(2.3rem, 5.4vw, 3.9rem);
+    line-height:1.03;
     max-width:16ch;
-    letter-spacing:-0.01em;
+    letter-spacing:-0.015em;
   }
   .hero h1 em{
     font-style:italic;
     color:var(--accent-ink);
   }
+  .hero__audience{
+    margin-top:16px;
+    max-width:42ch;
+    font-size:0.96rem;
+    color:var(--ink-soft);
+  }
   .hero__lede{
-    margin-top:22px;
-    max-width:52ch;
-    font-size:1.08rem;
+    margin-top:16px;
+    max-width:50ch;
+    font-size:1rem;
     color:var(--ink-soft);
   }
   .hero__ctas{
-    display:flex; gap:14px; flex-wrap:wrap;
-    margin-top:34px;
+    display:flex; align-items:center; gap:24px; flex-wrap:wrap;
+    margin-top:36px;
   }
   .btn{
     display:inline-flex; align-items:center; gap:8px;
@@ -283,11 +294,23 @@
     text-decoration:none;
     transition:background-color .15s ease, border-color .15s ease, color .15s ease, box-shadow .25s ease, transform .15s ease;
   }
-  .btn--primary{ background:var(--accent); color:#fff; }
-  .btn--primary:hover{ background:var(--accent-ink); box-shadow:0 0 26px var(--accent-soft-strong); transform:translateY(-1px); }
-  .btn--ghost{ border-color:var(--line-strong); color:var(--ink); }
-  .btn--ghost:hover{ border-color:var(--accent); background:var(--accent-soft); box-shadow:0 0 18px var(--accent-soft); transform:translateY(-1px); }
+  /* CTA primario: unico boton solido, mas grande y con mas contraste que
+     el resto del hero -- las otras dos acciones bajan a enlaces de texto
+     (.hero__ctas-secondary) para que no compitan en peso visual. */
+  .btn--primary{
+    background:var(--accent); color:#fff;
+    padding:15px 30px; font-size:1rem; font-weight:600;
+  }
+  .btn--primary:hover{ background:var(--accent-ink); box-shadow:0 0 30px var(--accent-soft-strong); transform:translateY(-1px); }
   @media (prefers-reduced-motion: reduce){ .btn{ transition:background-color .15s ease, border-color .15s ease, color .15s ease; transform:none !important; } }
+  .hero__ctas-secondary{ display:flex; align-items:center; gap:18px; flex-wrap:wrap; }
+  .hero__ctas-secondary a{
+    font-size:0.86rem; font-weight:500; color:var(--ink-soft);
+    text-decoration:none; border-bottom:1px solid transparent; padding-bottom:2px;
+    transition:color .15s ease, border-color .15s ease;
+  }
+  .hero__ctas-secondary a:hover{ color:var(--accent-ink); border-color:var(--accent-ink); }
+  @media (prefers-reduced-motion: reduce){ .hero__ctas-secondary a{ transition:none; } }
 
   .hero__stats{
     margin-top:52px;
@@ -330,8 +353,11 @@
   }
   .gallery__track::-webkit-scrollbar{ display:none; }
   .gallery__item{
-    flex:0 0 var(--gal-card);
-    width:var(--gal-card);
+    /* grow:1 para que las tarjetas repartan el ancho sobrante entre si en
+       vez de dejar fondo (var(--line)) visible al final de la fila cuando
+       el contenedor es mas ancho que las 4 fotos juntas; shrink:0 para que
+       en pantallas angostas no se compriman y sigan activando el scroll. */
+    flex:1 0 var(--gal-card);
     margin:0;
     scroll-snap-align:start;
   }
@@ -413,6 +439,11 @@
   /* Ritmo de bandas: alterna el fondo entre paper y paper-sunken en vez de
      que todas las secciones compartan el mismo plano. */
   section.band-alt{ background:var(--paper-sunken); }
+  /* Variantes de ritmo vertical: no todas las secciones pesan lo mismo --
+     "que se detecta" es contenido de fondo, respira un poco mas; descargas
+     es utilitario, no necesita tanto aire. */
+  section.pad-loose{ padding-block:80px; }
+  section.pad-snug{ padding-block:52px; }
   .section__head{
     display:flex; justify-content:space-between; align-items:flex-end;
     gap:24px; flex-wrap:wrap;
@@ -439,10 +470,28 @@
   @media (max-width:820px){ .pipeline{ grid-template-columns:repeat(2, 1fr); } }
   @media (max-width:480px){ .pipeline{ grid-template-columns:1fr; } }
   .step{
+    position:relative;
     background:var(--paper-raised);
     padding:26px 22px 28px;
     display:flex; flex-direction:column; gap:12px;
   }
+  /* Conector entre pasos: refuerza que son 4 etapas de un mismo proceso
+     secuencial, no 4 tarjetas de feature sueltas. Solo tiene sentido con
+     los 4 pasos en una sola fila -- se oculta apenas la grilla colapsa. */
+  .step:not(:last-child)::after{
+    content:"→";
+    position:absolute;
+    top:50%; right:-1px;
+    transform:translate(50%, -50%);
+    width:24px; height:24px;
+    display:flex; align-items:center; justify-content:center;
+    background:var(--paper-sunken);
+    border:1px solid var(--line-strong);
+    border-radius:50%;
+    font-family:var(--font-mono); font-size:0.85rem; color:var(--accent-ink);
+    z-index:2;
+  }
+  @media (max-width:820px){ .step::after{ display:none; } }
   .step__n{
     font-family:var(--font-mono);
     font-size:0.78rem;
@@ -529,19 +578,25 @@
   @media (max-width:760px){ .automation{ grid-template-columns:1fr; gap:32px; } }
   .automation p + p{ margin-top:14px; }
   .automation__body p{ font-size:0.97rem; color:var(--ink-soft); }
-  .limits{
+  .source-box{
     background:var(--paper-sunken);
     border:1px solid var(--line);
     border-radius:var(--radius);
     padding:20px 22px;
+    display:flex; flex-direction:column; gap:12px;
+    justify-content:space-between;
   }
-  .limits h3{
+  .source-box h3{
     font-family:var(--font-body); font-size:0.82rem; font-weight:600;
     text-transform:uppercase; letter-spacing:.04em; color:var(--ink-soft);
-    margin-bottom:12px;
   }
-  .limits li{ font-size:0.88rem; color:var(--ink-soft); padding-block:6px; border-top:1px solid var(--line); }
-  .limits li:first-of-type{ border-top:none; }
+  .source-box p{ font-size:0.88rem; color:var(--ink-soft); }
+  .source-box__link{
+    align-self:flex-start;
+    font-size:0.88rem; font-weight:500; color:var(--accent-ink);
+    text-decoration:underline; text-underline-offset:3px;
+  }
+  .source-box__link:hover{ color:var(--accent); }
 
   /* ---------- footer ---------- */
   footer{ padding-block:40px 56px; }
@@ -584,6 +639,10 @@
         <div class="hero__content">
           <div class="eyebrow">Georreferenciación diaria · Código de Minería</div>
           <h1>El boletín minero, <em>leído por una máquina</em> cada mañana.</h1>
+          <p class="hero__audience">
+            Para estudios jurídicos, geomensores y equipos de análisis geoespacial que siguen
+            pedimentos, manifestaciones y mensuras región por región.
+          </p>
           <p class="hero__lede">
             Un pipeline en GitHub Actions descarga el Boletín Oficial de Minería, extrae las coordenadas
             de cada pedimento, manifestación y mensura, y publica un mapa y datos descargables —
@@ -591,8 +650,10 @@
           </p>
           <div class="hero__ctas">
             <a class="btn btn--primary" href="#mapa-hoy">Ver mapa de hoy ↓</a>
-            <a class="btn btn--ghost" href="historico.html">Ver histórico completo</a>
-            <a class="btn btn--ghost" href="https://github.com/mgestadolocal/boletin-mineria" target="_blank" rel="noopener">Código en GitHub</a>
+            <div class="hero__ctas-secondary">
+              <a href="historico.html">Ver histórico completo</a>
+              <a href="https://github.com/mgestadolocal/boletin-mineria" target="_blank" rel="noopener">Código en GitHub</a>
+            </div>
           </div>
           <div class="hero__stats" data-reveal-group>
             <div class="stat reveal-item pending"><div class="stat__n" id="stat-pedi">30</div><div class="stat__l">Pedimentos</div></div>
@@ -683,7 +744,7 @@
       </div>
     </section>
 
-    <section>
+    <section class="pad-loose">
       <div class="wrap">
         <div class="section__head reveal pending" data-reveal>
           <div>
@@ -694,7 +755,7 @@
         </div>
         <div class="legend-wrap reveal pending" data-reveal>
           <span class="legend-label">Georreferenciación probada</span>
-          <div class="legend legend--three" id="legend-proven" data-reveal-group>
+          <div class="legend legend--three" data-reveal-group>
             <div class="type spot reveal-item pending">
               <div class="type__top">
                 <span class="type__name"><span class="type__swatch" style="--sw:var(--c-pedi)"></span>Pedimentos</span>
@@ -718,7 +779,7 @@
             </div>
           </div>
           <span class="legend-label">Georreferenciación nueva</span>
-          <div class="legend legend--two" id="legend-new" data-reveal-group>
+          <div class="legend legend--two" data-reveal-group>
             <div class="type spot reveal-item pending">
               <div class="type__top">
                 <span class="type__name"><span class="type__swatch" style="--sw:var(--c-sexp)"></span>Sentencias de Exploración</span>
@@ -738,7 +799,7 @@
       </div>
     </section>
 
-    <section class="band-alt">
+    <section class="band-alt pad-snug">
       <div class="wrap">
         <div class="section__head reveal pending" data-reveal>
           <div>
@@ -797,13 +858,10 @@
             queda trazable commit a commit.
           </p>
         </div>
-        <div class="limits">
-          <h3>Limitaciones documentadas</h3>
-          <ul>
-            <li>Sentencias de exploración y explotación se georreferencian reusando los deslindes del expediente que resuelven; sin un caso real aún para calibrar el formato, uno puntual podría fallar la primera vez.</li>
-            <li>Cualquier documento con redacción atípica queda listado en el reporte de no-georreferenciación, en vez de forzar una geometría incorrecta.</li>
-            <li>La geometría se reconstruye desde el texto del boletín, no desde un plano catastral oficial.</li>
-          </ul>
+        <div class="source-box">
+          <h3>Fuente oficial</h3>
+          <p>Cada publicación georreferenciada proviene directamente del Boletín Oficial de Minería de Chile — el pipeline no agrega ni interpreta datos que el boletín no haya publicado ese día.</p>
+          <a class="source-box__link" href="https://www.boletinoficialdemineria.cl" target="_blank" rel="noopener">Ver el boletín oficial ↗</a>
         </div>
       </div>
     </section>
@@ -953,29 +1011,6 @@
       setInterval(renderNextRun, 60000);
     }
 
-    // Peso visual proporcional al conteo real en las tarjetas de tipo (bento,
-    // no un grid parejo) — con piso minimo para que ninguna quede ilegible.
-    // Solo se aplica desde el ancho en que el grid deja de apilarse a 1
-    // columna (ver .legend--three/.legend--two en CSS), para no pelear con
-    // ese layout responsive.
-    var legendWide = window.matchMedia('(min-width:621px)');
-    function weighGrid(container, counts){
-      if (!container) return;
-      if (!legendWide.matches) { container.style.gridTemplateColumns = ''; return; }
-      var floor = 0.55;
-      container.style.gridTemplateColumns = counts.map(function(c){
-        return Math.max(c, floor).toFixed(2) + 'fr';
-      }).join(' ');
-    }
-    var provenEl = document.getElementById('legend-proven');
-    var newEl = document.getElementById('legend-new');
-    var provenCounts = null, newCounts = null;
-    legendWide.addEventListener ? legendWide.addEventListener('change', reapplyWeights) : null;
-    function reapplyWeights(){
-      if (provenCounts) weighGrid(provenEl, provenCounts);
-      if (newCounts) weighGrid(newEl, newCounts);
-    }
-
     // Progressive enhancement: if this file is served alongside the real
     // data/reporte_latest.json (i.e. dropped into docs/ next to the pipeline
     // output), pull live counts. Silently keeps the static numbers otherwise.
@@ -1003,23 +1038,14 @@
           if (mh) mh.textContent = 'Edición ' + report.edicion + ' · ' + report.fecha;
         }
 
-        provenCounts = [
-          report.por_tipo.pedimento || 0,
-          report.por_tipo.manifestacion || 0,
-          report.por_tipo.mensura || 0
-        ];
-        weighGrid(provenEl, provenCounts);
-
         // Sentencias: a diferencia de los otros tres tipos, todavía pueden
         // caer a revisión manual si el PDF no calza con el formato asumido
         // (ver parser.parse_sentencia). Reflejamos ambos estados.
         var pendientes = report.sin_georreferenciar || [];
-        newCounts = [];
         ['sexp', 'sexpl'].forEach(function(key){
           var tipo = key === 'sexp' ? 'sentencia_exploracion' : 'sentencia_explotacion';
           var ok = report.por_tipo[tipo] || 0;
           var pending = pendientes.filter(function(p){ return p.tipo === tipo; }).length;
-          newCounts.push(ok + pending);
           var countEl = document.getElementById('type-' + key);
           var noteEl = document.getElementById('type-' + key + '-note');
           animateNumber(countEl, ok);
@@ -1037,7 +1063,6 @@
             }
           }
         });
-        weighGrid(newEl, newCounts);
       })
       .catch(function(){ /* static numbers stand */ });
   })();

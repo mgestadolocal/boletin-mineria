@@ -41,21 +41,29 @@ _BASE_TEMPLATE = """<!DOCTYPE html>
   html, body { margin:0; padding:0; height:100%; font-family: -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
   #map { position:absolute; top:0; bottom:0; left:0; right:0; }
   .panel {
-    position:absolute; top:10px; right:10px; z-index:1000; background:white;
-    padding:14px 16px; border-radius:8px; box-shadow:0 2px 10px rgba(0,0,0,.25);
-    max-width:280px; font-size:13px; line-height:1.5;
+    position:absolute; top:6px; right:6px; z-index:1000; background:white;
+    padding:6px 8px; border-radius:5px; box-shadow:0 2px 10px rgba(0,0,0,.25);
+    max-width:132px; font-size:9px; line-height:1.3;
   }
-  .panel h3 { margin:0 0 8px 0; font-size:15px; }
-  .legend-item { display:flex; align-items:center; margin:4px 0; }
-  .swatch { width:14px; height:14px; margin-right:8px; border-radius:2px; flex-shrink:0; }
+  .panel h3 { margin:0 0 3px 0; font-size:9.5px; }
+  .legend-item { display:flex; align-items:center; margin:1.5px 0; }
+  .swatch { width:7px; height:7px; margin-right:4px; border-radius:2px; flex-shrink:0; }
   .stat { color:#555; }
   .popup-title { font-weight:600; margin-bottom:4px; }
   .popup-row { margin:2px 0; }
   a.pdf-link { color:#1a73e8; }
-  .dl-row { margin-top:10px; }
-  .dl-row a { display:inline-block; margin-right:8px; font-size:12px; color:#1a73e8; }
-  .nav-row { margin-top:8px; font-size:12px; }
+  .dl-row { margin-top:5px; }
+  .dl-row a { display:inline-block; margin-right:5px; font-size:8.5px; color:#1a73e8; }
+  .nav-row { margin-top:4px; font-size:8.5px; }
   .nav-row a { color:#1a73e8; }
+  /* Cuando el mapa vive embebido en un iframe (la vista previa de la
+     landing), el panel se achica aun mas y pierde los links de descarga/nav
+     -- ahi solo importa mostrar el mapa; para eso esta el boton "abrir a
+     pantalla completa" de la landing, que carga esta misma pagina sin
+     iframe y con el panel completo. */
+  .panel.panel--compact { max-width:92px; padding:5px 6px; font-size:7.5px; }
+  .panel.panel--compact h3 { font-size:8px; margin-bottom:2px; }
+  .panel.panel--compact .dl-row, .panel.panel--compact .nav-row { display:none; }
 </style>
 </head>
 <body>
@@ -78,6 +86,12 @@ _BASE_TEMPLATE = """<!DOCTYPE html>
 const data = __GEOJSON__;
 
 const map = L.map('map', { zoomControl: true });
+
+// Embebido en un iframe (preview de la landing) vs. pagina abierta directo:
+// el panel flotante se achica bastante mas cuando esta embebido, para que
+// el mapa mismo se alcance a ver en un recuadro chico.
+const embedded = window.self !== window.top;
+if (embedded) document.querySelector('.panel').classList.add('panel--compact');
 
 const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '&copy; OpenStreetMap', maxZoom: 19
@@ -113,7 +127,11 @@ if (data.features.length) {
       lyr.bindPopup(html);
     }
   }).addTo(map);
-  map.fitBounds(layer.getBounds(), { padding: [30, 30] });
+  // Padding asimetrico: reserva espacio en la esquina superior derecha para
+  // el panel/leyenda flotante, asi el ajuste de zoom no deja el territorio
+  // ni los datos tapados detras del panel. Con el panel compacto (embebido)
+  // hay que reservar bastante menos.
+  map.fitBounds(layer.getBounds(), { paddingTopLeft: [24, 24], paddingBottomRight: [embedded ? 70 : 150, 24] });
 } else {
   map.setView([-33.45, -70.65], 5);
 }
