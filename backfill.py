@@ -139,6 +139,13 @@ def main():
     ap.add_argument("--start", default=DEFAULT_START)
     ap.add_argument("--end", default=DEFAULT_END)
     ap.add_argument("--no-push", action="store_true")
+    ap.add_argument("--max-days", type=int, default=None,
+                     help="Parar despues de INTENTAR (exito o error) esta "
+                          "cantidad de fechas nuevas -- las ya hechas se "
+                          "saltan gratis y no cuentan. Uso: correr de a "
+                          "poco desde un cron de baja frecuencia (ver "
+                          "backfill-drip.yml), imitando el mismo patron "
+                          "'una fecha por corrida' que ya usa daily.yml.")
     args = ap.parse_args()
 
     start = parse_ddmmyyyy(args.start)
@@ -181,6 +188,11 @@ def main():
                 if already_done(date_str, state):
                     total_skipped += 1
                     continue
+
+                if args.max_days is not None and total_ok + total_failed >= args.max_days:
+                    print(f"\n(limite de --max-days {args.max_days} alcanzado, "
+                          f"parando aca -- la proxima corrida sigue desde {date_str})")
+                    break
 
                 print(f"\n--- {date_str} ---")
                 attempt = 0

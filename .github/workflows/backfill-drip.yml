@@ -1,0 +1,50 @@
+name: Boletin Mineria - backfill historico 2026 (goteo)
+
+# Backfill "de a poco": UNA fecha atrasada por corrida, cada 3 horas --
+# imita exactamente el patron de daily.yml (una corrida = una fecha = un
+# browser de un solo uso = una IP fresca de GitHub Actions), que es el unico
+# patron confirmado que el sitio tolera. Los intentos de correr el backfill
+# completo en una sola corrida (162 fechas de una) chocaron con el anti-bot
+# del sitio dos veces el 26-08-2026 (ver commits 16da623 y el historial de
+# esa fecha) -- en vez de seguir peleando contra eso, este workflow copia el
+# patron que ya sabemos que funciona, solo que disparado mas seguido que una
+# vez al dia.
+#
+# A ~8 fechas/dia (cada 3h) cierra el hueco de ~158 dias habiles en unas
+# 2-3 semanas. Se puede parar en cualquier momento (Actions -> Disable
+# workflow) y retomar despues sin perder nada -- es resumible igual que el
+# backfill masivo (ver already_done() en backfill.py).
+
+on:
+  schedule:
+    - cron: '0 */3 * * *'
+  workflow_dispatch:
+    inputs:
+      max_days:
+        description: 'Cuantas fechas nuevas procesar en esta corrida'
+        type: string
+        default: '1'
+
+permissions:
+  contents: write
+
+jobs:
+  backfill-drip:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    container:
+      image: mcr.microsoft.com/playwright/python:v1.56.0-noble
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configurar identidad de git
+        run: |
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          git config --global user.name "boletin-mineria-bot"
+          git config --global user.email "actions@users.noreply.github.com"
+
+      - name: Instalar dependencias
+        run: pip install -r requirements.txt
+
+      - name: Procesar una fecha atrasada
+        run: python backfill.py --max-days "${{ inputs.max_days || '1' }}"

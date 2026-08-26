@@ -1,13 +1,18 @@
 name: Boletin Mineria - backfill historico 2026
 
-# Job manual (no corre solo) para rellenar el historico con fechas pasadas.
-# Corre en la infraestructura de GitHub (misma que el job diario), no
-# depende de que ningun computador este prendido, y usa una IP distinta a
-# la de cualquier maquina local -- ver docs/superpowers si existiera spec,
-# o el historial de commits del 26-08-2026: el sitio bloqueo temporalmente
-# los requests de backfill hechos desde una red domestica (403 / connection
-# reset incluso para la fecha del dia), asi que este job es la forma
-# recomendada de correr el backfill.
+# Job manual (no corre solo) para rellenar el historico con fechas pasadas
+# EN UNA SOLA CORRIDA (muchas fechas seguidas).
+#
+# OJO (26-08-2026): dos intentos de correr esto con el rango completo (162
+# fechas) chocaron con el anti-bot del sitio -- ni bajando el ritmo entre
+# fechas ni reusando una sola sesion de Playwright ayudo; el patron "muchas
+# fechas en una corrida" parece ser justo lo que el sitio detecta, sin
+# importar el detalle tecnico. El unico patron confirmado que el sitio
+# tolera es "una fecha por corrida" (el mismo que usa daily.yml todos los
+# dias sin problema) -- para eso usar backfill-drip.yml en vez de este,
+# que dispara de a una fecha cada 3 horas via cron. Dejar este workflow
+# para rangos chicos puntuales (probar un par de fechas sueltas) en vez de
+# para rellenar meses enteros de una vez.
 #
 # backfill.py es resumible: si el job se corta o llega al timeout a mitad
 # de camino, basta con volver a lanzar el workflow (mismos start/end, o
