@@ -170,6 +170,8 @@
     100%{ box-shadow:0 0 0 0 color-mix(in srgb, var(--live) 0%, transparent); }
   }
   @media (prefers-reduced-motion: reduce){ .live-dot{ animation:none; } }
+  .next-run{ margin-left:10px; color:var(--ink-faint); font-variant-numeric:tabular-nums; }
+  .next-run:empty{ display:none; }
 
   /* ---------- hero ---------- */
   .hero{
@@ -202,10 +204,20 @@
   @media (max-width:720px){
     .hero__contours{ opacity:.6; }
   }
-  .hero__inner{ position:relative; }
+  .hero__inner{
+    position:relative;
+    display:grid;
+    grid-template-columns:1.05fr 1fr;
+    gap:52px;
+    align-items:center;
+  }
+  @media (max-width:960px){
+    .hero__inner{ grid-template-columns:1fr; gap:40px; }
+  }
+  .hero__content{ min-width:0; }
   .geo-ticker{
-    position:absolute; right:0; bottom:-4px;
-    display:flex; flex-direction:column; align-items:flex-end; gap:4px;
+    margin-top:28px;
+    display:flex; justify-content:flex-end; align-items:baseline; gap:8px;
     font-family:var(--font-mono); text-align:right;
     pointer-events:none;
   }
@@ -216,7 +228,18 @@
     font-size:0.78rem; color:var(--accent-ink); font-variant-numeric:tabular-nums;
     transition:opacity .35s ease;
   }
-  @media (max-width:900px){ .geo-ticker{ display:none; } }
+  @media (max-width:560px){ .geo-ticker{ display:none; } }
+
+  /* mapa en vivo, dentro del hero */
+  .hero__map{ position:relative; min-width:0; }
+  .hero__map::before{
+    content:"";
+    position:absolute; inset:-14%;
+    background:radial-gradient(circle at 50% 38%, var(--accent-soft-strong), transparent 68%);
+    filter:blur(14px);
+    z-index:-1;
+    pointer-events:none;
+  }
   .eyebrow{
     display:flex; align-items:center; gap:10px;
     font-family:var(--font-mono);
@@ -269,10 +292,9 @@
   .hero__stats{
     margin-top:52px;
     display:grid;
-    grid-template-columns:repeat(4, auto);
+    grid-template-columns:repeat(4, minmax(0,1fr));
     gap:0;
     border-top:1px solid var(--line);
-    max-width:640px;
   }
   @media (max-width:640px){ .hero__stats{ grid-template-columns:repeat(2, 1fr); } }
   .stat{
@@ -340,6 +362,12 @@
     color:var(--ink-faint);
   }
 
+  /* ---------- territorio: tira de contexto (no una seccion propia) ---------- */
+  .territorio-strip{ padding-block:32px; }
+  .territorio-strip__label{ display:block; margin-bottom:14px; }
+  .gallery--strip{ --gal-card: clamp(130px, 15vw, 190px); }
+  .gallery--strip .gallery__credits{ margin-top:10px; }
+
   /* ---------- embedded map ---------- */
   html{ scroll-behavior:smooth; }
   @media (prefers-reduced-motion: reduce){ html{ scroll-behavior:auto; } }
@@ -382,6 +410,9 @@
 
   /* ---------- section scaffolding ---------- */
   section{ padding-block:64px; border-bottom:1px solid var(--line); }
+  /* Ritmo de bandas: alterna el fondo entre paper y paper-sunken en vez de
+     que todas las secciones compartan el mismo plano. */
+  section.band-alt{ background:var(--paper-sunken); }
   .section__head{
     display:flex; justify-content:space-between; align-items:flex-end;
     gap:24px; flex-wrap:wrap;
@@ -533,6 +564,7 @@
       <span>
         <span id="mh-edition">Edición 44528 · 19 ago 2026</span>
         <span class="live-badge"><span class="live-dot"></span>PIPELINE ACTIVO</span>
+        <span class="next-run" id="next-run"></span>
       </span>
     </div>
   </header>
@@ -549,41 +581,51 @@
         </g>
       </svg>
       <div class="wrap hero__inner">
-        <div class="eyebrow">Georreferenciación diaria · Código de Minería</div>
-        <h1>El boletín minero, <em>leído por una máquina</em> cada mañana.</h1>
-        <p class="hero__lede">
-          Un pipeline en GitHub Actions descarga el Boletín Oficial de Minería, extrae las coordenadas
-          de cada pedimento, manifestación y mensura, y publica un mapa y datos descargables —
-          sin depender de que ningún computador se quede encendido.
-        </p>
-        <div class="hero__ctas">
-          <a class="btn btn--primary" href="#mapa-hoy">Ver mapa de hoy ↓</a>
-          <a class="btn btn--ghost" href="historico.html">Ver histórico completo</a>
-          <a class="btn btn--ghost" href="https://github.com/mgestadolocal/boletin-mineria" target="_blank" rel="noopener">Código en GitHub</a>
+        <div class="hero__content">
+          <div class="eyebrow">Georreferenciación diaria · Código de Minería</div>
+          <h1>El boletín minero, <em>leído por una máquina</em> cada mañana.</h1>
+          <p class="hero__lede">
+            Un pipeline en GitHub Actions descarga el Boletín Oficial de Minería, extrae las coordenadas
+            de cada pedimento, manifestación y mensura, y publica un mapa y datos descargables —
+            sin depender de que ningún computador se quede encendido.
+          </p>
+          <div class="hero__ctas">
+            <a class="btn btn--primary" href="#mapa-hoy">Ver mapa de hoy ↓</a>
+            <a class="btn btn--ghost" href="historico.html">Ver histórico completo</a>
+            <a class="btn btn--ghost" href="https://github.com/mgestadolocal/boletin-mineria" target="_blank" rel="noopener">Código en GitHub</a>
+          </div>
+          <div class="hero__stats" data-reveal-group>
+            <div class="stat reveal-item pending"><div class="stat__n" id="stat-pedi">30</div><div class="stat__l">Pedimentos</div></div>
+            <div class="stat reveal-item pending"><div class="stat__n" id="stat-manif">25</div><div class="stat__l">Manifestaciones</div></div>
+            <div class="stat reveal-item pending"><div class="stat__n" id="stat-mens">31</div><div class="stat__l">Mensuras</div></div>
+            <div class="stat reveal-item pending"><div class="stat__n" id="stat-total">86</div><div class="stat__l">Georreferenciadas hoy</div></div>
+          </div>
+          <div class="geo-ticker" aria-hidden="true">
+            <span class="geo-ticker__label">Última coordenada procesada</span>
+            <span class="geo-ticker__coord" id="geo-ticker-coord">-39.9900, -73.0770</span>
+          </div>
         </div>
-        <div class="hero__stats" data-reveal-group>
-          <div class="stat reveal-item pending"><div class="stat__n" id="stat-pedi">30</div><div class="stat__l">Pedimentos</div></div>
-          <div class="stat reveal-item pending"><div class="stat__n" id="stat-manif">25</div><div class="stat__l">Manifestaciones</div></div>
-          <div class="stat reveal-item pending"><div class="stat__n" id="stat-mens">31</div><div class="stat__l">Mensuras</div></div>
-          <div class="stat reveal-item pending"><div class="stat__n" id="stat-total">86</div><div class="stat__l">Georreferenciadas hoy</div></div>
+        <div class="hero__map" id="mapa-hoy">
+          <div class="mapframe">
+            <span class="mapframe__skeleton" id="map-skeleton">Cargando mapa…</span>
+            <iframe
+              src="index.html"
+              title="Mapa del Boletín Oficial de Minería — edición del día"
+              onload="this.classList.add('is-loaded'); var s=document.getElementById('map-skeleton'); if(s) s.style.display='none';"
+            ></iframe>
+          </div>
+          <div class="map__foot">
+            <span>Se actualiza solo, cada día, tras la corrida del pipeline.</span>
+            <a href="index.html">Abrir a pantalla completa ↗</a>
+          </div>
         </div>
-      </div>
-      <div class="geo-ticker" aria-hidden="true">
-        <span class="geo-ticker__label">Última coordenada procesada</span>
-        <span class="geo-ticker__coord" id="geo-ticker-coord">-39.9900, -73.0770</span>
       </div>
     </section>
 
-    <section id="territorio">
+    <section class="territorio-strip" id="territorio">
       <div class="wrap">
-        <div class="section__head reveal pending" data-reveal>
-          <div>
-            <div class="section__kicker">El territorio</div>
-            <h2 class="section__title">Detrás de cada coordenada</h2>
-          </div>
-          <p class="section__note">El norte de Chile, donde se concentra la mayoría de las publicaciones del boletín.</p>
-        </div>
-        <div class="gallery reveal pending" data-reveal>
+        <span class="section__kicker territorio-strip__label">El terreno real, detrás de cada coordenada</span>
+        <div class="gallery gallery--strip reveal pending" data-reveal>
           <div class="gallery__track" id="gallery-track">
             <figure class="gallery__item">
               <img src="images/mina-chuquicamata.jpg" alt="Vista panorámica de la mina de cobre a rajo abierto de Chuquicamata, en Calama." loading="lazy" width="1000" height="750">
@@ -607,34 +649,7 @@
       </div>
     </section>
 
-    <section id="mapa-hoy">
-      <div class="wrap">
-        <div class="section__head reveal pending" data-reveal>
-          <div>
-            <div class="section__kicker">Edición de hoy</div>
-            <h2 class="section__title">El mapa, en vivo</h2>
-          </div>
-          <p class="section__note">Mismo mapa Leaflet que genera el pipeline — panel, capas satelitales y popups incluidos.</p>
-        </div>
-        <div class="reveal pending" data-reveal>
-          <div class="mapframe">
-            <span class="mapframe__skeleton" id="map-skeleton">Cargando mapa…</span>
-            <iframe
-              src="index.html"
-              title="Mapa del Boletín Oficial de Minería — edición del día"
-              loading="lazy"
-              onload="this.classList.add('is-loaded'); var s=document.getElementById('map-skeleton'); if(s) s.style.display='none';"
-            ></iframe>
-          </div>
-          <div class="map__foot">
-            <span>Se actualiza solo, cada día, tras la corrida del pipeline.</span>
-            <a href="index.html">Abrir a pantalla completa ↗</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section>
+    <section class="band-alt">
       <div class="wrap">
         <div class="section__head reveal pending" data-reveal>
           <div>
@@ -679,7 +694,7 @@
         </div>
         <div class="legend-wrap reveal pending" data-reveal>
           <span class="legend-label">Georreferenciación probada</span>
-          <div class="legend legend--three" data-reveal-group>
+          <div class="legend legend--three" id="legend-proven" data-reveal-group>
             <div class="type spot reveal-item pending">
               <div class="type__top">
                 <span class="type__name"><span class="type__swatch" style="--sw:var(--c-pedi)"></span>Pedimentos</span>
@@ -703,7 +718,7 @@
             </div>
           </div>
           <span class="legend-label">Georreferenciación nueva</span>
-          <div class="legend legend--two" data-reveal-group>
+          <div class="legend legend--two" id="legend-new" data-reveal-group>
             <div class="type spot reveal-item pending">
               <div class="type__top">
                 <span class="type__name"><span class="type__swatch" style="--sw:var(--c-sexp)"></span>Sentencias de Exploración</span>
@@ -723,7 +738,7 @@
       </div>
     </section>
 
-    <section>
+    <section class="band-alt">
       <div class="wrap">
         <div class="section__head reveal pending" data-reveal>
           <div>
@@ -922,6 +937,45 @@
       });
     }
 
+    // Próxima corrida del pipeline: cron diario a las 17:00 UTC
+    // (.github/workflows/daily.yml) — puramente aritmético, no depende de datos.
+    var nextRunEl = document.getElementById('next-run');
+    if (nextRunEl) {
+      var renderNextRun = function(){
+        var now = new Date();
+        var next = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 17, 0, 0, 0));
+        if (next <= now) next.setUTCDate(next.getUTCDate() + 1);
+        var mins = Math.round((next - now) / 60000);
+        var h = Math.floor(mins / 60), m = mins % 60;
+        nextRunEl.textContent = '· próxima corrida en ' + (h > 0 ? h + 'h ' : '') + m + 'm';
+      };
+      renderNextRun();
+      setInterval(renderNextRun, 60000);
+    }
+
+    // Peso visual proporcional al conteo real en las tarjetas de tipo (bento,
+    // no un grid parejo) — con piso minimo para que ninguna quede ilegible.
+    // Solo se aplica desde el ancho en que el grid deja de apilarse a 1
+    // columna (ver .legend--three/.legend--two en CSS), para no pelear con
+    // ese layout responsive.
+    var legendWide = window.matchMedia('(min-width:621px)');
+    function weighGrid(container, counts){
+      if (!container) return;
+      if (!legendWide.matches) { container.style.gridTemplateColumns = ''; return; }
+      var floor = 0.55;
+      container.style.gridTemplateColumns = counts.map(function(c){
+        return Math.max(c, floor).toFixed(2) + 'fr';
+      }).join(' ');
+    }
+    var provenEl = document.getElementById('legend-proven');
+    var newEl = document.getElementById('legend-new');
+    var provenCounts = null, newCounts = null;
+    legendWide.addEventListener ? legendWide.addEventListener('change', reapplyWeights) : null;
+    function reapplyWeights(){
+      if (provenCounts) weighGrid(provenEl, provenCounts);
+      if (newCounts) weighGrid(newEl, newCounts);
+    }
+
     // Progressive enhancement: if this file is served alongside the real
     // data/reporte_latest.json (i.e. dropped into docs/ next to the pipeline
     // output), pull live counts. Silently keeps the static numbers otherwise.
@@ -949,14 +1003,23 @@
           if (mh) mh.textContent = 'Edición ' + report.edicion + ' · ' + report.fecha;
         }
 
+        provenCounts = [
+          report.por_tipo.pedimento || 0,
+          report.por_tipo.manifestacion || 0,
+          report.por_tipo.mensura || 0
+        ];
+        weighGrid(provenEl, provenCounts);
+
         // Sentencias: a diferencia de los otros tres tipos, todavía pueden
         // caer a revisión manual si el PDF no calza con el formato asumido
         // (ver parser.parse_sentencia). Reflejamos ambos estados.
         var pendientes = report.sin_georreferenciar || [];
+        newCounts = [];
         ['sexp', 'sexpl'].forEach(function(key){
           var tipo = key === 'sexp' ? 'sentencia_exploracion' : 'sentencia_explotacion';
           var ok = report.por_tipo[tipo] || 0;
           var pending = pendientes.filter(function(p){ return p.tipo === tipo; }).length;
+          newCounts.push(ok + pending);
           var countEl = document.getElementById('type-' + key);
           var noteEl = document.getElementById('type-' + key + '-note');
           animateNumber(countEl, ok);
@@ -974,6 +1037,7 @@
             }
           }
         });
+        weighGrid(newEl, newCounts);
       })
       .catch(function(){ /* static numbers stand */ });
   })();
