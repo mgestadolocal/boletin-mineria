@@ -1,23 +1,27 @@
 name: Boletin Mineria - backfill historico 2026 (goteo)
 
-# Backfill "de a poco": UNA fecha atrasada por corrida, cada 3 horas --
+# Backfill "de a poco": UNA fecha atrasada por corrida, cada 15 minutos --
 # imita exactamente el patron de daily.yml (una corrida = una fecha = un
 # browser de un solo uso = una IP fresca de GitHub Actions), que es el unico
 # patron confirmado que el sitio tolera. Los intentos de correr el backfill
 # completo en una sola corrida (162 fechas de una) chocaron con el anti-bot
 # del sitio dos veces el 26-08-2026 (ver commits 16da623 y el historial de
 # esa fecha) -- en vez de seguir peleando contra eso, este workflow copia el
-# patron que ya sabemos que funciona, solo que disparado mas seguido que una
-# vez al dia.
+# patron que ya sabemos que funciona, solo que disparado muy seguido en vez
+# de una vez al dia. Cada corrida es una IP/sesion nueva de GitHub Actions
+# (sin relacion con la corrida anterior ni la siguiente), asi que subir la
+# frecuencia no reintroduce el patron "muchas fechas en una sola sesion"
+# que fue lo que realmente disparo el bloqueo.
 #
-# A ~8 fechas/dia (cada 3h) cierra el hueco de ~158 dias habiles en unas
-# 2-3 semanas. Se puede parar en cualquier momento (Actions -> Disable
-# workflow) y retomar despues sin perder nada -- es resumible igual que el
-# backfill masivo (ver already_done() en backfill.py).
+# A ~96 corridas/dia (cada 15 min) el backlog de ~158 dias deberia cerrarse
+# en 1-2 dias. Si empiezan a aparecer fallos sistematicos (no solo alguna
+# fecha puntual atascada, ver RETRY_LIMIT en backfill.py), bajar la
+# frecuencia de nuevo. Se puede parar en cualquier momento (Actions ->
+# Disable workflow) y retomar despues sin perder nada -- es resumible.
 
 on:
   schedule:
-    - cron: '0 */3 * * *'
+    - cron: '*/15 * * * *'
   workflow_dispatch:
     inputs:
       max_days:

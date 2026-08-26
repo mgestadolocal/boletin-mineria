@@ -19,6 +19,13 @@ docs/data/reporte_<AAAAMMDD>.json (ya commiteado). Esto ultimo es lo que
 permite resumir en un checkout limpio de CI, donde el archivo de estado
 local no persiste entre corridas del workflow.
 
+Una fecha que falla se reintenta en corridas SEPARADAS (cada una con su
+propia IP de GitHub Actions) hasta RETRY_LIMIT veces -- despues de eso se
+salta y sigue con la siguiente, para que un feriado sin edicion real (o un
+bloqueo persistente) no deje trabado todo el backlog. El contador vive en
+docs/data/backfill_failed.json (SI se commitea, a diferencia del estado
+local) para que sobreviva entre corridas.
+
 Publica (git add + commit + push de docs/data/ y docs/historico.html) al
 terminar cada mes calendario procesado, para que el sitio se vaya
 actualizando progresivamente en vez de esperar a que termine todo el rango.
@@ -36,12 +43,21 @@ import run_pipeline as RP
 import scraper as S
 
 STATE_PATH = ".backfill_state.json"
+# Contador de reintentos entre corridas SEPARADAS (a diferencia de
+# .backfill_state.json, este SI se commitea -- vive dentro de docs/data
+# para que "git add -A -- docs/data" ya lo incluya). Sin esto, una fecha
+# que falla de verdad (bloqueo del sitio, o un feriado sin edicion real)
+# deja al drip trabado reintentando SIEMPRE la misma fecha mas vieja en
+# cada corrida nueva, sin avanzar nunca al resto del backlog.
+FAILED_TRACK_PATH = "docs/data/backfill_failed.json"
+RETRY_LIMIT = 4  # intentos entre corridas distintas (c/u con IP propia)
+                 # antes de saltarse la fecha y seguir con la siguiente
 DEFAULT_START = "01-01-2026"
 DEFAULT_END = "16-08-2026"
 SLEEP_BETWEEN_DAYS = 6.0  # cortesia con el sitio, ademas del delay entre PDFs
                           # (subido de 2.0 a 6.0 tras el bloqueo anti-bot del
                           # 26-08-2026 -- ver commit fcc3d92)
-MAX_ATTEMPTS_PER_DAY = 2  # 1 intento + 1 reintento
+MAX_ATTEMPTS_PER_DAY = 2  # 1 intento + 1 reintento, DENTRO de una misma corrida
 
 MESES = ["", "enero", "febrero", "marzo", "abril", "mayo", "junio", "julio",
          "agosto", "septiembre", "octubre", "noviembre", "diciembre"]
@@ -106,6 +122,22 @@ def save_state(state):
         json.dump(state, f, ensure_ascii=False, indent=1, sort_keys=True)
 
 
+def load_failed_track():
+    if os.path.exists(FAILED_TRACK_PATH):
+        try:
+            with open(FAILED_TRACK_PATH, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except Exception:
+            pass
+    return {}
+
+
+def save_failed_track(failed_track):
+    os.makedirs(os.path.dirname(FAILED_TRACK_PATH), exist_ok=True)
+    with open(FAILED_TRACK_PATH, "w", encoding="utf-8") as f:
+        json.dump(failed_track, f, ensure_ascii=False, indent=1, sort_keys=True)
+
+
 def has_staged_changes():
     r = subprocess.run(["git", "diff", "--cached", "--quiet"])
     return r.returncode != 0
@@ -153,12 +185,13 @@ def main():
     push = not args.no_push
 
     state = load_state()
+    failed_track = load_failed_track()
     days = list(business_days(start, end))
     print(f"Backfill: {len(days)} dias habiles entre {args.start} y {args.end}")
 
     current_month = None
     month_new_pubs = 0
-    total_ok = total_skipped = total_failed = 0
+    total_ok = total_skipped = total_failed = total_retry_skipped = 0
 
     def flush_month():
         nonlocal month_new_pubs
@@ -189,6 +222,18 @@ def main():
                     total_skipped += 1
                     continue
 
+                if failed_track.get(date_str, 0) >= RETRY_LIMIT:
+                    # Ya se intento RETRY_LIMIT veces en corridas SEPARADAS
+                    # (cada una con su propia IP) y sigue fallando -- puede
+                    # ser un feriado sin edicion real, no necesariamente un
+                    # bloqueo. Sin este salto, el drip quedaria trabado
+                    # reintentando para siempre esta misma fecha y nunca
+                    # avanzaria al resto del backlog.
+                    print(f"  ({date_str}: {failed_track[date_str]} intentos fallidos "
+                          f"entre corridas, saltando por ahora -- revisar a mano)")
+                    total_retry_skipped += 1
+                    continue
+
                 if args.max_days is not None and total_ok + total_failed >= args.max_days:
                     print(f"\n(limite de --max-days {args.max_days} alcanzado, "
                           f"parando aca -- la proxima corrida sigue desde {date_str})")
@@ -209,6 +254,8 @@ def main():
                         month_new_pubs += report["georreferenciadas"]
                         total_ok += 1
                         save_state(state)
+                        failed_track.pop(date_str, None)
+                        save_failed_track(failed_track)
                         break
                     except Exception as e:
                         print(f"  ERROR (intento {attempt}/{MAX_ATTEMPTS_PER_DAY}): {e}")
@@ -216,6 +263,8 @@ def main():
                             state[date_str] = {"status": "error", "error": str(e)}
                             total_failed += 1
                             save_state(state)
+                            failed_track[date_str] = failed_track.get(date_str, 0) + 1
+                            save_failed_track(failed_track)
                             break
                         time.sleep(5)
 
@@ -228,10 +277,15 @@ def main():
             browser.close()
 
     print("\n=== Backfill terminado ===")
-    print(f"OK: {total_ok}  saltados (ya hechos): {total_skipped}  fallidos: {total_failed}")
+    print(f"OK: {total_ok}  saltados (ya hechos): {total_skipped}  "
+          f"fallidos: {total_failed}  saltados por limite de reintentos: {total_retry_skipped}")
     failed = sorted(k for k, v in state.items() if v.get("status") == "error")
     if failed:
         print(f"Fechas con error (revisar manualmente): {failed}")
+    stuck = sorted(k for k, v in failed_track.items() if v >= RETRY_LIMIT)
+    if stuck:
+        print(f"Fechas atascadas tras {RETRY_LIMIT} intentos en corridas separadas "
+              f"(probable feriado sin edicion, o bloqueo persistente): {stuck}")
 
 
 if __name__ == "__main__":
