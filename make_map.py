@@ -126,15 +126,14 @@ if (data.features.length) {
       lyr.bindPopup(html);
     }
   }).addTo(map);
-  // El encuadre inicial es un cajon fijo sobre el corredor minero real
-  // (calibrado con el historico acumulado real: norte a centro-sur de
-  // Chile, donde vive la gran mayoria de las publicaciones) en vez de
-  // ajustarse a los limites exactos de ESTE dia. Un caso aislado en un
-  // extremo (ej. una mensura puntual en Magallanes, mucho mas al sur que
-  // el resto) no debe forzar un zoom abierto que empequeñezca todo lo
-  // demas -- esos puntos siguen en el mapa (clic, popup), solo no entran
-  // en el encuadre inicial.
-  const CHILE_MINERO = [[-40.0, -73.1], [-17.8, -67.0]];
+  // El encuadre inicial es un cajon fijo (calibrado a mano contra una
+  // captura de referencia: norte de Chile con contexto del NO argentino
+  // de fondo) en vez de ajustarse a los limites exactos de ESTE dia. Un
+  // caso aislado en un extremo (ej. una mensura puntual en Magallanes,
+  // mucho mas al sur que el resto) no debe forzar un zoom abierto que
+  // empequeñezca todo lo demas -- esos puntos siguen en el mapa (clic,
+  // popup), solo no entran en el encuadre inicial.
+  const CHILE_MINERO = [[-40.5, -84.0], [-22.3, -55.0]];
   // Padding asimetrico: reserva espacio en la esquina superior derecha para
   // el panel/leyenda flotante, asi el zoom no deja el territorio ni los
   // datos tapados detras del panel.

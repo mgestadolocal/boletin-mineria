@@ -399,10 +399,9 @@
   @media (prefers-reduced-motion: reduce){ html{ scroll-behavior:auto; } }
   .mapframe{
     position:relative;
-    /* Chile es mucho mas alto que ancho -- una relacion menos panoramica
-       (4:3 en vez de 16:10) deja ver mejor la silueta completa del pais
-       en el recuadro chico del hero. */
-    aspect-ratio:4/3;
+    /* Proporcion calibrada contra la captura de referencia (Chile con
+       contexto del NO argentino de fondo) -- mas panoramica que un 4:3. */
+    aspect-ratio:16/10;
     border:1px solid var(--line);
     border-radius:var(--radius);
     overflow:hidden;
