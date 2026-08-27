@@ -660,7 +660,22 @@
     font-size:1.4rem;
   }
   .hallazgo-split__l{ font-size:0.78rem; color:var(--ink-faint); }
-  .tipobars{ display:flex; flex-direction:column; gap:16px; }
+  .tipobars{ display:flex; flex-direction:column; gap:28px; }
+  /* Dos escalas distintas, no una: publicaciones del Boletin (cientos-miles)
+     y concesiones del catastro SERNAGEOMIN (decenas de miles) viven en
+     ordenes de magnitud tan distintos que compararlas en una sola barra
+     "aplastaba" a pedimentos/manifestaciones/mensuras contra el ancho de
+     sentencias (ver anti-patron "dos medidas de escala distinta -> un solo
+     grafico" -- corregido el 27-08-2026 tras la fusion del catastro
+     completo). Cada grupo indexa a su propio maximo. */
+  .tipobars__group{ display:flex; flex-direction:column; gap:16px; }
+  .tipobars__label{
+    font-family:var(--font-mono);
+    font-size:0.72rem;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--ink-faint);
+  }
   .tipobar{
     display:grid;
     grid-template-columns:190px 1fr 64px;
@@ -1273,7 +1288,6 @@
         if (!stats || !stats.por_tipo) return;
         var wrap = document.getElementById('tipobars');
         if (!wrap) return;
-        var order = ['pedimento', 'manifestacion', 'mensura', 'sentencia_exploracion', 'sentencia_explotacion'];
         var meta = {
           pedimento: ['Pedimentos', '--c-pedi'],
           manifestacion: ['Manifestaciones', '--c-manif'],
@@ -1281,18 +1295,35 @@
           sentencia_exploracion: ['Sentencias de Exploración', '--c-sexp'],
           sentencia_explotacion: ['Sentencias de Explotación', '--c-sexpl']
         };
-        var max = 0;
-        order.forEach(function(k){ max = Math.max(max, stats.por_tipo[k] || 0); });
-        order.forEach(function(k){
-          var v = stats.por_tipo[k] || 0;
-          var m = meta[k];
-          var row = document.createElement('div');
-          row.className = 'tipobar';
-          row.innerHTML =
-            '<div class="tipobar__name"><span class="tipobar__swatch" style="background:var(' + m[1] + ')"></span>' + m[0] + '</div>' +
-            '<div class="tipobar__track"><div class="tipobar__fill" style="background:var(' + m[1] + ')" data-w="' + (max ? (v / max * 100) : 0) + '"></div></div>' +
-            '<div class="tipobar__val">' + v.toLocaleString('es-CL') + '</div>';
-          wrap.appendChild(row);
+        // Dos grupos, cada uno con su propia escala -- ver comentario CSS en
+        // .tipobars__group. Publicaciones del Boletin (cientos-miles) vs.
+        // concesiones del catastro SERNAGEOMIN completo (decenas de miles):
+        // en una sola escala lineal las primeras quedaban invisibles.
+        var groups = [
+          { label: 'Publicaciones del Boletín Oficial', keys: ['pedimento', 'manifestacion', 'mensura'] },
+          { label: 'Concesiones del catastro SERNAGEOMIN completo', keys: ['sentencia_exploracion', 'sentencia_explotacion'] }
+        ];
+        groups.forEach(function(group){
+          var max = 0;
+          group.keys.forEach(function(k){ max = Math.max(max, stats.por_tipo[k] || 0); });
+          var section = document.createElement('div');
+          section.className = 'tipobars__group';
+          var label = document.createElement('div');
+          label.className = 'tipobars__label';
+          label.textContent = group.label;
+          section.appendChild(label);
+          group.keys.forEach(function(k){
+            var v = stats.por_tipo[k] || 0;
+            var m = meta[k];
+            var row = document.createElement('div');
+            row.className = 'tipobar';
+            row.innerHTML =
+              '<div class="tipobar__name"><span class="tipobar__swatch" style="background:var(' + m[1] + ')"></span>' + m[0] + '</div>' +
+              '<div class="tipobar__track"><div class="tipobar__fill" style="background:var(' + m[1] + ')" data-w="' + (max ? (v / max * 100) : 0) + '"></div></div>' +
+              '<div class="tipobar__val">' + v.toLocaleString('es-CL') + '</div>';
+            section.appendChild(row);
+          });
+          wrap.appendChild(section);
         });
         // Anchar las barras despues de insertarlas (transition de width).
         requestAnimationFrame(function(){
