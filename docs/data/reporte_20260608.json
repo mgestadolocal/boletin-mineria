@@ -1,0 +1,92 @@
+{
+ "fecha": "08-06-2026",
+ "edicion": "44469",
+ "total_publicaciones": 216,
+ "georreferenciadas": 203,
+ "por_tipo": {
+  "manifestacion": 66,
+  "mensura": 61,
+  "pedimento": 76
+ },
+ "sin_georreferenciar": [
+  {
+   "cve": "2819075",
+   "tipo": "manifestacion",
+   "archivo": "gm_manifestacion_2819075.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2819085",
+   "tipo": "manifestacion",
+   "archivo": "gm_manifestacion_2819085.pdf",
+   "motivo": "rectificacion_sin_geometria"
+  },
+  {
+   "cve": "2819073",
+   "tipo": "manifestacion",
+   "archivo": "gm_manifestacion_2819073.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2818900",
+   "tipo": "manifestacion",
+   "archivo": "gm_manifestacion_2818900.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2819068",
+   "tipo": "mensura",
+   "archivo": "gm_mensura_2819068.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2819710",
+   "tipo": "mensura",
+   "archivo": "gm_mensura_2819710.pdf",
+   "motivo": "geometria invalida o area cero"
+  },
+  {
+   "cve": "2819779",
+   "tipo": "mensura",
+   "archivo": "gm_mensura_2819779.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2818849",
+   "tipo": "mensura",
+   "archivo": "gm_mensura_2818849.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2818609",
+   "tipo": "mensura",
+   "archivo": "gm_mensura_2818609.pdf",
+   "motivo": "geometria invalida o area cero"
+  },
+  {
+   "cve": "2819760",
+   "tipo": "pedimento",
+   "archivo": "gm_pedimento_2819760.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2819758",
+   "tipo": "pedimento",
+   "archivo": "gm_pedimento_2819758.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2819759",
+   "tipo": "pedimento",
+   "archivo": "gm_pedimento_2819759.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2821258",
+   "tipo": "pedimento",
+   "archivo": "gm_pedimento_2821258.pdf",
+   "motivo": "parseo_incompleto"
+  }
+ ],
+ "historico_total_acumulado": 112717
+}
