@@ -1,0 +1,20 @@
+{
+ "fecha": "21-07-2026",
+ "edicion": "44504",
+ "total_publicaciones": 47,
+ "georreferenciadas": 46,
+ "por_tipo": {
+  "manifestacion": 5,
+  "mensura": 8,
+  "pedimento": 33
+ },
+ "sin_georreferenciar": [
+  {
+   "cve": "2840397",
+   "tipo": "manifestacion",
+   "archivo": "gm_manifestacion_2840397.pdf",
+   "motivo": "parseo_incompleto"
+  }
+ ],
+ "historico_total_acumulado": 2472
+}
