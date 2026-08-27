@@ -19,6 +19,26 @@ UNIT = r'(?:metros|mts?\.?|m\.?)'
 def clean_num(s):
     s = s.strip()
     s = s.strip('.,')
+    # Bug detectado el 27-08-2026 (CVEs 2828746 y 2859811, georreferenciados
+    # en Argentina): algunos formularios escriben CADA separador -- miles Y
+    # decimales -- con el MISMO caracter, ej. "7.051.500.00" (todo puntos) o
+    # "272,500,00" (todo comas, CVE 2838780) -- en vez del formato chileno
+    # habitual "7.051.500,00" (puntos=miles, coma=decimal). Tratar todas las
+    # repeticiones como separador de miles (comportamiento de antes) infla el
+    # numero x100 (ej. "705150000"), lo saca del rango valido de coordenada
+    # UTM, y el codigo termina eligiendo por descarte un numero vecino
+    # equivocado. Heuristica: el separador aparece 2+ veces SIN el otro
+    # separador presente, Y el ultimo grupo tiene EXACTAMENTE 2 digitos
+    # (huella de centavos/decimales, ej. ".00") -> esa ultima ocurrencia es
+    # el separador decimal real; las anteriores siguen siendo de miles. Un
+    # grupo final de 3 digitos (ej. "1.000") sigue siendo miles, como
+    # siempre; y un separador que aparece una sola vez no se toca (ambiguo,
+    # y no es el patron confirmado).
+    for sep, other in (('.', ','), (',', '.')):
+        if other not in s and s.count(sep) >= 2:
+            partes = s.split(sep)
+            if len(partes[-1]) == 2:
+                return float(''.join(partes[:-1]) + '.' + partes[-1])
     s = s.replace('.', '').replace(',', '.')
     return float(s)
 
@@ -39,9 +59,16 @@ def find_datum(t):
     # la longitud ~6 grados al este del valor real. Distintos estudios
     # juridicos usan una u otra palabra para lo mismo, asi que hay que
     # aceptar ambas.
-    huso_m = re.search(r'(?:Huso|[Zz]ona)\s*(\d{1,2})\s*(?:S|Sur|N|Norte)?', t, F)
+    # Segundo hallazgo el 27-08-2026 (CVEs 2822652-55, 2859100-01, 2831515,
+    # 2840656, 2838780): la frase real es "Zona o Huso UTM 18" -- "Zona" y
+    # "Huso" van JUNTOS con "UTM" de por medio antes del numero, algo que
+    # ni "Huso\s*18" ni "Zona\s*18" (por separado) matcheaban. Se tolera
+    # ahora un tramo corto de texto no-numerico entre la palabra clave y el
+    # numero (cubre "UTM", "o Huso UTM", "N°", etc.) en vez de exigir que
+    # el numero vaya inmediatamente pegado.
+    huso_m = re.search(r'(?:Huso|[Zz]ona)[^0-9]{0,25}?(\d{1,2})\s*(?:S|Sur|N|Norte)?', t, F)
     huso = int(huso_m.group(1)) if huso_m else 19
-    hemis_m = re.search(r'(?:Huso|[Zz]ona)\s*\d{1,2}\s*(S|Sur|N|Norte)', t, F)
+    hemis_m = re.search(r'(?:Huso|[Zz]ona)[^0-9]{0,25}?\d{1,2}\s*(S|Sur|N|Norte)', t, F)
     hemis = 'S'
     if hemis_m and hemis_m.group(1).upper().startswith('N'):
         hemis = 'N'
