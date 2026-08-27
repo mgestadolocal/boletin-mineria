@@ -47,7 +47,16 @@ _BASE_TEMPLATE = """<!DOCTYPE html>
     max-width:158px; font-size:10.5px; line-height:1.35;
   }
   .panel h3 { margin:0 0 4px 0; font-size:11.5px; }
-  .legend-item { display:flex; align-items:center; margin:2px 0; }
+  .legend-item {
+    display:flex; align-items:center; margin:2px 0; cursor:pointer;
+    user-select:none; border-radius:3px; padding:1px 2px; margin-left:-2px;
+  }
+  .legend-item:hover { background:rgba(0,0,0,.05); }
+  /* Atributo des-seleccionado: la capa correspondiente se saca del mapa
+     (ver JS) y el item de la leyenda queda visualmente "apagado" para que
+     se note que esta oculto, sin desaparecer del panel. */
+  .legend-item--off { opacity:.4; }
+  .legend-item--off .swatch { box-shadow: inset 0 0 0 1px rgba(0,0,0,.4); }
   .swatch { width:9px; height:9px; margin-right:5px; border-radius:2px; flex-shrink:0; }
   .stat { color:#555; }
   .popup-title { font-weight:600; margin-bottom:4px; }
@@ -104,29 +113,64 @@ L.control.layers({ "Calles": osm, "Satelite": sat }).addTo(map);
 
 const colors = __COLORS__;
 
+function styleFor(feature) {
+  const c = colors[feature.properties.tipo_publicacion] || '#888';
+  return { color: c, weight: 2, fillColor: c, fillOpacity: 0.25 };
+}
+function bindPopup(feature, lyr) {
+  const p = feature.properties;
+  const html = `
+    <div class="popup-title">${p.nombre || '(sin nombre)'}</div>
+    <div class="popup-row"><b>Tipo:</b> ${p.tipo_publicacion}</div>
+    <div class="popup-row"><b>CVE:</b> ${p.cve}</div>
+    <div class="popup-row"><b>Fecha publicacion:</b> ${p.fecha || '-'}</div>
+    <div class="popup-row"><b>Solicitante:</b> ${p.solicitante || '-'}</div>
+    <div class="popup-row"><b>Region:</b> ${p.region || '-'}</div>
+    <div class="popup-row"><b>Provincia:</b> ${p.provincia || '-'}</div>
+    <div class="popup-row"><b>Superficie:</b> ${p.superficie_ha ? p.superficie_ha + ' ha' : '-'}</div>
+    <div class="popup-row"><b>Datum origen:</b> ${p.datum_original} / Huso ${p.huso}</div>
+    <div class="popup-row"><a class="pdf-link" href="${p.fuente_pdf}" target="_blank">Ver PDF original</a></div>
+  `;
+  lyr.bindPopup(html);
+}
+
 if (data.features.length) {
-  const layer = L.geoJSON(data, {
-    style: function(feature) {
-      const c = colors[feature.properties.tipo_publicacion] || '#888';
-      return { color: c, weight: 2, fillColor: c, fillOpacity: 0.25 };
-    },
-    onEachFeature: function(feature, lyr) {
-      const p = feature.properties;
-      const html = `
-        <div class="popup-title">${p.nombre || '(sin nombre)'}</div>
-        <div class="popup-row"><b>Tipo:</b> ${p.tipo_publicacion}</div>
-        <div class="popup-row"><b>CVE:</b> ${p.cve}</div>
-        <div class="popup-row"><b>Fecha publicacion:</b> ${p.fecha || '-'}</div>
-        <div class="popup-row"><b>Solicitante:</b> ${p.solicitante || '-'}</div>
-        <div class="popup-row"><b>Region:</b> ${p.region || '-'}</div>
-        <div class="popup-row"><b>Provincia:</b> ${p.provincia || '-'}</div>
-        <div class="popup-row"><b>Superficie:</b> ${p.superficie_ha ? p.superficie_ha + ' ha' : '-'}</div>
-        <div class="popup-row"><b>Datum origen:</b> ${p.datum_original} / Huso ${p.huso}</div>
-        <div class="popup-row"><a class="pdf-link" href="${p.fuente_pdf}" target="_blank">Ver PDF original</a></div>
-      `;
-      lyr.bindPopup(html);
-    }
-  }).addTo(map);
+  // Una capa Leaflet POR TIPO (no una sola combinada) -- asi el toggle de
+  // la leyenda puede sacar/poner del mapa solo ese tipo con
+  // map.removeLayer/addLayer, sin tener que reconstruir nada.
+  const layersByType = {};
+  const byType = {};
+  for (const f of data.features) {
+    const t = f.properties.tipo_publicacion;
+    (byType[t] = byType[t] || []).push(f);
+  }
+  for (const t in byType) {
+    const lyr = L.geoJSON({ type: 'FeatureCollection', features: byType[t] }, {
+      style: styleFor,
+      onEachFeature: bindPopup
+    });
+    lyr.addTo(map);
+    layersByType[t] = lyr;
+  }
+
+  // Leyenda: cada item togglea su tipo (des-seleccionar = sacar la capa
+  // del mapa y apagar visualmente el item; volver a clickear la trae de
+  // vuelta). Dinamico, sin recargar la pagina.
+  document.querySelectorAll('.legend-item[data-tipo]').forEach(function(el) {
+    el.addEventListener('click', function() {
+      const t = el.dataset.tipo;
+      const lyr = layersByType[t];
+      if (!lyr) return;
+      if (map.hasLayer(lyr)) {
+        map.removeLayer(lyr);
+        el.classList.add('legend-item--off');
+      } else {
+        lyr.addTo(map);
+        el.classList.remove('legend-item--off');
+      }
+    });
+  });
+
   // El encuadre inicial es un cajon fijo (calibrado a mano contra una
   // captura de referencia: norte de Chile con contexto del NO argentino
   // de fondo) en vez de ajustarse a los limites exactos de ESTE dia. Un
@@ -155,7 +199,7 @@ def _render(rows, title, subtitle, gpkg_name, geojson_name, nav_html, out_path):
         counts[row['tipo_publicacion']] = counts.get(row['tipo_publicacion'], 0) + 1
 
     legend_items = "\n".join(
-        f'<div class="legend-item"><span class="swatch" style="background:{COLORS.get(t, "#888")}"></span> '
+        f'<div class="legend-item" data-tipo="{t}"><span class="swatch" style="background:{COLORS.get(t, "#888")}"></span> '
         f'{LABELS.get(t, t)} ({n})</div>'
         for t, n in counts.items()
     )
