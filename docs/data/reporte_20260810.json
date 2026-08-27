@@ -1,0 +1,80 @@
+{
+ "fecha": "10-08-2026",
+ "edicion": "44521",
+ "total_publicaciones": 227,
+ "georreferenciadas": 216,
+ "por_tipo": {
+  "manifestacion": 74,
+  "mensura": 59,
+  "pedimento": 83
+ },
+ "sin_georreferenciar": [
+  {
+   "cve": "2850744",
+   "tipo": "manifestacion",
+   "archivo": "gm_manifestacion_2850744.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2850745",
+   "tipo": "manifestacion",
+   "archivo": "gm_manifestacion_2850745.pdf",
+   "motivo": "rectificacion_sin_geometria"
+  },
+  {
+   "cve": "2850406",
+   "tipo": "manifestacion",
+   "archivo": "gm_manifestacion_2850406.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2850656",
+   "tipo": "manifestacion",
+   "archivo": "gm_manifestacion_2850656.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2850476",
+   "tipo": "manifestacion",
+   "archivo": "gm_manifestacion_2850476.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2850036",
+   "tipo": "mensura",
+   "archivo": "gm_mensura_2850036.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2850397",
+   "tipo": "mensura",
+   "archivo": "gm_mensura_2850397.pdf",
+   "motivo": "geometria invalida o area cero"
+  },
+  {
+   "cve": "2852780",
+   "tipo": "pedimento",
+   "archivo": "gm_pedimento_2852780.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2850046",
+   "tipo": "pedimento",
+   "archivo": "gm_pedimento_2850046.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2850676",
+   "tipo": "pedimento",
+   "archivo": "gm_pedimento_2850676.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2850675",
+   "tipo": "pedimento",
+   "archivo": "gm_pedimento_2850675.pdf",
+   "motivo": "parseo_incompleto"
+  }
+ ],
+ "historico_total_acumulado": 3329
+}
