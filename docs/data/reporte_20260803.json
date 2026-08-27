@@ -1,0 +1,98 @@
+{
+ "fecha": "03-08-2026",
+ "edicion": "44515",
+ "total_publicaciones": 88,
+ "georreferenciadas": 74,
+ "por_tipo": {
+  "manifestacion": 28,
+  "mensura": 12,
+  "pedimento": 34
+ },
+ "sin_georreferenciar": [
+  {
+   "cve": "2847580",
+   "tipo": "manifestacion",
+   "archivo": "gm_manifestacion_2847580.pdf",
+   "motivo": "rectificacion_sin_geometria"
+  },
+  {
+   "cve": "2847581",
+   "tipo": "manifestacion",
+   "archivo": "gm_manifestacion_2847581.pdf",
+   "motivo": "rectificacion_sin_geometria"
+  },
+  {
+   "cve": "2847585",
+   "tipo": "manifestacion",
+   "archivo": "gm_manifestacion_2847585.pdf",
+   "motivo": "rectificacion_sin_geometria"
+  },
+  {
+   "cve": "2847586",
+   "tipo": "manifestacion",
+   "archivo": "gm_manifestacion_2847586.pdf",
+   "motivo": "rectificacion_sin_geometria"
+  },
+  {
+   "cve": "2847582",
+   "tipo": "manifestacion",
+   "archivo": "gm_manifestacion_2847582.pdf",
+   "motivo": "rectificacion_sin_geometria"
+  },
+  {
+   "cve": "2847583",
+   "tipo": "manifestacion",
+   "archivo": "gm_manifestacion_2847583.pdf",
+   "motivo": "rectificacion_sin_geometria"
+  },
+  {
+   "cve": "2847584",
+   "tipo": "manifestacion",
+   "archivo": "gm_manifestacion_2847584.pdf",
+   "motivo": "rectificacion_sin_geometria"
+  },
+  {
+   "cve": "2847587",
+   "tipo": "manifestacion",
+   "archivo": "gm_manifestacion_2847587.pdf",
+   "motivo": "rectificacion_sin_geometria"
+  },
+  {
+   "cve": "2847588",
+   "tipo": "manifestacion",
+   "archivo": "gm_manifestacion_2847588.pdf",
+   "motivo": "rectificacion_sin_geometria"
+  },
+  {
+   "cve": "2847589",
+   "tipo": "manifestacion",
+   "archivo": "gm_manifestacion_2847589.pdf",
+   "motivo": "rectificacion_sin_geometria"
+  },
+  {
+   "cve": "2847506",
+   "tipo": "manifestacion",
+   "archivo": "gm_manifestacion_2847506.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2847468",
+   "tipo": "manifestacion",
+   "archivo": "gm_manifestacion_2847468.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2847094",
+   "tipo": "mensura",
+   "archivo": "gm_mensura_2847094.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2847037",
+   "tipo": "pedimento",
+   "archivo": "gm_pedimento_2847037.pdf",
+   "motivo": "parseo_incompleto"
+  }
+ ],
+ "historico_total_acumulado": 2965
+}
