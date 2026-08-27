@@ -1,0 +1,32 @@
+{
+ "fecha": "09-07-2026",
+ "edicion": "44495",
+ "total_publicaciones": 42,
+ "georreferenciadas": 39,
+ "por_tipo": {
+  "manifestacion": 13,
+  "mensura": 20,
+  "pedimento": 6
+ },
+ "sin_georreferenciar": [
+  {
+   "cve": "2834864",
+   "tipo": "mensura",
+   "archivo": "gm_mensura_2834864.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2834865",
+   "tipo": "mensura",
+   "archivo": "gm_mensura_2834865.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2834947",
+   "tipo": "pedimento",
+   "archivo": "gm_pedimento_2834947.pdf",
+   "motivo": "parseo_incompleto"
+  }
+ ],
+ "historico_total_acumulado": 1865
+}
