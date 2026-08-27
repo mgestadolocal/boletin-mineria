@@ -1,0 +1,26 @@
+{
+ "fecha": "04-06-2026",
+ "edicion": "44466",
+ "total_publicaciones": 28,
+ "georreferenciadas": 26,
+ "por_tipo": {
+  "manifestacion": 15,
+  "mensura": 2,
+  "pedimento": 9
+ },
+ "sin_georreferenciar": [
+  {
+   "cve": "2818396",
+   "tipo": "manifestacion",
+   "archivo": "gm_manifestacion_2818396.pdf",
+   "motivo": "rectificacion_sin_geometria"
+  },
+  {
+   "cve": "2818057",
+   "tipo": "pedimento",
+   "archivo": "gm_pedimento_2818057.pdf",
+   "motivo": "parseo_incompleto"
+  }
+ ],
+ "historico_total_acumulado": 1417
+}
