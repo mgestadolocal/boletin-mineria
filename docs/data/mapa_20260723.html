@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Boletin Oficial de Mineria - 23-07-2026 - Edicion 44506</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+<style>
+  html, body { margin:0; padding:0; height:100%; font-family: -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+  #map { position:absolute; top:0; bottom:0; left:0; right:0; }
+  .panel {
+    position:absolute; top:8px; right:8px; z-index:1000; background:white;
+    padding:9px 11px; border-radius:6px; box-shadow:0 2px 10px rgba(0,0,0,.25);
+    max-width:158px; font-size:10.5px; line-height:1.35;
+  }
+  .panel h3 { margin:0 0 4px 0; font-size:11.5px; }
+  .legend-item { display:flex; align-items:center; margin:2px 0; }
+  .swatch { width:9px; height:9px; margin-right:5px; border-radius:2px; flex-shrink:0; }
+  .stat { color:#555; }
+  .popup-title { font-weight:600; margin-bottom:4px; }
+  .popup-row { margin:2px 0; }
+  a.pdf-link { color:#1a73e8; }
+  .dl-row { margin-top:6px; }
+  .dl-row a { display:inline-block; margin-right:6px; font-size:9.5px; color:#1a73e8; }
+  .nav-row { margin-top:5px; font-size:9.5px; }
+  .nav-row a { color:#1a73e8; }
+  /* Cuando el mapa vive embebido en un iframe (la vista previa de la
+     landing), el panel pierde los links de descarga/nav -- ahi solo
+     importa mostrar el mapa y una leyenda legible; para los links esta el
+     boton "abrir a pantalla completa" de la landing, que carga esta misma
+     pagina sin iframe y con el panel completo. */
+  .panel.panel--compact { max-width:146px; padding:8px 10px; }
+  .panel.panel--compact .dl-row, .panel.panel--compact .nav-row { display:none; }
+</style>
+</head>
+<body>
+<div id="map"></div>
+<div class="panel">
+  <h3>Boletin Oficial de Mineria</h3>
+  <div class="stat">Edicion 44506 &middot; 23-07-2026</div>
+  <div style="margin-top:10px;">
+    <div class="legend-item"><span class="swatch" style="background:#16a34a"></span> Manifestaciones (8)</div>
+<div class="legend-item"><span class="swatch" style="background:#dc2626"></span> Mensuras (2)</div>
+<div class="legend-item"><span class="swatch" style="background:#2563eb"></span> Pedimentos (11)</div>
+  </div>
+  <div class="dl-row">
+    <a href="data/boletin_mineria_latest.gpkg" download>Descargar GeoPackage</a>
+    <a href="data/boletin_mineria_latest.geojson" download>Descargar GeoJSON</a>
+  </div>
+  <div class="nav-row"><a href="historico.html">Ver historico completo (todas las fechas) &rarr;</a></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+const data = {"type": "FeatureCollection", "features": [{"type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[-70.24415570629748, -18.554602000677992], [-70.23468166398769, -18.554664209524688], [-70.23481168975913, -18.57273620432203], [-70.24428672916639, -18.572673930583647], [-70.24415570629748, -18.554602000677992]]]}, "properties": {"cve": "2841532", "nombre": "NUEVA MIA ISABEL 2 DEL 1 AL 20", "solicitante": "Barrios Díaz Iván Sebastián", "region": "REGIÓN DE ARICA Y PARINACOTA", "provincia": "Provincia de Arica", "comuna": null, "superficie_ha": 200.0, "datum_original": "WGS84", "huso": 19, "epsg_origen": 32719, "tipo_publicacion": "manifestacion", "fuente_pdf": "http://www.diariooficial.interior.gob.cl/publicaciones/2026/07/23/44506/07/2841532.pdf", "archivo": "gm_manifestacion_2841532.pdf", "fecha": "23-07-2026", "edicion": "44506"}}, {"type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[-69.60965934813298, -27.56238552818376], [-69.59952992800595, -27.56242960168679], [-69.59967714992511, -27.589511675463644], [-69.60980905708284, -27.58946755138906], [-69.60965934813298, -27.56238552818376]]]}, "properties": {"cve": "2841639", "nombre": "ANTURI C 1, 1 AL 30", "solicitante": "Antofagasta Minerals S.A.", "region": "REGIÓN DE ATACAMA", "provincia": "Provincia de Copiapó", "comuna": null, "superficie_ha": 300.0, "datum_original": "PSAD56", "huso": 19, "epsg_origen": 24879, "tipo_publicacion": "manifestacion", "fuente_pdf": "http://www.diariooficial.interior.gob.cl/publicaciones/2026/07/23/44506/07/2841639.pdf", "archivo": "gm_manifestacion_2841639.pdf", "fecha": "23-07-2026", "edicion": "44506"}}, {"type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[-69.59950541099938, -27.55791591230231], [-69.58937638221663, -27.557959239198674], [-69.58947282722329, -27.576014012017122], [-69.59960351327099, -27.575970651976455], [-69.59950541099938, -27.55791591230231]]]}, "properties": {"cve": "2841640", "nombre": "ANTURI C 2, 1 AL 20", "solicitante": "Antofagasta Minerals S.A.", "region": "REGIÓN DE ATACAMA", "provincia": "Provincia de Copiapó", "comuna": null, "superficie_ha": 200.0, "datum_original": "PSAD56", "huso": 19, "epsg_origen": 24879, "tipo_publicacion": "manifestacion", "fuente_pdf": "http://www.diariooficial.interior.gob.cl/publicaciones/2026/07/23/44506/07/2841640.pdf", "archivo": "gm_manifestacion_2841640.pdf", "fecha": "23-07-2026", "edicion": "44506"}}, {"type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[-70.90739777634795, -27.936675378683535], [-70.8972387221859, -27.936815755634715], [-70.89739639934706, -27.94583815976325], [-70.90755629657079, -27.945697729643157], [-70.90739777634795, -27.936675378683535]]]}, "properties": {"cve": "2841535", "nombre": "ATENEA 1/10", "solicitante": "Cepeda Alafaro Diego Alonso", "region": "REGIÓN DE ATACAMA", "provincia": "Provincia de Copiapó", "comuna": "Copiapó", "superficie_ha": 100.0, "datum_original": "PSAD56", "huso": 19, "epsg_origen": 24879, "tipo_publicacion": "manifestacion", "fuente_pdf": "http://www.diariooficial.interior.gob.cl/publicaciones/2026/07/23/44506/07/2841535.pdf", "archivo": "gm_manifestacion_2841535.pdf", "fecha": "23-07-2026", "edicion": "44506"}}, {"type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[-70.84024631171906, -28.072273508197572], [-70.83719466803711, -28.0723143945514], [-70.83724072894425, -28.075021156211335], [-70.84029244902977, -28.07498026522682], [-70.84024631171906, -28.072273508197572]]]}, "properties": {"cve": "2841617", "nombre": "LA CHARITO 1 AL 9", "solicitante": "Gárate Torres Javier Omar", "region": "REGIÓN DE ATACAMA", "provincia": "Provincia de Copiapó", "comuna": "Copiapó", "superficie_ha": 9.0, "datum_original": "PSAD56", "huso": 19, "epsg_origen": 24879, "tipo_publicacion": "manifestacion", "fuente_pdf": "http://www.diariooficial.interior.gob.cl/publicaciones/2026/07/23/44506/07/2841617.pdf", "archivo": "gm_manifestacion_2841617.pdf", "fecha": "23-07-2026", "edicion": "44506"}}, {"type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[-70.14759563798066, -28.100122221925286], [-70.1445422416808, -28.100147732027512], [-70.14460928854061, -28.106465477269744], [-70.14766286361174, -28.106439960428133], [-70.14759563798066, -28.100122221925286]]]}, "properties": {"cve": "2841634", "nombre": "SAN PIETRO SUR 1 AL 7", "solicitante": "Muñoz Cortés Ramón Segundo", "region": "REGIÓN DE ATACAMA", "provincia": "Provincia de Copiapó", "comuna": "Copiapó", "superficie_ha": 21.0, "datum_original": "PSAD56", "huso": 19, "epsg_origen": 24879, "tipo_publicacion": "manifestacion", "fuente_pdf": "http://www.diariooficial.interior.gob.cl/publicaciones/2026/07/23/44506/07/2841634.pdf", "archivo": "gm_manifestacion_2841634.pdf", "fecha": "23-07-2026", "edicion": "44506"}}, {"type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[-70.7255150438431, -29.18148789317442], [-70.7203749016861, -29.181554042907983], [-70.72057065257174, -29.193282145903478], [-70.72571137888747, -29.193215964511566], [-70.7255150438431, -29.18148789317442]]]}, "properties": {"cve": "2841388", "nombre": "Marsella 1 al 13", "solicitante": "Rojas González Raúl Enrique", "region": "REGIÓN DE COQUIMBO", "provincia": "Provincia de Elqui", "comuna": null, "superficie_ha": 65.0, "datum_original": "PSAD56", "huso": 19, "epsg_origen": 24879, "tipo_publicacion": "manifestacion", "fuente_pdf": "http://www.diariooficial.interior.gob.cl/publicaciones/2026/07/23/44506/07/2841388.pdf", "archivo": "gm_manifestacion_2841388.pdf", "fecha": "23-07-2026", "edicion": "44506"}}, {"type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[-70.7939937147558, -32.708239522481385], [-70.78332913782455, -32.70839165351089], [-70.78340449527964, -32.71217852527874], [-70.79406952227234, -32.71202637225614], [-70.7939937147558, -32.708239522481385]]]}, "properties": {"cve": "2841607", "nombre": "LA OLVIDADA 1 AL 20", "solicitante": "Varas Varas Fernando Manuel", "region": "REGIÓN DE VALPARAÍSO", "provincia": "Provincia de San Felipe de Aconcagua", "comuna": "SAN FELIPE", "superficie_ha": 42.0, "datum_original": "PSAD56", "huso": 19, "epsg_origen": 24879, "tipo_publicacion": "manifestacion", "fuente_pdf": "http://www.diariooficial.interior.gob.cl/publicaciones/2026/07/23/44506/07/2841607.pdf", "archivo": "gm_manifestacion_2841607.pdf", "fecha": "23-07-2026", "edicion": "44506"}}, {"type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[-73.26869775972818, -37.31586604524748], [-73.26192938597123, -37.315766806532196], [-73.26159728647612, -37.33018243055893], [-73.26836695191267, -37.33028172075016], [-73.26869775972818, -37.31586604524748]]]}, "properties": {"cve": "2841572", "nombre": "MALLOGA I, 1 AL 16", "solicitante": "Abusleme Donoso Pablo Andrés", "region": "REGIÓN DEL BIOBÍO", "provincia": "Provincia de Arauco", "comuna": null, "superficie_ha": 96.0, "datum_original": "PSAD56", "huso": 18, "epsg_origen": 24878, "tipo_publicacion": "mensura", "fuente_pdf": "http://www.diariooficial.interior.gob.cl/publicaciones/2026/07/23/44506/07/2841572.pdf", "archivo": "gm_mensura_2841572.pdf", "fecha": "23-07-2026", "edicion": "44506"}}, {"type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[-73.27681981834326, -37.33081073129741], [-73.26328036508949, -37.3306127286334], [-73.2631973823647, -37.33421663166076], [-73.2767374817677, -37.334414659993854], [-73.27681981834326, -37.33081073129741]]]}, "properties": {"cve": "2841573", "nombre": "MALLOGA II, 1 AL 12", "solicitante": "Abusleme Donoso Pablo Andrés", "region": "REGIÓN DEL BIOBÍO", "provincia": "Provincia de Arauco", "comuna": null, "superficie_ha": 48.0, "datum_original": "PSAD56", "huso": 18, "epsg_origen": 24878, "tipo_publicacion": "mensura", "fuente_pdf": "http://www.diariooficial.interior.gob.cl/publicaciones/2026/07/23/44506/07/2841573.pdf", "archivo": "gm_mensura_2841573.pdf", "fecha": "23-07-2026", "edicion": "44506"}}, {"type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[-70.00832308833915, -27.392429833654184], [-69.97798427561624, -27.392645792963517], [-69.97806371149169, -27.40167256043474], [-70.0084049874544, -27.40145651819719], [-70.00832308833915, -27.392429833654184]]]}, "properties": {"cve": "2841464", "nombre": "NUEVA UNION 1", "solicitante": "SCM Minera Nueva Unión", "region": "REGIÓN DE ATACAMA", "provincia": "Provincia de Copiapó", "comuna": "Copiapó", "superficie_ha": 300.0, "datum_original": "PSAD56", "huso": 19, "epsg_origen": 24879, "tipo_publicacion": "pedimento", "fuente_pdf": "http://www.diariooficial.interior.gob.cl/publicaciones/2026/07/23/44506/07/2841464.pdf", "archivo": "gm_pedimento_2841464.pdf", "fecha": "23-07-2026", "edicion": "44506"}}, {"type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[-70.0084049874544, -27.40145651819719], [-69.97806371149169, -27.40167256043474], [-69.97814318442599, -27.41069931591333], [-70.00848692477743, -27.41048319073444], [-70.0084049874544, -27.40145651819719]]]}, "properties": {"cve": "2841465", "nombre": "NUEVA UNIÓN 2", "solicitante": "SCM Minera Nueva Unión", "region": "REGIÓN DE ATACAMA", "provincia": "Provincia de Copiapó", "comuna": "Copiapó", "superficie_ha": 300.0, "datum_original": "PSAD56", "huso": 19, "epsg_origen": 24879, "tipo_publicacion": "pedimento", "fuente_pdf": "http://www.diariooficial.interior.gob.cl/publicaciones/2026/07/23/44506/07/2841465.pdf", "archivo": "gm_pedimento_2841465.pdf", "fecha": "23-07-2026", "edicion": "44506"}}, {"type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[-70.00848692477743, -27.41048319073444], [-69.97814318442599, -27.41069931591333], [-69.97822269443205, -27.419726059396577], [-70.00856890032152, -27.419509851263207], [-70.00848692477743, -27.41048319073444]]]}, "properties": {"cve": "2841466", "nombre": "NUEVA UNION 3", "solicitante": "SCM Minera Nueva Unión", "region": "REGIÓN DE ATACAMA", "provincia": "Provincia de Copiapó", "comuna": "Copiapó", "superficie_ha": 300.0, "datum_original": "PSAD56", "huso": 19, "epsg_origen": 24879, "tipo_publicacion": "pedimento", "fuente_pdf": "http://www.diariooficial.interior.gob.cl/publicaciones/2026/07/23/44506/07/2841466.pdf", "archivo": "gm_pedimento_2841466.pdf", "fecha": "23-07-2026", "edicion": "44506"}}, {"type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[-70.00846774686774, -27.419510582924385], [-69.97812153984853, -27.41972676904944], [-69.97820107871678, -27.42875350080698], [-70.00854975242414, -27.428537231722753], [-70.00846774686774, -27.419510582924385]]]}, "properties": {"cve": "2841467", "nombre": "NUEVA UNION 4", "solicitante": "SCM Minera Nueva Unión", "region": "REGIÓN DE ATACAMA", "provincia": "Provincia de Copiapó", "comuna": "Copiapó", "superficie_ha": 300.0, "datum_original": "PSAD56", "huso": 19, "epsg_origen": 24879, "tipo_publicacion": "pedimento", "fuente_pdf": "http://www.diariooficial.interior.gob.cl/publicaciones/2026/07/23/44506/07/2841467.pdf", "archivo": "gm_pedimento_2841467.pdf", "fecha": "23-07-2026", "edicion": "44506"}}, {"type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[-70.00854975242414, -27.428537231722753], [-69.97820107871678, -27.42875350080698], [-69.97828065467881, -27.437780220563816], [-70.00863179622445, -27.437563868507276], [-70.00854975242414, -27.428537231722753]]]}, "properties": {"cve": "2841468", "nombre": "NUEVA UNIÓN 5", "solicitante": "SCM Minera Nueva Unión", "region": "REGIÓN DE ATACAMA", "provincia": "Provincia de Copiapó", "comuna": "Copiapó", "superficie_ha": 300.0, "datum_original": "PSAD56", "huso": 19, "epsg_origen": 24879, "tipo_publicacion": "pedimento", "fuente_pdf": "http://www.diariooficial.interior.gob.cl/publicaciones/2026/07/23/44506/07/2841468.pdf", "archivo": "gm_pedimento_2841468.pdf", "fecha": "23-07-2026", "edicion": "44506"}}, {"type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[-69.97798983492153, -27.39327766707681], [-69.96787676528044, -27.39334818985915], [-69.96811272733272, -27.420428535027316], [-69.97822826152114, -27.420357930991116], [-69.97798983492153, -27.39327766707681]]]}, "properties": {"cve": "2841469", "nombre": "NUEVA UNIÓN 6", "solicitante": "SCM Minera Nueva Unión", "region": "REGIÓN DE ATACAMA", "provincia": "Provincia de Copiapó", "comuna": "Copiapó", "superficie_ha": 300.0, "datum_original": "PSAD56", "huso": 19, "epsg_origen": 24879, "tipo_publicacion": "pedimento", "fuente_pdf": "http://www.diariooficial.interior.gob.cl/publicaciones/2026/07/23/44506/07/2841469.pdf", "archivo": "gm_pedimento_2841469.pdf", "fecha": "23-07-2026", "edicion": "44506"}}, {"type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[-71.0399180696978, -27.679604546376126], [-71.02978370775597, -27.679753432829813], [-71.03028453907794, -27.70681946663881], [-71.0404213973662, -27.7066704099375], [-71.0399180696978, -27.679604546376126]]]}, "properties": {"cve": "2841584", "nombre": "PUNTA CACHOS SEPTIMA 1", "solicitante": "Rumman Moreno Evelyn del Carmen", "region": "REGIÓN DE ATACAMA", "provincia": "Provincia de Copiapó", "comuna": null, "superficie_ha": 300.0, "datum_original": "PSAD56", "huso": 19, "epsg_origen": 24879, "tipo_publicacion": "pedimento", "fuente_pdf": "http://www.diariooficial.interior.gob.cl/publicaciones/2026/07/23/44506/07/2841584.pdf", "archivo": "gm_pedimento_2841584.pdf", "fecha": "23-07-2026", "edicion": "44506"}}, {"type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[-71.05013660880735, -27.683965876204258], [-71.04000190894563, -27.684115531628258], [-71.04033746071315, -27.70215944067044], [-71.05047382475097, -27.702009671183866], [-71.05013660880735, -27.683965876204258]]]}, "properties": {"cve": "2841586", "nombre": "PUNTA CACHOS SEPTIMA 16", "solicitante": "Rumman Moreno Evelyn del Carmen", "region": "REGIÓN DE ATACAMA", "provincia": "Provincia de Copiapó", "comuna": null, "superficie_ha": 200.0, "datum_original": "PSAD56", "huso": 19, "epsg_origen": 24879, "tipo_publicacion": "pedimento", "fuente_pdf": "http://www.diariooficial.interior.gob.cl/publicaciones/2026/07/23/44506/07/2841586.pdf", "archivo": "gm_pedimento_2841586.pdf", "fecha": "23-07-2026", "edicion": "44506"}}, {"type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[-71.0404213973662, -27.7066704099375], [-71.03028453907794, -27.70681946663881], [-71.03078606861064, -27.733885385395972], [-71.04092542672237, -27.733736158365193], [-71.0404213973662, -27.7066704099375]]]}, "properties": {"cve": "2841585", "nombre": "PUNTA CACHOS SEPTIMA 3", "solicitante": "Rumman Moreno Evelyn del Carmen", "region": "REGIÓN DE ATACAMA", "provincia": "Provincia de Copiapó", "comuna": null, "superficie_ha": 300.0, "datum_original": "PSAD56", "huso": 19, "epsg_origen": 24879, "tipo_publicacion": "pedimento", "fuente_pdf": "http://www.diariooficial.interior.gob.cl/publicaciones/2026/07/23/44506/07/2841585.pdf", "archivo": "gm_pedimento_2841585.pdf", "fecha": "23-07-2026", "edicion": "44506"}}, {"type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[-70.96155914142086, -27.662687038312363], [-70.94129249495177, -27.662972448424604], [-70.94145197576026, -27.67199497960143], [-70.96172028458282, -27.671709460669923], [-70.96155914142086, -27.662687038312363]]]}, "properties": {"cve": "2841587", "nombre": "SALADO SEXTA 4", "solicitante": "Rumman Moreno Evelyn del Carmen", "region": "REGIÓN DE ATACAMA", "provincia": "Provincia de Copiapó", "comuna": null, "superficie_ha": 200.0, "datum_original": "PSAD56", "huso": 19, "epsg_origen": 24879, "tipo_publicacion": "pedimento", "fuente_pdf": "http://www.diariooficial.interior.gob.cl/publicaciones/2026/07/23/44506/07/2841587.pdf", "archivo": "gm_pedimento_2841587.pdf", "fecha": "23-07-2026", "edicion": "44506"}}, {"type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[-70.94121278233168, -27.65846117807674], [-70.93107976323773, -27.658602746006114], [-70.93123837597666, -27.66762533751124], [-70.94137222609353, -27.667483715599616], [-70.94121278233168, -27.65846117807674]]]}, "properties": {"cve": "2841588", "nombre": "SALADO SEXTA 5", "solicitante": "Rumman Moreno Evelyn del Carmen", "region": "REGIÓN DE ATACAMA", "provincia": "Provincia de Copiapó", "comuna": null, "superficie_ha": 100.0, "datum_original": "PSAD56", "huso": 19, "epsg_origen": 24879, "tipo_publicacion": "pedimento", "fuente_pdf": "http://www.diariooficial.interior.gob.cl/publicaciones/2026/07/23/44506/07/2841588.pdf", "archivo": "gm_pedimento_2841588.pdf", "fecha": "23-07-2026", "edicion": "44506"}}]};
+
+const map = L.map('map', { zoomControl: true });
+
+// Embebido en un iframe (preview de la landing) vs. pagina abierta directo:
+// el panel flotante se achica bastante mas cuando esta embebido, para que
+// el mapa mismo se alcance a ver en un recuadro chico.
+const embedded = window.self !== window.top;
+if (embedded) document.querySelector('.panel').classList.add('panel--compact');
+
+const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '&copy; OpenStreetMap', maxZoom: 19
+});
+const sat = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+  attribution: 'Tiles &copy; Esri', maxZoom: 19
+});
+osm.addTo(map);
+L.control.layers({ "Calles": osm, "Satelite": sat }).addTo(map);
+
+const colors = {"pedimento": "#2563eb", "manifestacion": "#16a34a", "mensura": "#dc2626", "sentencia_exploracion": "#9333ea", "sentencia_explotacion": "#ea580c"};
+
+if (data.features.length) {
+  const layer = L.geoJSON(data, {
+    style: function(feature) {
+      const c = colors[feature.properties.tipo_publicacion] || '#888';
+      return { color: c, weight: 2, fillColor: c, fillOpacity: 0.25 };
+    },
+    onEachFeature: function(feature, lyr) {
+      const p = feature.properties;
+      const html = `
+        <div class="popup-title">${p.nombre || '(sin nombre)'}</div>
+        <div class="popup-row"><b>Tipo:</b> ${p.tipo_publicacion}</div>
+        <div class="popup-row"><b>CVE:</b> ${p.cve}</div>
+        <div class="popup-row"><b>Fecha publicacion:</b> ${p.fecha || '-'}</div>
+        <div class="popup-row"><b>Solicitante:</b> ${p.solicitante || '-'}</div>
+        <div class="popup-row"><b>Region:</b> ${p.region || '-'}</div>
+        <div class="popup-row"><b>Provincia:</b> ${p.provincia || '-'}</div>
+        <div class="popup-row"><b>Superficie:</b> ${p.superficie_ha ? p.superficie_ha + ' ha' : '-'}</div>
+        <div class="popup-row"><b>Datum origen:</b> ${p.datum_original} / Huso ${p.huso}</div>
+        <div class="popup-row"><a class="pdf-link" href="${p.fuente_pdf}" target="_blank">Ver PDF original</a></div>
+      `;
+      lyr.bindPopup(html);
+    }
+  }).addTo(map);
+  // El encuadre inicial es un cajon fijo (calibrado a mano contra una
+  // captura de referencia: norte de Chile con contexto del NO argentino
+  // de fondo) en vez de ajustarse a los limites exactos de ESTE dia. Un
+  // caso aislado en un extremo (ej. una mensura puntual en Magallanes,
+  // mucho mas al sur que el resto) no debe forzar un zoom abierto que
+  // empequeñezca todo lo demas -- esos puntos siguen en el mapa (clic,
+  // popup), solo no entran en el encuadre inicial.
+  const CHILE_MINERO = [[-40.5, -84.0], [-22.3, -55.0]];
+  // Padding asimetrico: reserva espacio en la esquina superior derecha para
+  // el panel/leyenda flotante, asi el zoom no deja el territorio ni los
+  // datos tapados detras del panel.
+  map.fitBounds(CHILE_MINERO, { paddingTopLeft: [24, 24], paddingBottomRight: [embedded ? 170 : 190, 24] });
+} else {
+  map.setView([-33.45, -70.65], 5);
+}
+</script>
+</body>
+</html>
