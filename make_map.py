@@ -129,7 +129,8 @@ function bindPopup(feature, lyr) {
     <div class="popup-row"><b>Provincia:</b> ${p.provincia || '-'}</div>
     <div class="popup-row"><b>Superficie:</b> ${p.superficie_ha ? p.superficie_ha + ' ha' : '-'}</div>
     <div class="popup-row"><b>Datum origen:</b> ${p.datum_original} / Huso ${p.huso}</div>
-    <div class="popup-row"><a class="pdf-link" href="${p.fuente_pdf}" target="_blank">Ver PDF original</a></div>
+    <div class="popup-row"><b>Fuente:</b> ${p.fuente_dato || 'Boletín Oficial de Minería'}</div>
+    ${p.fuente_pdf ? `<div class="popup-row"><a class="pdf-link" href="${p.fuente_pdf}" target="_blank">Ver PDF original</a></div>` : ''}
   `;
   lyr.bindPopup(html);
 }
