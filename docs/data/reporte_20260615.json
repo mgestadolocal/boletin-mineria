@@ -1,0 +1,122 @@
+{
+ "fecha": "15-06-2026",
+ "edicion": "44475",
+ "total_publicaciones": 206,
+ "georreferenciadas": 188,
+ "por_tipo": {
+  "manifestacion": 26,
+  "mensura": 52,
+  "pedimento": 110
+ },
+ "sin_georreferenciar": [
+  {
+   "cve": "2823525",
+   "tipo": "mensura",
+   "archivo": "gm_mensura_2823525.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2822324",
+   "tipo": "mensura",
+   "archivo": "gm_mensura_2822324.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2822325",
+   "tipo": "mensura",
+   "archivo": "gm_mensura_2822325.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2823635",
+   "tipo": "pedimento",
+   "archivo": "gm_pedimento_2823635.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2822257",
+   "tipo": "pedimento",
+   "archivo": "gm_pedimento_2822257.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2822241",
+   "tipo": "pedimento",
+   "archivo": "gm_pedimento_2822241.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2823506",
+   "tipo": "pedimento",
+   "archivo": "gm_pedimento_2823506.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2823507",
+   "tipo": "pedimento",
+   "archivo": "gm_pedimento_2823507.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2823508",
+   "tipo": "pedimento",
+   "archivo": "gm_pedimento_2823508.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2823509",
+   "tipo": "pedimento",
+   "archivo": "gm_pedimento_2823509.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2823510",
+   "tipo": "pedimento",
+   "archivo": "gm_pedimento_2823510.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2823511",
+   "tipo": "pedimento",
+   "archivo": "gm_pedimento_2823511.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2823512",
+   "tipo": "pedimento",
+   "archivo": "gm_pedimento_2823512.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2823513",
+   "tipo": "pedimento",
+   "archivo": "gm_pedimento_2823513.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2823514",
+   "tipo": "pedimento",
+   "archivo": "gm_pedimento_2823514.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2823515",
+   "tipo": "pedimento",
+   "archivo": "gm_pedimento_2823515.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2823516",
+   "tipo": "pedimento",
+   "archivo": "gm_pedimento_2823516.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2823517",
+   "tipo": "pedimento",
+   "archivo": "gm_pedimento_2823517.pdf",
+   "motivo": "parseo_incompleto"
+  }
+ ],
+ "historico_total_acumulado": 1076
+}
