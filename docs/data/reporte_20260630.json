@@ -1,0 +1,92 @@
+{
+ "fecha": "30-06-2026",
+ "edicion": "44487",
+ "total_publicaciones": 143,
+ "georreferenciadas": 130,
+ "por_tipo": {
+  "manifestacion": 29,
+  "mensura": 24,
+  "pedimento": 77
+ },
+ "sin_georreferenciar": [
+  {
+   "cve": "2830541",
+   "tipo": "manifestacion",
+   "archivo": "gm_manifestacion_2830541.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2830484",
+   "tipo": "manifestacion",
+   "archivo": "gm_manifestacion_2830484.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2830504",
+   "tipo": "manifestacion",
+   "archivo": "gm_manifestacion_2830504.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2830505",
+   "tipo": "manifestacion",
+   "archivo": "gm_manifestacion_2830505.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2830506",
+   "tipo": "manifestacion",
+   "archivo": "gm_manifestacion_2830506.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2830507",
+   "tipo": "manifestacion",
+   "archivo": "gm_manifestacion_2830507.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2830508",
+   "tipo": "manifestacion",
+   "archivo": "gm_manifestacion_2830508.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2830717",
+   "tipo": "mensura",
+   "archivo": "gm_mensura_2830717.pdf",
+   "motivo": "geometria invalida o area cero"
+  },
+  {
+   "cve": "2830316",
+   "tipo": "mensura",
+   "archivo": "gm_mensura_2830316.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2830730",
+   "tipo": "pedimento",
+   "archivo": "gm_pedimento_2830730.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2830752",
+   "tipo": "pedimento",
+   "archivo": "gm_pedimento_2830752.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2832431",
+   "tipo": "pedimento",
+   "archivo": "gm_pedimento_2832431.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2829598",
+   "tipo": "pedimento",
+   "archivo": "gm_pedimento_2829598.pdf",
+   "motivo": "parseo_incompleto"
+  }
+ ],
+ "historico_total_acumulado": 1547
+}
