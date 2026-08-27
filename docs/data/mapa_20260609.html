@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Boletin Oficial de Mineria - 09-06-2026 - Edicion 44470</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+<style>
+  html, body { margin:0; padding:0; height:100%; font-family: -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+  #map { position:absolute; top:0; bottom:0; left:0; right:0; }
+  .panel {
+    position:absolute; top:8px; right:8px; z-index:1000; background:white;
+    padding:9px 11px; border-radius:6px; box-shadow:0 2px 10px rgba(0,0,0,.25);
+    max-width:158px; font-size:10.5px; line-height:1.35;
+  }
+  .panel h3 { margin:0 0 4px 0; font-size:11.5px; }
+  .legend-item { display:flex; align-items:center; margin:2px 0; }
+  .swatch { width:9px; height:9px; margin-right:5px; border-radius:2px; flex-shrink:0; }
+  .stat { color:#555; }
+  .popup-title { font-weight:600; margin-bottom:4px; }
+  .popup-row { margin:2px 0; }
+  a.pdf-link { color:#1a73e8; }
+  .dl-row { margin-top:6px; }
+  .dl-row a { display:inline-block; margin-right:6px; font-size:9.5px; color:#1a73e8; }
+  .nav-row { margin-top:5px; font-size:9.5px; }
+  .nav-row a { color:#1a73e8; }
+  /* Cuando el mapa vive embebido en un iframe (la vista previa de la
+     landing), el panel pierde los links de descarga/nav -- ahi solo
+     importa mostrar el mapa y una leyenda legible; para los links esta el
+     boton "abrir a pantalla completa" de la landing, que carga esta misma
+     pagina sin iframe y con el panel completo. */
+  .panel.panel--compact { max-width:146px; padding:8px 10px; }
+  .panel.panel--compact .dl-row, .panel.panel--compact .nav-row { display:none; }
+</style>
+</head>
+<body>
+<div id="map"></div>
+<div class="panel">
+  <h3>Boletin Oficial de Mineria</h3>
+  <div class="stat">Edicion 44470 &middot; 09-06-2026</div>
+  <div style="margin-top:10px;">
+    <div class="legend-item"><span class="swatch" style="background:#16a34a"></span> Manifestaciones (1)</div>
+<div class="legend-item"><span class="swatch" style="background:#dc2626"></span> Mensuras (11)</div>
+<div class="legend-item"><span class="swatch" style="background:#2563eb"></span> Pedimentos (1)</div>
+  </div>
+  <div class="dl-row">
+    <a href="data/boletin_mineria_latest.gpkg" download>Descargar GeoPackage</a>
+    <a href="data/boletin_mineria_latest.geojson" download>Descargar GeoJSON</a>
+  </div>
+  <div class="nav-row"><a href="historico.html">Ver historico completo (todas las fechas) &rarr;</a></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+const data = {"type": "FeatureCollection", "features": [{"type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[-72.90608198373403, -39.9730244700888], [-72.89437941365087, -39.972812412067576], [-72.893826388566, -39.990819792805496], [-72.9055320267468, -39.9910319853549], [-72.90608198373403, -39.9730244700888]]]}, "properties": {"cve": "2820057", "nombre": "CAMAN 50 C, 1 al 200", "solicitante": "AR Caman SpA", "region": "REGIÓN DE LOS RÍOS", "provincia": "Provincia de Valdivia", "comuna": null, "superficie_ha": 200.0, "datum_original": "PSAD56", "huso": 18, "epsg_origen": 24878, "tipo_publicacion": "manifestacion", "fuente_pdf": "http://www.diariooficial.interior.gob.cl/publicaciones/2026/06/09/44470/07/2820057.pdf", "archivo": "gm_manifestacion_2820057.pdf", "fecha": "09-06-2026", "edicion": "44470"}}, {"type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[-70.84537950764386, -29.998927218035163], [-70.83501666389567, -29.9990721130867], [-70.83533219827325, -30.01621002577391], [-70.84569682147189, -30.016065031117723], [-70.84537950764386, -29.998927218035163]]]}, "properties": {"cve": "2820256", "nombre": "ALGODÓN 101, 1 al 190", "solicitante": "Piñones Jiménez Beatriz del Pilar", "region": "REGIÓN DE COQUIMBO", "provincia": "Provincia de Elqui", "comuna": null, "superficie_ha": 190.0, "datum_original": "WGS84", "huso": 19, "epsg_origen": 32719, "tipo_publicacion": "mensura", "fuente_pdf": "http://www.diariooficial.interior.gob.cl/publicaciones/2026/06/09/44470/07/2820256.pdf", "archivo": "gm_mensura_2820256.pdf", "fecha": "09-06-2026", "edicion": "44470"}}, {"type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[-70.84569682147189, -30.016065031117723], [-70.83533219827325, -30.01621002577391], [-70.83583096429153, -30.043269790823786], [-70.84619840026956, -30.04312463882895], [-70.84599768687262, -30.032300810024015], [-70.842887801692, -30.032344422433376], [-70.84278765470361, -30.026932491431655], [-70.8458973711193, -30.02688888848119], [-70.84569682147189, -30.016065031117723]]]}, "properties": {"cve": "2820257", "nombre": "ALGODÓN 102,1 al 300", "solicitante": "Piñones Jiménez Beatriz del Pilar", "region": "REGIÓN DE COQUIMBO", "provincia": "Provincia de Elqui", "comuna": null, "superficie_ha": 282.0, "datum_original": "WGS84", "huso": 19, "epsg_origen": 32719, "tipo_publicacion": "mensura", "fuente_pdf": "http://www.diariooficial.interior.gob.cl/publicaciones/2026/06/09/44470/07/2820257.pdf", "archivo": "gm_mensura_2820257.pdf", "fecha": "09-06-2026", "edicion": "44470"}}, {"type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[-70.86642584014405, -30.015772595030697], [-70.85606136890367, -30.015919220862838], [-70.8565657603945, -30.042978670350855], [-70.86693304424134, -30.042831885410948], [-70.86642584014405, -30.015772595030697]]]}, "properties": {"cve": "2820259", "nombre": "ALGODÓN 104, 1 al 300", "solicitante": "Piñones Jiménez Beatriz del Pilar", "region": "REGIÓN DE COQUIMBO", "provincia": "Provincia de Elqui", "comuna": null, "superficie_ha": 300.0, "datum_original": "WGS84", "huso": 19, "epsg_origen": 32719, "tipo_publicacion": "mensura", "fuente_pdf": "http://www.diariooficial.interior.gob.cl/publicaciones/2026/06/09/44470/07/2820259.pdf", "archivo": "gm_mensura_2820259.pdf", "fecha": "09-06-2026", "edicion": "44470"}}, {"type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[-70.87679023476854, -30.015625153642837], [-70.86642584014405, -30.015772595030697], [-70.86693304424134, -30.042831885410948], [-70.87730025138505, -30.042684284030813], [-70.87679023476854, -30.015625153642837]]]}, "properties": {"cve": "2820260", "nombre": "ALGODÓN 105, 1 al 300", "solicitante": "Piñones Jiménez Beatriz del Pilar", "region": "REGIÓN DE COQUIMBO", "provincia": "Provincia de Elqui", "comuna": null, "superficie_ha": 300.0, "datum_original": "WGS84", "huso": 19, "epsg_origen": 32719, "tipo_publicacion": "mensura", "fuente_pdf": "http://www.diariooficial.interior.gob.cl/publicaciones/2026/06/09/44470/07/2820260.pdf", "archivo": "gm_mensura_2820260.pdf", "fecha": "09-06-2026", "edicion": "44470"}}, {"type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[-70.90567143680514, -30.043178378589626], [-70.90463473142144, -30.043193399292267], [-70.90465199190069, -30.04409535392075], [-70.90568870666552, -30.044080332675254], [-70.90567143680514, -30.043178378589626]]]}, "properties": {"cve": "2820261", "nombre": "ALGODÓN 108, 1", "solicitante": "Piñones Jiménez Beatriz del Pilar", "region": "REGIÓN DE COQUIMBO", "provincia": "Provincia de Elqui", "comuna": null, "superficie_ha": 1.0, "datum_original": "WGS84", "huso": 19, "epsg_origen": 32719, "tipo_publicacion": "mensura", "fuente_pdf": "http://www.diariooficial.interior.gob.cl/publicaciones/2026/06/09/44470/07/2820261.pdf", "archivo": "gm_mensura_2820261.pdf", "fecha": "09-06-2026", "edicion": "44470"}}, {"type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[-70.89934658062343, -30.0568029703538], [-70.89830972951353, -30.056817947331044], [-70.8983613696815, -30.059523815165093], [-70.89939824895575, -30.059508836564444], [-70.89934658062343, -30.0568029703538]]]}, "properties": {"cve": "2820262", "nombre": "ALGODÓN 108, 2 al 4", "solicitante": "Piñones Jiménez Beatriz del Pilar", "region": "REGIÓN DE COQUIMBO", "provincia": "Provincia de Elqui", "comuna": null, "superficie_ha": 3.0, "datum_original": "WGS84", "huso": 19, "epsg_origen": 32719, "tipo_publicacion": "mensura", "fuente_pdf": "http://www.diariooficial.interior.gob.cl/publicaciones/2026/06/09/44470/07/2820262.pdf", "archivo": "gm_mensura_2820262.pdf", "fecha": "09-06-2026", "edicion": "44470"}}, {"type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[-70.91876830443003, -30.042085714543823], [-70.90840140834813, -30.042236581466653], [-70.90841870228432, -30.043138534245116], [-70.90945540480826, -30.04312348374442], [-70.90947270890953, -30.04402543584611], [-70.9115461303655, -30.043995309264584], [-70.9116154296724, -30.047603111987765], [-70.91265217675054, -30.047588034271556], [-70.9126868498833, -30.049391933746204], [-70.91372361494204, -30.04937684677445], [-70.91370626859923, -30.04847489764874], [-70.91474302348814, -30.04845980305667], [-70.91477773572745, -30.050263700084273], [-70.91788805197325, -30.05021836403907], [-70.91792282366652, -30.052022257258567], [-70.91895961294153, -30.052007127818165], [-70.91876830443003, -30.042085714543823]]]}, "properties": {"cve": "2820263", "nombre": "ALGODÓN 109, 1 al 110", "solicitante": "Piñones Jiménez Beatriz del Pilar", "region": "REGIÓN DE COQUIMBO", "provincia": "Provincia de Elqui", "comuna": null, "superficie_ha": 64.0, "datum_original": "WGS84", "huso": 19, "epsg_origen": 32719, "tipo_publicacion": "mensura", "fuente_pdf": "http://www.diariooficial.interior.gob.cl/publicaciones/2026/06/09/44470/07/2820263.pdf", "archivo": "gm_mensura_2820263.pdf", "fecha": "09-06-2026", "edicion": "44470"}}, {"type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[-70.85570870291141, -29.996977535387213], [-70.8453461220913, -29.997123234935756], [-70.84544628783473, -30.00253518264847], [-70.84617171028074, -30.00252500799933], [-70.84642234226325, -30.016054850947366], [-70.848495256763, -30.016025742725258], [-70.84824434379493, -30.002495915564072], [-70.85580943035293, -30.00238945147373], [-70.85570870291141, -29.996977535387213]]]}, "properties": {"cve": "2820264", "nombre": "ALGODÓN 111, 1 al 210", "solicitante": "Piñones Jiménez Beatriz del Pilar", "region": "REGIÓN DE COQUIMBO", "provincia": "Provincia de Elqui", "comuna": null, "superficie_ha": 90.0, "datum_original": "WGS84", "huso": 19, "epsg_origen": 32719, "tipo_publicacion": "mensura", "fuente_pdf": "http://www.diariooficial.interior.gob.cl/publicaciones/2026/06/09/44470/07/2820264.pdf", "archivo": "gm_mensura_2820264.pdf", "fecha": "09-06-2026", "edicion": "44470"}}, {"type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[-70.90422011745878, -30.04049278935753], [-70.90318343915978, -30.040507797411585], [-70.90320068462873, -30.041409753170775], [-70.90423737230763, -30.041394744574287], [-70.90422011745878, -30.04049278935753]]]}, "properties": {"cve": "2820265", "nombre": "ALGODÓN 112, 1", "solicitante": "Piñones Jiménez Beatriz del Pilar", "region": "REGIÓN DE COQUIMBO", "provincia": "Provincia de Elqui", "comuna": null, "superficie_ha": 1.0, "datum_original": "WGS84", "huso": 19, "epsg_origen": 32719, "tipo_publicacion": "mensura", "fuente_pdf": "http://www.diariooficial.interior.gob.cl/publicaciones/2026/06/09/44470/07/2820265.pdf", "archivo": "gm_mensura_2820265.pdf", "fecha": "09-06-2026", "edicion": "44470"}}, {"type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[-70.96293759146683, -33.85218485172975], [-70.95645543127345, -33.852287936634895], [-70.95657879676132, -33.857696251600075], [-70.9630613650524, -33.857593145781024], [-70.96293759146683, -33.85218485172975]]]}, "properties": {"cve": "2820464", "nombre": "LIMONITA 1 AL 9", "solicitante": "Medina Granifo Manuel Filomeno", "region": "REGIÓN METROPOLITANA DE SANTIAGO", "provincia": "Provincia de Maipo", "comuna": null, "superficie_ha": 36.0, "datum_original": "WGS84", "huso": 19, "epsg_origen": 32719, "tipo_publicacion": "mensura", "fuente_pdf": "http://www.diariooficial.interior.gob.cl/publicaciones/2026/06/09/44470/07/2820464.pdf", "archivo": "gm_mensura_2820464.pdf", "fecha": "09-06-2026", "edicion": "44470"}}, {"type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[-71.0558933480599, -34.645848140129935], [-71.04498853082661, -34.64603155242497], [-71.04520992317576, -34.655043679569324], [-71.05611591895244, -34.65486020594509], [-71.0558933480599, -34.645848140129935]]]}, "properties": {"cve": "2820055", "nombre": "CANTERA LA TUNA 1 AL 20", "solicitante": "Soto Pavez Ricardo Segundo", "region": "REGIÓN DEL LIBERTADOR GENERAL BERNARDO O’HIGGINS", "provincia": "Provincia de Colchagua", "comuna": null, "superficie_ha": 100.0, "datum_original": "PSAD56", "huso": 19, "epsg_origen": 24879, "tipo_publicacion": "mensura", "fuente_pdf": "http://www.diariooficial.interior.gob.cl/publicaciones/2026/06/09/44470/07/2820055.pdf", "archivo": "gm_mensura_2820055.pdf", "fecha": "09-06-2026", "edicion": "44470"}}, {"type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[-73.12993701741553, -36.98158434957202], [-73.1187068111753, -36.9814068752113], [-73.11848488398253, -36.99041644398953], [-73.12971641310858, -36.990593976072304], [-73.12993701741553, -36.98158434957202]]]}, "properties": {"cve": "2820050", "nombre": "EL PEUMO", "solicitante": "Newen Quiñenco SpA", "region": "REGIÓN DEL BIOBÍO", "provincia": "Provincia de Concepción", "comuna": null, "superficie_ha": 100.0, "datum_original": "PSAD56", "huso": 18, "epsg_origen": 24878, "tipo_publicacion": "pedimento", "fuente_pdf": "http://www.diariooficial.interior.gob.cl/publicaciones/2026/06/09/44470/07/2820050.pdf", "archivo": "gm_pedimento_2820050.pdf", "fecha": "09-06-2026", "edicion": "44470"}}]};
+
+const map = L.map('map', { zoomControl: true });
+
+// Embebido en un iframe (preview de la landing) vs. pagina abierta directo:
+// el panel flotante se achica bastante mas cuando esta embebido, para que
+// el mapa mismo se alcance a ver en un recuadro chico.
+const embedded = window.self !== window.top;
+if (embedded) document.querySelector('.panel').classList.add('panel--compact');
+
+const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '&copy; OpenStreetMap', maxZoom: 19
+});
+const sat = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+  attribution: 'Tiles &copy; Esri', maxZoom: 19
+});
+osm.addTo(map);
+L.control.layers({ "Calles": osm, "Satelite": sat }).addTo(map);
+
+const colors = {"pedimento": "#2563eb", "manifestacion": "#16a34a", "mensura": "#dc2626", "sentencia_exploracion": "#9333ea", "sentencia_explotacion": "#ea580c"};
+
+if (data.features.length) {
+  const layer = L.geoJSON(data, {
+    style: function(feature) {
+      const c = colors[feature.properties.tipo_publicacion] || '#888';
+      return { color: c, weight: 2, fillColor: c, fillOpacity: 0.25 };
+    },
+    onEachFeature: function(feature, lyr) {
+      const p = feature.properties;
+      const html = `
+        <div class="popup-title">${p.nombre || '(sin nombre)'}</div>
+        <div class="popup-row"><b>Tipo:</b> ${p.tipo_publicacion}</div>
+        <div class="popup-row"><b>CVE:</b> ${p.cve}</div>
+        <div class="popup-row"><b>Fecha publicacion:</b> ${p.fecha || '-'}</div>
+        <div class="popup-row"><b>Solicitante:</b> ${p.solicitante || '-'}</div>
+        <div class="popup-row"><b>Region:</b> ${p.region || '-'}</div>
+        <div class="popup-row"><b>Provincia:</b> ${p.provincia || '-'}</div>
+        <div class="popup-row"><b>Superficie:</b> ${p.superficie_ha ? p.superficie_ha + ' ha' : '-'}</div>
+        <div class="popup-row"><b>Datum origen:</b> ${p.datum_original} / Huso ${p.huso}</div>
+        <div class="popup-row"><a class="pdf-link" href="${p.fuente_pdf}" target="_blank">Ver PDF original</a></div>
+      `;
+      lyr.bindPopup(html);
+    }
+  }).addTo(map);
+  // El encuadre inicial es un cajon fijo (calibrado a mano contra una
+  // captura de referencia: norte de Chile con contexto del NO argentino
+  // de fondo) en vez de ajustarse a los limites exactos de ESTE dia. Un
+  // caso aislado en un extremo (ej. una mensura puntual en Magallanes,
+  // mucho mas al sur que el resto) no debe forzar un zoom abierto que
+  // empequeñezca todo lo demas -- esos puntos siguen en el mapa (clic,
+  // popup), solo no entran en el encuadre inicial.
+  const CHILE_MINERO = [[-40.5, -84.0], [-22.3, -55.0]];
+  // Padding asimetrico: reserva espacio en la esquina superior derecha para
+  // el panel/leyenda flotante, asi el zoom no deja el territorio ni los
+  // datos tapados detras del panel.
+  map.fitBounds(CHILE_MINERO, { paddingTopLeft: [24, 24], paddingBottomRight: [embedded ? 170 : 190, 24] });
+} else {
+  map.setView([-33.45, -70.65], 5);
+}
+</script>
+</body>
+</html>
