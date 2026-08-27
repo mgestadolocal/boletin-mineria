@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Boletin Oficial de Mineria - 08-07-2026 - Edicion 44494</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+<style>
+  html, body { margin:0; padding:0; height:100%; font-family: -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+  #map { position:absolute; top:0; bottom:0; left:0; right:0; }
+  .panel {
+    position:absolute; top:8px; right:8px; z-index:1000; background:white;
+    padding:9px 11px; border-radius:6px; box-shadow:0 2px 10px rgba(0,0,0,.25);
+    max-width:158px; font-size:10.5px; line-height:1.35;
+  }
+  .panel h3 { margin:0 0 4px 0; font-size:11.5px; }
+  .legend-item { display:flex; align-items:center; margin:2px 0; }
+  .swatch { width:9px; height:9px; margin-right:5px; border-radius:2px; flex-shrink:0; }
+  .stat { color:#555; }
+  .popup-title { font-weight:600; margin-bottom:4px; }
+  .popup-row { margin:2px 0; }
+  a.pdf-link { color:#1a73e8; }
+  .dl-row { margin-top:6px; }
+  .dl-row a { display:inline-block; margin-right:6px; font-size:9.5px; color:#1a73e8; }
+  .nav-row { margin-top:5px; font-size:9.5px; }
+  .nav-row a { color:#1a73e8; }
+  /* Cuando el mapa vive embebido en un iframe (la vista previa de la
+     landing), el panel pierde los links de descarga/nav -- ahi solo
+     importa mostrar el mapa y una leyenda legible; para los links esta el
+     boton "abrir a pantalla completa" de la landing, que carga esta misma
+     pagina sin iframe y con el panel completo. */
+  .panel.panel--compact { max-width:146px; padding:8px 10px; }
+  .panel.panel--compact .dl-row, .panel.panel--compact .nav-row { display:none; }
+</style>
+</head>
+<body>
+<div id="map"></div>
+<div class="panel">
+  <h3>Boletin Oficial de Mineria</h3>
+  <div class="stat">Edicion 44494 &middot; 08-07-2026</div>
+  <div style="margin-top:10px;">
+    <div class="legend-item"><span class="swatch" style="background:#16a34a"></span> Manifestaciones (12)</div>
+<div class="legend-item"><span class="swatch" style="background:#dc2626"></span> Mensuras (2)</div>
+<div class="legend-item"><span class="swatch" style="background:#2563eb"></span> Pedimentos (2)</div>
+  </div>
+  <div class="dl-row">
+    <a href="data/boletin_mineria_latest.gpkg" download>Descargar GeoPackage</a>
+    <a href="data/boletin_mineria_latest.geojson" download>Descargar GeoJSON</a>
+  </div>
+  <div class="nav-row"><a href="historico.html">Ver historico completo (todas las fechas) &rarr;</a></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+const data = {"type": "FeatureCollection", "features": [{"type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[-70.37143674822178, -23.504523097328274], [-70.36654087043017, -23.504566124586685], [-70.3666154013219, -23.511790295215995], [-70.37151154593015, -23.511747253174995], [-70.37143674822178, -23.504523097328274]]]}, "properties": {"cve": "2833938", "nombre": "ANDREWS 1 DEL 1 AL 4", "solicitante": "Alday Contreras Ulises René", "region": "REGIÓN DE ANTOFAGASTA", "provincia": "Provincia de Antofagasta", "comuna": null, "superficie_ha": 40.0, "datum_original": "PSAD56", "huso": 19, "epsg_origen": 24879, "tipo_publicacion": "manifestacion", "fuente_pdf": "http://www.diariooficial.interior.gob.cl/publicaciones/2026/07/08/44494/07/2833938.pdf", "archivo": "gm_manifestacion_2833938.pdf", "fecha": "08-07-2026", "edicion": "44494"}}, {"type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[-70.0297830120232, -28.074429457764168], [-70.01960703432508, -28.07450542347371], [-70.01986287650351, -28.101582654162158], [-70.03004140648694, -28.101506602370556], [-70.0297830120232, -28.074429457764168]]]}, "properties": {"cve": "2834068", "nombre": "ATENEA III 6, 1 AL 60", "solicitante": "Inversiones América SpA", "region": "REGIÓN DE ATACAMA", "provincia": "Provincia de Copiapó", "comuna": "TIERRA AMARILLA", "superficie_ha": 300.0, "datum_original": "PSAD56", "huso": 19, "epsg_origen": 24879, "tipo_publicacion": "manifestacion", "fuente_pdf": "http://www.diariooficial.interior.gob.cl/publicaciones/2026/07/08/44494/07/2834068.pdf", "archivo": "gm_manifestacion_2834068.pdf", "fecha": "08-07-2026", "edicion": "44494"}}, {"type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[-70.92766371552001, -27.924877844223545], [-70.91750588475993, -27.92501966129484], [-70.91766516651164, -27.93404197427603], [-70.92782383978323, -27.93390010347578], [-70.92766371552001, -27.924877844223545]]]}, "properties": {"cve": "2834327", "nombre": "ESPERANZA I 1 AL 100", "solicitante": "González Guerra José Raúl", "region": "REGIÓN DE ATACAMA", "provincia": "Provincia de Copiapó", "comuna": "Copiapó", "superficie_ha": 100.0, "datum_original": "PSAD56", "huso": 19, "epsg_origen": 24879, "tipo_publicacion": "manifestacion", "fuente_pdf": "http://www.diariooficial.interior.gob.cl/publicaciones/2026/07/08/44494/07/2834327.pdf", "archivo": "gm_manifestacion_2834327.pdf", "fecha": "08-07-2026", "edicion": "44494"}}, {"type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[-70.74077087584557, -27.430071291372794], [-70.73065765011675, -27.43019724640099], [-70.73077027050003, -27.437416370248165], [-70.74088415352651, -27.43729037657558], [-70.74077087584557, -27.430071291372794]]]}, "properties": {"cve": "2834043", "nombre": "LOMA GRIS 1 AL 16", "solicitante": "Ingeniería y Construcción Banner y Compañía Limitada", "region": "REGIÓN DE ATACAMA", "provincia": "Provincia de Copiapó", "comuna": null, "superficie_ha": 80.0, "datum_original": "PSAD56", "huso": 19, "epsg_origen": 24879, "tipo_publicacion": "manifestacion", "fuente_pdf": "http://www.diariooficial.interior.gob.cl/publicaciones/2026/07/08/44494/07/2834043.pdf", "archivo": "gm_manifestacion_2834043.pdf", "fecha": "08-07-2026", "edicion": "44494"}}, {"type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[-69.9108293794495, -26.837393005798848], [-69.90579768081105, -26.837425314157283], [-69.9058336003682, -26.841939147873102], [-69.91086549847245, -26.84190683322345], [-69.9108293794495, -26.837393005798848]]]}, "properties": {"cve": "2834350", "nombre": "CARBONATO 1 AL 5", "solicitante": "Herrera Arancibia Manuel Antonio", "region": "REGIÓN DE ATACAMA", "provincia": "Provincia de Chañaral", "comuna": "Diego", "superficie_ha": 25.0, "datum_original": "WGS84", "huso": 19, "epsg_origen": 32719, "tipo_publicacion": "manifestacion", "fuente_pdf": "http://www.diariooficial.interior.gob.cl/publicaciones/2026/07/08/44494/07/2834350.pdf", "archivo": "gm_manifestacion_2834350.pdf", "fecha": "08-07-2026", "edicion": "44494"}}, {"type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[-69.61174406795615, -26.859948640103052], [-69.60771763218543, -26.859966004247116], [-69.60773693029401, -26.863577309163077], [-69.61176349390504, -26.86355994231546], [-69.61174406795615, -26.859948640103052]]]}, "properties": {"cve": "2834277", "nombre": "LORENA 1 AL 4", "solicitante": "Cerda Contreras Wilfredo", "region": "REGIÓN DE ATACAMA", "provincia": "Provincia de Chañaral", "comuna": "DIEGO DE ALMAGRO", "superficie_ha": 16.0, "datum_original": "WGS84", "huso": 19, "epsg_origen": 32719, "tipo_publicacion": "manifestacion", "fuente_pdf": "http://www.diariooficial.interior.gob.cl/publicaciones/2026/07/08/44494/07/2834277.pdf", "archivo": "gm_manifestacion_2834277.pdf", "fecha": "08-07-2026", "edicion": "44494"}}, {"type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[-69.91474082261504, -25.93224303976849], [-69.90475556700707, -25.932305737747527], [-69.90482454283539, -25.941334546599624], [-69.9148105594317, -25.941271823600403], [-69.91474082261504, -25.93224303976849]]]}, "properties": {"cve": "2834090", "nombre": "PETRA K 5, 1 AL 10", "solicitante": "Corporación Nacional del Cobre de Chile", "region": "REGIÓN DE ATACAMA", "provincia": "Provincia de Chañaral", "comuna": null, "superficie_ha": 100.0, "datum_original": "WGS84", "huso": 19, "epsg_origen": 32719, "tipo_publicacion": "manifestacion", "fuente_pdf": "http://www.diariooficial.interior.gob.cl/publicaciones/2026/07/08/44494/07/2834090.pdf", "archivo": "gm_manifestacion_2834090.pdf", "fecha": "08-07-2026", "edicion": "44494"}}, {"type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[-69.94773141448348, -26.799629846791014], [-69.9437074322239, -26.79965672287374], [-69.94372237580772, -26.80146224698155], [-69.94774642176377, -26.80143536880347], [-69.94773141448348, -26.799629846791014]]]}, "properties": {"cve": "2834351", "nombre": "POCHITA DOS 1/4", "solicitante": "SLM Pochita Una de Sierra El Inca", "region": "REGIÓN DE ATACAMA", "provincia": "Provincia de Chañaral", "comuna": null, "superficie_ha": 8.0, "datum_original": "WGS84", "huso": 19, "epsg_origen": 32719, "tipo_publicacion": "manifestacion", "fuente_pdf": "http://www.diariooficial.interior.gob.cl/publicaciones/2026/07/08/44494/07/2834351.pdf", "archivo": "gm_manifestacion_2834351.pdf", "fecha": "08-07-2026", "edicion": "44494"}}, {"type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[-70.4243118960711, -28.536562324643903], [-70.42226819152289, -28.536583746316357], [-70.42229243309171, -28.53838850531945], [-70.42433617244478, -28.538367082046776], [-70.4243118960711, -28.536562324643903]]]}, "properties": {"cve": "2834188", "nombre": "LA CIELO 1 AL 2", "solicitante": "Flores Carvajal Ana Alejandra y otro", "region": "REGIÓN DE ATACAMA", "provincia": "Provincia de Huasco", "comuna": null, "superficie_ha": 4.0, "datum_original": "WGS84", "huso": 19, "epsg_origen": 32719, "tipo_publicacion": "manifestacion", "fuente_pdf": "http://www.diariooficial.interior.gob.cl/publicaciones/2026/07/08/44494/07/2834188.pdf", "archivo": "gm_manifestacion_2834188.pdf", "fecha": "08-07-2026", "edicion": "44494"}}, {"type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[-70.98897070306752, -29.19362305680961], [-70.98588671801397, -29.193668854320077], [-70.9859910380032, -29.199081003076966], [-70.98907518480043, -29.199035195455266], [-70.98897070306752, -29.19362305680961]]]}, "properties": {"cve": "2834127", "nombre": "YERBA BUENA 1/18", "solicitante": "Barrera Álvarez Eladio Alberto", "region": "REGIÓN DE ATACAMA", "provincia": "Provincia de Huasco", "comuna": "Vallenar", "superficie_ha": 18.0, "datum_original": "PSAD56", "huso": 19, "epsg_origen": 24879, "tipo_publicacion": "manifestacion", "fuente_pdf": "http://www.diariooficial.interior.gob.cl/publicaciones/2026/07/08/44494/07/2834127.pdf", "archivo": "gm_manifestacion_2834127.pdf", "fecha": "08-07-2026", "edicion": "44494"}}, {"type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[-71.10269671757119, -30.20450113019421], [-71.10062018916885, -30.20453442536687], [-71.1006776636688, -30.207239890114966], [-71.10275424878448, -30.207206591344413], [-71.10269671757119, -30.20450113019421]]]}, "properties": {"cve": "2834341", "nombre": "LA FORTUNA 1 AL 16", "solicitante": "Delgado Hurtado Carmen", "region": "REGIÓN DE COQUIMBO", "provincia": "Provincia de Elqui", "comuna": null, "superficie_ha": 6.0, "datum_original": "PSAD56", "huso": 19, "epsg_origen": 24879, "tipo_publicacion": "manifestacion", "fuente_pdf": "http://www.diariooficial.interior.gob.cl/publicaciones/2026/07/08/44494/07/2834341.pdf", "archivo": "gm_manifestacion_2834341.pdf", "fecha": "08-07-2026", "edicion": "44494"}}, {"type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[-71.10565810886337, -30.203100398994877], [-71.10254336498957, -30.20315039768836], [-71.10256253875613, -30.204052218484083], [-71.10567731098314, -30.204002217989647], [-71.10565810886337, -30.203100398994877]]]}, "properties": {"cve": "2834340", "nombre": "LOS AÑOS LOCOS 1 AL 3", "solicitante": "Delgado Hurtado Carmen", "region": "REGIÓN DE COQUIMBO", "provincia": "Provincia de Elqui", "comuna": null, "superficie_ha": 3.0, "datum_original": "PSAD56", "huso": 19, "epsg_origen": 24879, "tipo_publicacion": "manifestacion", "fuente_pdf": "http://www.diariooficial.interior.gob.cl/publicaciones/2026/07/08/44494/07/2834340.pdf", "archivo": "gm_manifestacion_2834340.pdf", "fecha": "08-07-2026", "edicion": "44494"}}, {"type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[-71.00622161794833, -29.705841631101773], [-70.98555829692575, -29.70615311853444], [-70.9857358166777, -29.71517266579566], [-71.00640098210833, -29.714861064993116], [-71.00622161794833, -29.705841631101773]]]}, "properties": {"cve": "2834303", "nombre": "CONDE 1 1 AL 40", "solicitante": "Molina Bauer Gonzalo Andrés", "region": "REGIÓN DE COQUIMBO", "provincia": "Provincia de Elqui", "comuna": null, "superficie_ha": 200.0, "datum_original": "PSAD56", "huso": 19, "epsg_origen": 24879, "tipo_publicacion": "mensura", "fuente_pdf": "http://www.diariooficial.interior.gob.cl/publicaciones/2026/07/08/44494/07/2834303.pdf", "archivo": "gm_mensura_2834303.pdf", "fecha": "08-07-2026", "edicion": "44494"}}, {"type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[-71.17783503177397, -34.018563029220346], [-71.17134118019054, -34.01867789208415], [-71.17161672521891, -34.02949267952307], [-71.17378162066471, -34.02945441447621], [-71.17382760483235, -34.031256874411746], [-71.17815747487505, -34.03118022493385], [-71.17783503177397, -34.018563029220346]]]}, "properties": {"cve": "2833866", "nombre": "SHEFA 6, 1 AL 20", "solicitante": "Medina", "region": "REGIÓN METROPOLITANA DE SANTIAGO", "provincia": "Provincia de Melipilla", "comuna": null, "superficie_ha": 80.0, "datum_original": "PSAD56", "huso": 19, "epsg_origen": 24879, "tipo_publicacion": "mensura", "fuente_pdf": "http://www.diariooficial.interior.gob.cl/publicaciones/2026/07/08/44494/07/2833866.pdf", "archivo": "gm_mensura_2833866.pdf", "fecha": "08-07-2026", "edicion": "44494"}}, {"type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[-70.39000343708807, -30.10788529392027], [-70.3796269409035, -30.10799468495793], [-70.37975231536348, -30.117016491305993], [-70.3901297537812, -30.116907060770885], [-70.39000343708807, -30.10788529392027]]]}, "properties": {"cve": "2834308", "nombre": "ASTRO REY", "solicitante": "Ahumada Varela Hernán Antonio", "region": "REGIÓN DE COQUIMBO", "provincia": "Provincia de Elqui", "comuna": null, "superficie_ha": 100.0, "datum_original": "PSAD56", "huso": 19, "epsg_origen": 24879, "tipo_publicacion": "pedimento", "fuente_pdf": "http://www.diariooficial.interior.gob.cl/publicaciones/2026/07/08/44494/07/2834308.pdf", "archivo": "gm_pedimento_2834308.pdf", "fecha": "08-07-2026", "edicion": "44494"}}, {"type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[-72.91691972676442, -36.914045684470395], [-72.88326351004807, -36.91345056849806], [-72.88301443538128, -36.92245894550558], [-72.9166746053579, -36.9230542551441], [-72.91691972676442, -36.914045684470395]]]}, "properties": {"cve": "2834309", "nombre": "JOSEFA II 4", "solicitante": "Prospecciones Greenfield SpA", "region": "REGIÓN DEL BIOBÍO", "provincia": "Provincia de Concepción", "comuna": null, "superficie_ha": 300.0, "datum_original": "PSAD56", "huso": 18, "epsg_origen": 24878, "tipo_publicacion": "pedimento", "fuente_pdf": "http://www.diariooficial.interior.gob.cl/publicaciones/2026/07/08/44494/07/2834309.pdf", "archivo": "gm_pedimento_2834309.pdf", "fecha": "08-07-2026", "edicion": "44494"}}]};
+
+const map = L.map('map', { zoomControl: true });
+
+// Embebido en un iframe (preview de la landing) vs. pagina abierta directo:
+// el panel flotante se achica bastante mas cuando esta embebido, para que
+// el mapa mismo se alcance a ver en un recuadro chico.
+const embedded = window.self !== window.top;
+if (embedded) document.querySelector('.panel').classList.add('panel--compact');
+
+const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '&copy; OpenStreetMap', maxZoom: 19
+});
+const sat = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+  attribution: 'Tiles &copy; Esri', maxZoom: 19
+});
+osm.addTo(map);
+L.control.layers({ "Calles": osm, "Satelite": sat }).addTo(map);
+
+const colors = {"pedimento": "#2563eb", "manifestacion": "#16a34a", "mensura": "#dc2626", "sentencia_exploracion": "#9333ea", "sentencia_explotacion": "#ea580c"};
+
+if (data.features.length) {
+  const layer = L.geoJSON(data, {
+    style: function(feature) {
+      const c = colors[feature.properties.tipo_publicacion] || '#888';
+      return { color: c, weight: 2, fillColor: c, fillOpacity: 0.25 };
+    },
+    onEachFeature: function(feature, lyr) {
+      const p = feature.properties;
+      const html = `
+        <div class="popup-title">${p.nombre || '(sin nombre)'}</div>
+        <div class="popup-row"><b>Tipo:</b> ${p.tipo_publicacion}</div>
+        <div class="popup-row"><b>CVE:</b> ${p.cve}</div>
+        <div class="popup-row"><b>Fecha publicacion:</b> ${p.fecha || '-'}</div>
+        <div class="popup-row"><b>Solicitante:</b> ${p.solicitante || '-'}</div>
+        <div class="popup-row"><b>Region:</b> ${p.region || '-'}</div>
+        <div class="popup-row"><b>Provincia:</b> ${p.provincia || '-'}</div>
+        <div class="popup-row"><b>Superficie:</b> ${p.superficie_ha ? p.superficie_ha + ' ha' : '-'}</div>
+        <div class="popup-row"><b>Datum origen:</b> ${p.datum_original} / Huso ${p.huso}</div>
+        <div class="popup-row"><a class="pdf-link" href="${p.fuente_pdf}" target="_blank">Ver PDF original</a></div>
+      `;
+      lyr.bindPopup(html);
+    }
+  }).addTo(map);
+  // El encuadre inicial es un cajon fijo (calibrado a mano contra una
+  // captura de referencia: norte de Chile con contexto del NO argentino
+  // de fondo) en vez de ajustarse a los limites exactos de ESTE dia. Un
+  // caso aislado en un extremo (ej. una mensura puntual en Magallanes,
+  // mucho mas al sur que el resto) no debe forzar un zoom abierto que
+  // empequeñezca todo lo demas -- esos puntos siguen en el mapa (clic,
+  // popup), solo no entran en el encuadre inicial.
+  const CHILE_MINERO = [[-40.5, -84.0], [-22.3, -55.0]];
+  // Padding asimetrico: reserva espacio en la esquina superior derecha para
+  // el panel/leyenda flotante, asi el zoom no deja el territorio ni los
+  // datos tapados detras del panel.
+  map.fitBounds(CHILE_MINERO, { paddingTopLeft: [24, 24], paddingBottomRight: [embedded ? 170 : 190, 24] });
+} else {
+  map.setView([-33.45, -70.65], 5);
+}
+</script>
+</body>
+</html>
