@@ -95,10 +95,30 @@ def _stable_content(page, timeout=45000, retries=6):
     raise last_exc
 
 
+def _goto_with_retries(page, url, timeout, retries=3, sleep_between=3.0):
+    """page.goto() con reintentos ante fallos de red transitorios (ej.
+    net::ERR_CONNECTION_RESET). Detectado en vivo el 27-08-2026: el job
+    DIARIO (una sola fecha, sin ninguna relacion con el backfill) fallo con
+    este mismo error en la segunda peticion del dia -- el sitio es flaky de
+    base, no solo bajo carga de backfill, y run_pipeline.py no tenia NINGUN
+    reintento (a diferencia de backfill.py). Arreglado aca, en la funcion
+    base de navegacion, para que beneficie a cualquier llamador por igual."""
+    last_exc = None
+    for attempt in range(retries):
+        try:
+            page.goto(url, wait_until="load", timeout=timeout)
+            return
+        except Exception as e:
+            last_exc = e
+            if attempt < retries - 1:
+                page.wait_for_timeout(int(sleep_between * 1000))
+    raise last_exc
+
+
 def _goto_and_get_html(page, url, timeout=45000):
     """Navega con un navegador real (para pasar el challenge JS anti-bot) y
     devuelve el HTML final, esperando a que la pagina se estabilice."""
-    page.goto(url, wait_until="load", timeout=timeout)
+    _goto_with_retries(page, url, timeout)
     try:
         page.wait_for_load_state("networkidle", timeout=timeout)
     except Exception:
