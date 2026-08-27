@@ -1,0 +1,26 @@
+{
+ "fecha": "30-07-2026",
+ "edicion": "44512",
+ "total_publicaciones": 69,
+ "georreferenciadas": 67,
+ "por_tipo": {
+  "manifestacion": 12,
+  "mensura": 1,
+  "pedimento": 54
+ },
+ "sin_georreferenciar": [
+  {
+   "cve": "2845689",
+   "tipo": "pedimento",
+   "archivo": "gm_pedimento_2845689.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2845690",
+   "tipo": "pedimento",
+   "archivo": "gm_pedimento_2845690.pdf",
+   "motivo": "parseo_incompleto"
+  }
+ ],
+ "historico_total_acumulado": 782
+}
