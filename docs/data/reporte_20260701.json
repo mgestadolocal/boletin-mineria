@@ -1,0 +1,3441 @@
+{
+ "fecha": "01-07-2026",
+ "edicion": "44488",
+ "total_publicaciones": 615,
+ "georreferenciadas": 44,
+ "por_tipo": {
+  "manifestacion": 22,
+  "mensura": 2,
+  "sentencia_exploracion": 2,
+  "pedimento": 18
+ },
+ "sin_georreferenciar": [
+  {
+   "cve": "2830960",
+   "tipo": "manifestacion",
+   "archivo": "gm_manifestacion_2830960.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2831398",
+   "tipo": "mensura",
+   "archivo": "gm_mensura_2831398.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2831397",
+   "tipo": "mensura",
+   "archivo": "gm_mensura_2831397.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2831102",
+   "tipo": "mensura",
+   "archivo": "gm_mensura_2831102.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2831233",
+   "tipo": "mensura",
+   "archivo": "gm_mensura_2831233.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2824390",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2824390.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2824486",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2824486.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2824487",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2824487.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2824488",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2824488.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2824482",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2824482.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2824483",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2824483.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2824484",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2824484.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2824485",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2824485.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829862",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829862.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829867",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829867.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829868",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829868.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829863",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829863.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829864",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829864.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829865",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829865.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829866",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829866.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829941",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829941.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829942",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829942.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829943",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829943.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829944",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829944.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829945",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829945.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829946",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829946.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829956",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829956.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829957",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829957.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826581",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826581.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826582",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826582.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826583",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826583.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826584",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826584.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829920",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829920.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829929",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829929.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829930",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829930.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829931",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829931.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829932",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829932.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829934",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829934.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829921",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829921.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829922",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829922.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829923",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829923.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829924",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829924.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829925",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829925.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829926",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829926.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829927",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829927.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829928",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829928.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829911",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829911.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829902",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829902.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829903",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829903.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829904",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829904.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2825901",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2825901.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2825873",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2825873.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2825874",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2825874.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2822388",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2822388.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826587",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826587.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826588",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826588.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829961",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829961.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829962",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829962.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829963",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829963.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829964",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829964.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829464",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829464.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829468",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829468.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829469",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829469.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829470",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829470.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829889",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829889.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829465",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829465.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829466",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829466.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829890",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829890.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829467",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829467.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829510",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829510.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829511",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829511.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829559",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829559.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829512",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829512.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2823533",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2823533.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2828939",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2828939.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2828940",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2828940.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2823534",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2823534.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2823537",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2823537.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2828941",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2828941.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2828942",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2828942.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2828943",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2828943.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2828944",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2828944.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2823535",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2823535.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2828945",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2828945.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2823538",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2823538.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2823539",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2823539.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2828946",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2828946.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2828947",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2828947.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2823536",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2823536.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2828937",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2828937.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2828938",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2828938.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829751",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829751.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829514",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829514.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829515",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829515.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829516",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829516.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829517",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829517.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829518",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829518.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829519",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829519.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829520",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829520.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829521",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829521.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829522",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829522.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829513",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829513.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829523",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829523.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829526",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829526.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829527",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829527.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829528",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829528.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829524",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829524.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829525",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829525.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829529",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829529.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829530",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829530.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829531",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829531.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826664",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826664.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829488",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829488.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829487",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829487.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829489",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829489.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829490",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829490.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829491",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829491.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2823501",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2823501.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829492",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829492.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829507",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829507.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829493",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829493.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829532",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829532.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2825611",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2825611.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829533",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829533.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829534",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829534.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829494",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829494.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829495",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829495.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829496",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829496.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829497",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829497.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829498",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829498.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829499",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829499.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829500",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829500.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829780",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829780.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829839",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829839.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829840",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829840.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829841",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829841.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829842",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829842.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829837",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829837.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829838",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829838.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829501",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829501.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829503",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829503.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829504",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829504.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829505",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829505.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829502",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829502.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829535",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829535.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2823488",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2823488.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2823491",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2823491.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2823492",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2823492.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2823493",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2823493.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2823494",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2823494.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2823495",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2823495.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2823496",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2823496.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2823489",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2823489.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2823490",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2823490.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829689",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829689.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829536",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829536.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829537",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829537.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829540",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829540.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829538",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829538.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829539",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829539.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829541",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829541.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829542",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829542.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829547",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829547.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829548",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829548.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829549",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829549.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829550",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829550.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829551",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829551.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829552",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829552.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829553",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829553.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829554",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829554.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829555",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829555.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829556",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829556.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829557",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829557.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829558",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829558.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829543",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829543.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829544",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829544.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829545",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829545.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829546",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829546.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2823410",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2823410.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829506",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829506.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829560",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829560.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829561",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829561.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826665",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826665.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829752",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829752.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829757",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829757.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829758",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829758.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829759",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829759.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829760",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829760.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829761",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829761.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829753",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829753.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829754",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829754.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829755",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829755.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829756",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829756.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829562",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829562.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829563",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829563.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829564",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829564.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829565",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829565.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829566",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829566.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826652",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826652.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829568",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829568.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829567",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829567.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829569",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829569.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829570",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829570.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829508",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829508.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2823521",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2823521.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829509",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829509.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2825634",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2825634.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2825635",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2825635.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2825636",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2825636.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2825637",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2825637.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829691",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829691.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829692",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829692.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829693",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829693.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2823523",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2823523.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2823524",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2823524.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829854",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829854.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829873",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829873.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829874",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829874.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829875",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829875.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829876",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829876.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829877",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829877.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829878",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829878.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829879",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829879.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829880",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829880.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829705",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829705.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829706",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829706.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829707",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829707.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829708",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829708.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829709",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829709.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2819808",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2819808.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829710",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829710.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829711",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829711.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829712",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829712.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2827735",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2827735.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829480",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829480.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2827480",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2827480.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2827481",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2827481.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829733",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829733.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829767",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829767.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829768",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829768.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829769",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829769.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829770",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829770.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829771",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829771.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829772",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829772.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829773",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829773.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826204",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826204.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826212",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826212.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826213",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826213.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826214",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826214.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826215",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826215.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826216",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826216.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826217",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826217.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826218",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826218.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826219",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826219.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826220",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826220.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826221",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826221.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826205",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826205.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826222",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826222.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826223",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826223.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826224",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826224.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826225",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826225.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826226",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826226.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826227",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826227.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826228",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826228.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826229",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826229.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826230",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826230.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826231",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826231.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826206",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826206.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826232",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826232.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826233",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826233.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826234",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826234.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826235",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826235.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826236",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826236.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826237",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826237.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826238",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826238.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826239",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826239.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826240",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826240.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826241",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826241.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826242",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826242.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826243",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826243.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826244",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826244.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826245",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826245.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826246",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826246.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826247",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826247.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826248",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826248.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826249",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826249.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826250",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826250.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826251",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826251.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826207",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826207.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826252",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826252.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826253",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826253.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826254",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826254.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826255",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826255.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826256",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826256.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826257",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826257.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826258",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826258.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826259",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826259.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826260",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826260.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826261",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826261.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826208",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826208.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826262",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826262.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826263",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826263.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826264",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826264.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826265",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826265.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826266",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826266.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826267",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826267.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826268",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826268.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826269",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826269.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826270",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826270.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826271",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826271.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826209",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826209.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826210",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826210.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826272",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826272.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826273",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826273.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826274",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826274.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826275",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826275.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826276",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826276.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826277",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826277.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826278",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826278.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826211",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826211.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826279",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826279.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826280",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826280.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826281",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826281.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826282",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826282.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826283",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826283.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2827766",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2827766.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2824103",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2824103.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2824104",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2824104.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829435",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829435.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829430",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829430.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2825949",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2825949.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2825983",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2825983.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2825950",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2825950.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2825984",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2825984.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2825951",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2825951.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2825985",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2825985.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829675",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829675.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829431",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829431.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829432",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829432.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829433",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829433.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829254",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829254.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829255",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829255.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2825815",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2825815.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2825816",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2825816.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2825813",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2825813.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2825817",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2825817.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2825814",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2825814.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829434",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829434.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829481",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829481.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829482",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829482.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829483",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829483.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829484",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829484.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829485",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829485.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829716",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829716.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829723",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829723.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829724",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829724.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829717",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829717.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829718",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829718.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829719",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829719.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829720",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829720.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829721",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829721.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829722",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829722.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829678",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829678.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829679",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829679.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829680",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829680.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829681",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829681.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829676",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829676.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829677",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829677.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829683",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829683.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829684",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829684.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829682",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829682.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829700",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829700.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829847",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829847.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829848",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829848.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829849",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829849.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829850",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829850.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829851",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829851.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829852",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829852.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829619",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829619.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2825767",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2825767.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2825773",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2825773.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2825774",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2825774.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2825775",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2825775.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2825776",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2825776.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2825777",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2825777.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2825768",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2825768.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2825778",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2825778.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2825769",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2825769.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2825770",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2825770.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2825771",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2825771.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2825772",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2825772.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829381",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829381.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829382",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829382.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829896",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829896.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829871",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829871.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2824156",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2824156.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829398",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829398.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2824030",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2824030.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2827452",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2827452.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829324",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829324.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829588",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829588.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829589",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829589.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829590",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829590.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2828901",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2828901.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2820324",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2820324.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2821058",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2821058.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2821059",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2821059.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2821060",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2821060.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2821056",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2821056.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2821057",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2821057.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2821061",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2821061.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2821062",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2821062.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2821063",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2821063.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2827409",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2827409.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2827410",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2827410.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2827411",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2827411.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2827412",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2827412.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2827413",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2827413.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2827414",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2827414.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2827415",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2827415.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826744",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826744.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826745",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826745.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826746",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826746.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826747",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826747.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826748",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826748.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826749",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826749.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826750",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826750.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826751",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826751.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826752",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826752.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826753",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826753.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826754",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826754.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826755",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2826755.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2828614",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2828614.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2828615",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2828615.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2828602",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2828602.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2827369",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2827369.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2820795",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2820795.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2816059",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2816059.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2816060",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2816060.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2828420",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2828420.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2827900",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2827900.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2820793",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2820793.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2820794",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2820794.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2828276",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2828276.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2815644",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2815644.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2815645",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2815645.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2815646",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2815646.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2815647",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2815647.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829642",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829642.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2823364",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2823364.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2825736",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2825736.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2825737",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2825737.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2825738",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2825738.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2825739",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2825739.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829022",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829022.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829023",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829023.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2828307",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2828307.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2827925",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2827925.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2825200",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2825200.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829657",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829657.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2817085",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2817085.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2824951",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2824951.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2820876",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2820876.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2816020",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2816020.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2822199",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2822199.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2825073",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2825073.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2824310",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2824310.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2824303",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2824303.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2824304",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2824304.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2824305",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2824305.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2824306",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2824306.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2824307",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2824307.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2824308",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2824308.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2824309",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2824309.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2828531",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2828531.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2816514",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2816514.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2827938",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2827938.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2825034",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2825034.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2825035",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2825035.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829843",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2829843.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2828696",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2828696.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2816523",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2816523.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2828681",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2828681.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2827936",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2827936.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2821878",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2821878.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2816623",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2816623.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2816624",
+   "tipo": "sentencia_exploracion",
+   "archivo": "gm_sentencia_exploracion_2816624.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829958",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2829958.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2825900",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2825900.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829948",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2829948.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2825660",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2825660.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2819086",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2819086.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829697",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2829697.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2823546",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2823546.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829674",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2829674.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2825593",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2825593.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2823547",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2823547.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2825722",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2825722.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829696",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2829696.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2825621",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2825621.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2823544",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2823544.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2828962",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2828962.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829353",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2829353.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829451",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2829451.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829785",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2829785.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2827688",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2827688.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829653",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2829653.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829654",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2829654.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2827435",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2827435.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2827418",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2827418.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2827419",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2827419.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2827420",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2827420.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2827422",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2827422.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2827654",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2827654.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2827657",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2827657.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2827658",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2827658.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2827659",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2827659.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2827655",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2827655.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2827656",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2827656.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2826303",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2826303.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2824105",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2824105.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2824106",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2824106.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829988",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2829988.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829688",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2829688.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2824136",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2824136.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829267",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2829267.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829668",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2829668.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829955",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2829955.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829949",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2829949.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829950",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2829950.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829951",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2829951.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829952",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2829952.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829953",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2829953.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829954",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2829954.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2825888",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2825888.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2827773",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2827773.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2825839",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2825839.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2824121",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2824121.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829913",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2829913.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2827793",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2827793.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829645",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2829645.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829646",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2829646.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829284",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2829284.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829283",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2829283.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2817844",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2817844.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2816392",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2816392.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2819518",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2819518.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2821156",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2821156.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2818949",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2818949.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2818970",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2818970.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2824977",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2824977.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2821055",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2821055.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2824066",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2824066.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2827498",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2827498.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2827572",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2827572.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2820827",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2820827.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829804",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2829804.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2815948",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2815948.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2825760",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2825760.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2825761",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2825761.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2831107",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2831107.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2820752",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2820752.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2825698",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2825698.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2825699",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2825699.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2817933",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2817933.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2824514",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2824514.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2816320",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2816320.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2827853",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2827853.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2829207",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2829207.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2825548",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2825548.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  },
+  {
+   "cve": "2825549",
+   "tipo": "sentencia_explotacion",
+   "archivo": "gm_sentencia_explotacion_2825549.pdf",
+   "motivo": "formato_sentencia_no_reconocido"
+  }
+ ],
+ "historico_total_acumulado": 1591
+}
