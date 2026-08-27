@@ -244,3 +244,24 @@ def build_historico_html(rows, out_path):
     nav = '<a href="mapa.html">Ver solo la edicion de hoy &rarr;</a>'
     _render(rows, title, subtitle, "data/boletin_mineria_historico.gpkg",
             "data/boletin_mineria_historico.geojson", nav, out_path)
+
+    # Resumen liviano (JSON, no el geojson completo) para que la landing
+    # pueda graficar el acumulado por tipo sin descargar el historico
+    # entero -- se regenera solas cada vez que corre el pipeline (diario o
+    # backfill), asi el grafico de la landing no queda desactualizado.
+    por_tipo = {}
+    for r in rows:
+        t = r.get('tipo_publicacion')
+        if t:
+            por_tipo[t] = por_tipo.get(t, 0) + 1
+    stats = {
+        'total': len(rows),
+        'por_tipo': por_tipo,
+        'fecha_desde': fechas[0] if fechas else None,
+        'fecha_hasta': fechas[-1] if fechas else None,
+    }
+    import os
+    stats_path = os.path.join(os.path.dirname(out_path) or '.', 'data', 'historico_stats.json')
+    os.makedirs(os.path.dirname(stats_path), exist_ok=True)
+    with open(stats_path, 'w', encoding='utf-8') as f:
+        json.dump(stats, f, ensure_ascii=False, indent=1)
