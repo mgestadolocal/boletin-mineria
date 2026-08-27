@@ -500,8 +500,15 @@
   }
   /* Conector entre pasos: refuerza que son 4 etapas de un mismo proceso
      secuencial, no 4 tarjetas de feature sueltas. Solo tiene sentido con
-     los 4 pasos en una sola fila -- se oculta apenas la grilla colapsa. */
-  .step:not(:last-child)::after{
+     los 4 pasos en una sola fila -- se oculta apenas la grilla colapsa.
+     Bug detectado el 27-08-2026: esto vivia en ::after, pero .step tambien
+     es .spot (brillo que sigue el cursor, tambien en ::after -- ver arriba)
+     -- un elemento solo puede tener UN ::after, asi que las dos reglas se
+     mezclaban (inset:0 del spot ganaba bottom/left, top/right del conector
+     quedaban, y la opacity:0->1 en hover del spot terminaba controlando la
+     flecha tambien). Resultado: la flecha aparecia mal ubicada, encima del
+     texto, y solo visible al hacer hover. Usar ::before evita el choque. */
+  .step:not(:last-child)::before{
     content:"→";
     position:absolute;
     top:50%; right:-1px;
@@ -514,7 +521,7 @@
     font-family:var(--font-mono); font-size:0.85rem; color:var(--accent-ink);
     z-index:2;
   }
-  @media (max-width:820px){ .step::after{ display:none; } }
+  @media (max-width:820px){ .step::before{ display:none; } }
   .step__n{
     font-family:var(--font-mono);
     font-size:0.78rem;
