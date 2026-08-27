@@ -1,0 +1,20 @@
+{
+ "fecha": "15-07-2026",
+ "edicion": "44500",
+ "total_publicaciones": 76,
+ "georreferenciadas": 75,
+ "por_tipo": {
+  "manifestacion": 17,
+  "mensura": 3,
+  "pedimento": 55
+ },
+ "sin_georreferenciar": [
+  {
+   "cve": "2838151",
+   "tipo": "manifestacion",
+   "archivo": "gm_manifestacion_2838151.pdf",
+   "motivo": "rectificacion_sin_geometria"
+  }
+ ],
+ "historico_total_acumulado": 2209
+}
