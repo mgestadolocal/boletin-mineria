@@ -494,6 +494,17 @@
   @media (max-width:480px){ .pipeline{ grid-template-columns:1fr; } }
   .step{
     position:relative;
+    /* min-width:0 anula el minimo automatico ("auto") que un item de grid
+       tiene por defecto -- sin esto, el texto sin wrap de .step__log (mas
+       abajo) fuerza un ancho minimo de contenido distinto por columna, y
+       las 4 columnas del grid dejan de ser realmente iguales pese a
+       "repeat(4, 1fr)" (bug detectado el 27-08-2026: las 4 tarjetas median
+       340/277/319/277px en vez de 248px parejo -- la mas ancha "ganaba"
+       espacio a costa de las otras, dando una grilla visiblemente dispareja
+       que ademas no se sentia con el mismo ancho que las secciones
+       vecinas). Con min-width:0, el overflow:hidden + text-overflow:ellipsis
+       que .step__log ya declaraba puede finalmente actuar. */
+    min-width:0;
     background:var(--paper-raised);
     padding:26px 22px 28px;
     display:flex; flex-direction:column; gap:12px;
@@ -501,15 +512,18 @@
   /* Conector entre pasos: refuerza que son 4 etapas de un mismo proceso
      secuencial, no 4 tarjetas de feature sueltas. Solo tiene sentido con
      los 4 pasos en una sola fila -- se oculta apenas la grilla colapsa.
-     Bug detectado el 27-08-2026: esto vivia en ::after, pero .step tambien
-     es .spot (brillo que sigue el cursor, tambien en ::after -- ver arriba)
-     -- un elemento solo puede tener UN ::after, asi que las dos reglas se
-     mezclaban (inset:0 del spot ganaba bottom/left, top/right del conector
-     quedaban, y la opacity:0->1 en hover del spot terminaba controlando la
-     flecha tambien). Resultado: la flecha aparecia mal ubicada, encima del
-     texto, y solo visible al hacer hover. Usar ::before evita el choque. */
-  .step:not(:last-child)::before{
-    content:"→";
+     Es un <span> real (no un pseudo-elemento) por dos bugs encontrados el
+     27-08-2026: (1) vivia en .step::after, pero .step tambien es .spot (el
+     brillo que sigue el cursor, tambien en ::after) -- un elemento solo
+     puede tener UN ::after, asi que las dos reglas se mezclaban y la flecha
+     terminaba mal ubicada y solo visible al hacer hover; movida a ::before
+     evitaba ese choque puntual, pero (2) el caracter "→" (U+2192) no forma
+     parte del subset que Google Fonts sirve para IBM Plex Mono, así que el
+     navegador caía a la fuente de respaldo para ese glifo y se veia como un
+     simple guion en vez de una flecha, sin importar el pseudo-elemento
+     usado. Un SVG inline evita ambos problemas de raiz: no depende de
+     ningun pseudo-elemento ni de cobertura de glifos de una fuente. */
+  .step__arrow{
     position:absolute;
     top:50%; right:-1px;
     transform:translate(50%, -50%);
@@ -518,10 +532,10 @@
     background:var(--paper-sunken);
     border:1px solid var(--line-strong);
     border-radius:50%;
-    font-family:var(--font-mono); font-size:0.85rem; color:var(--accent-ink);
+    color:var(--accent-ink);
     z-index:2;
   }
-  @media (max-width:820px){ .step::before{ display:none; } }
+  @media (max-width:820px){ .step__arrow{ display:none; } }
   .step__n{
     font-family:var(--font-mono);
     font-size:0.78rem;
@@ -900,18 +914,21 @@
             <h3>Scraping</h3>
             <p>Un navegador Chromium headless (Playwright) descarga los PDF de cada categoría, sorteando la protección anti-bot F5/TrafficShield del sitio oficial.</p>
             <code class="step__log" id="step-log-1">› 35 PDFs descargados · edición 44534</code>
+            <span class="step__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15M13 6l6 6-6 6"/></svg></span>
           </div>
           <div class="step spot reveal-item pending">
             <span class="step__n">02</span>
             <h3>Análisis</h3>
             <p>Expresiones regulares extraen coordenadas UTM y dimensiones, tolerando la redacción propia de cada estudio jurídico.</p>
             <code class="step__log" id="step-log-2">› 35/35 documentos parseados</code>
+            <span class="step__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15M13 6l6 6-6 6"/></svg></span>
           </div>
           <div class="step spot reveal-item pending">
             <span class="step__n">03</span>
             <h3>Construcción geométrica</h3>
             <p>Se generan los polígonos (rectángulos para pedimentos y manifestaciones, vértices directos para mensuras) y se reproyectan a WGS84.</p>
             <code class="step__log" id="step-log-3">› 35 polígonos construidos · WGS84</code>
+            <span class="step__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15M13 6l6 6-6 6"/></svg></span>
           </div>
           <div class="step spot reveal-item pending">
             <span class="step__n">04</span>
