@@ -685,12 +685,19 @@
   }
 
   /* ---------- downloads ---------- */
-  .files{ border-top:1px solid var(--line); }
+  /* Mismo truco que .pipeline: grilla con gap de 1px en color --line hace
+     de separador fino entre tarjetas, en vez de border-top+border-bottom
+     en cada fila (evita el look de tabla de specs). */
+  .files{
+    display:grid; gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+  }
   .file{
+    background:var(--paper-raised);
     display:flex; align-items:center; justify-content:space-between;
     gap:16px; flex-wrap:wrap;
-    padding:18px 0;
-    border-bottom:1px solid var(--line);
+    padding:18px 20px;
   }
   .file__meta{ display:flex; flex-direction:column; gap:4px; }
   .file__name{ font-family:var(--font-mono); font-size:0.9rem; }
@@ -786,7 +793,7 @@
           </p>
           <p class="hero__lede">
             Un pipeline en GitHub Actions descarga el Boletín Oficial de Minería, extrae las coordenadas
-            de cada pedimento, manifestación y mensura, y publica un mapa y datos descargables —
+            de cada pedimento, manifestación y mensura, y publica un mapa y datos descargables,
             sin depender de que ningún computador se quede encendido.
           </p>
           <div class="hero__ctas">
@@ -813,7 +820,7 @@
             <img class="hero__globe-fallback" id="hero-globe-fallback" src="images/earth-equirectangular.jpg" alt="Vista satelital de la Tierra" hidden>
             <noscript><style>#hero-globe-canvas{display:none} #hero-globe-fallback{display:block !important}</style></noscript>
           </div>
-          <p class="hero__globe-credit">Imagen: NASA Blue Marble Next Generation (dominio público) — Reto Stöckli/NASA Earth Observatory, edición de NordNordWest — vía Wikimedia Commons.</p>
+          <p class="hero__globe-credit">Imagen: NASA Blue Marble Next Generation (dominio público), de Reto Stöckli/NASA Earth Observatory, edición de NordNordWest, vía Wikimedia Commons.</p>
         </div>
       </div>
     </section>
@@ -825,14 +832,14 @@
             <div class="section__kicker">Edición de hoy</div>
             <h2 class="section__title">El mapa, en vivo</h2>
           </div>
-          <p class="section__note">Mismo mapa Leaflet que genera el pipeline — panel, capas satelitales y popups incluidos.</p>
+          <p class="section__note">Mismo mapa Leaflet que genera el pipeline, con panel, capas satelitales y popups incluidos.</p>
         </div>
         <div class="reveal pending" data-reveal>
           <div class="mapframe">
             <span class="mapframe__skeleton" id="map-skeleton">Cargando mapa…</span>
             <iframe
               src="mapa.html"
-              title="Mapa del Boletín Oficial de Minería — edición del día"
+              title="Mapa del Boletín Oficial de Minería, edición del día"
               onload="this.classList.add('is-loaded'); var s=document.getElementById('map-skeleton'); if(s) s.style.display='none';"
             ></iframe>
           </div>
@@ -866,7 +873,7 @@
             <button class="gallery__btn" type="button" data-dir="-1" aria-label="Foto anterior">←</button>
             <button class="gallery__btn" type="button" data-dir="1" aria-label="Foto siguiente">→</button>
           </div>
-          <p class="gallery__credits">Fotos: Diego Delso (CC BY-SA 4.0) · ESO/M. Zamani (CC BY 4.0) · Jonathan Zander (CC BY-SA 3.0) · NASA/METI/AIST/Japan Space Systems (dominio público) — vía Wikimedia Commons.</p>
+          <p class="gallery__credits">Fotos: Diego Delso (CC BY-SA 4.0) · ESO/M. Zamani (CC BY 4.0) · Jonathan Zander (CC BY-SA 3.0) · NASA/METI/AIST/Japan Space Systems (dominio público), vía Wikimedia Commons.</p>
         </div>
       </div>
     </section>
@@ -896,7 +903,7 @@
           <div class="step spot reveal-item pending">
             <span class="step__n">03</span>
             <h3>Construcción geométrica</h3>
-            <p>Se generan los polígonos —rectángulos para pedimentos y manifestaciones, vértices directos para mensuras— y se reproyectan a WGS84.</p>
+            <p>Se generan los polígonos (rectángulos para pedimentos y manifestaciones, vértices directos para mensuras) y se reproyectan a WGS84.</p>
             <code class="step__log" id="step-log-3">› 35 polígonos construidos · WGS84</code>
           </div>
           <div class="step spot reveal-item pending">
@@ -916,12 +923,12 @@
             <div class="section__kicker">Un hallazgo en el camino</div>
             <h2 class="section__title">Las sentencias eran la punta del iceberg</h2>
           </div>
-          <p class="section__note">El boletín diario casi nunca publica Sentencias de Exploración/Explotación — pero esa sentencia es, legalmente, el mismo acto que constituye una concesión minera. Cruzando con el catastro oficial de SERNAGEOMIN aparecieron miles más.</p>
+          <p class="section__note">El boletín diario casi nunca publica Sentencias de Exploración/Explotación, pero esa sentencia es, legalmente, el mismo acto que constituye una concesión minera. Cruzando con el catastro oficial de SERNAGEOMIN aparecieron miles más.</p>
         </div>
 
         <div class="hallazgo-hero spot reveal-item pending" data-reveal>
           <div class="hallazgo-hero__n">104.147</div>
-          <div class="hallazgo-hero__l">concesiones mineras <strong>históricas</strong> — el catastro oficial completo de SERNAGEOMIN, con concesiones que datan de hasta los años 80, mucho antes de que este proyecto empezara a registrar publicaciones diarias. <a href="data/sernageomin_concesiones_completo.gpkg">Descargar catastro completo (GPKG)</a></div>
+          <div class="hallazgo-hero__l">concesiones mineras <strong>históricas</strong>: el catastro oficial completo de SERNAGEOMIN, con concesiones que datan de hasta los años 80, mucho antes de que este proyecto empezara a registrar publicaciones diarias. <a href="data/sernageomin_concesiones_completo.gpkg">Descargar catastro completo (GPKG)</a></div>
           <div class="hallazgo-hero__split">
             <div class="hallazgo-split">
               <span class="hallazgo-split__n" style="color:var(--c-sexpl)">70.338</span>
@@ -954,7 +961,7 @@
           <div class="file spot reveal-item pending">
             <div class="file__meta">
               <span class="file__name">boletin_mineria_latest</span>
-              <span class="file__desc">Edición del día — pedimentos, manifestaciones y mensuras</span>
+              <span class="file__desc">Edición del día: pedimentos, manifestaciones y mensuras</span>
             </div>
             <div class="file__links">
               <a href="data/boletin_mineria_latest.gpkg">GPKG</a>
@@ -974,7 +981,7 @@
           <div class="file spot reveal-item pending">
             <div class="file__meta">
               <span class="file__name">sernageomin_concesiones_completo</span>
-              <span class="file__desc">Catastro OFICIAL completo de SERNAGEOMIN — 104.147 concesiones de exploración y explotación (no solo lo reciente que se ve en el mapa)</span>
+              <span class="file__desc">Catastro OFICIAL completo de SERNAGEOMIN: 104.147 concesiones de exploración y explotación (no solo lo reciente que se ve en el mapa)</span>
             </div>
             <div class="file__links">
               <a href="data/sernageomin_concesiones_completo.gpkg">GPKG</a>
@@ -999,7 +1006,7 @@
           <div class="section__kicker">Automatización</div>
           <h2 class="section__title" style="margin-top:8px;">Se ejecuta sola, todos los días</h2>
           <p style="margin-top:18px;">
-            Todo el pipeline corre en GitHub Actions bajo un cron diario — nadie necesita dejar
+            Todo el pipeline corre en GitHub Actions bajo un cron diario: nadie necesita dejar
             un computador encendido ni ejecutar nada a mano. El scraper usa un navegador real para
             evitar el bloqueo anti-bot del sitio oficial, y cada corrida deja un reporte con las
             publicaciones que sí y las que no pudieron georreferenciarse.
@@ -1011,7 +1018,7 @@
         </div>
         <div class="source-box">
           <h3>Fuente oficial</h3>
-          <p>Cada publicación georreferenciada proviene directamente del Boletín Oficial de Minería de Chile — el pipeline no agrega ni interpreta datos que el boletín no haya publicado ese día.</p>
+          <p>Cada publicación georreferenciada proviene directamente del Boletín Oficial de Minería de Chile: el pipeline no agrega ni interpreta datos que el boletín no haya publicado ese día.</p>
           <a class="source-box__link" href="https://www.boletinoficialdemineria.cl" target="_blank" rel="noopener">Ver el boletín oficial ↗</a>
         </div>
       </div>
