@@ -1386,16 +1386,29 @@
       // Puntos: dos esferas por marcador (nucleo solido + halo translucido)
       // en vez de un sprite -- un sprite plano se corta contra la curva de
       // la esfera desde ciertos angulos; una esfera chica no.
+      //
+      // Bug visual detectado el 27-08-2026: con ~86 publicaciones del dia
+      // concentradas en una franja angosta de Chile (la zona minera real),
+      // marcadores grandes con blending normal se pisan entre si y quedan
+      // como una mancha plana de color solido en vez de leerse como datos
+      // individuales. Dos cambios: marcadores mas chicos (para que el
+      // apilamiento real de las coordenadas siga siendo visible como
+      // textura, no como un blob), y el halo con AdditiveBlending -- asi
+      // los halos que se superponen SUMAN luz (un cumulo se ve como brillo
+      // concentrado, no como un circulo opaco tapando a los demas).
       var markers = [];
       function addMarker(lat, lon, colorHex){
         var pos = latLonToVec3(lat, lon, 1.008);
         var core = new THREE.Mesh(
-          new THREE.SphereGeometry(0.009, 8, 8),
+          new THREE.SphereGeometry(0.0045, 10, 10),
           new THREE.MeshBasicMaterial({ color: colorHex })
         );
         var glow = new THREE.Mesh(
-          new THREE.SphereGeometry(0.022, 8, 8),
-          new THREE.MeshBasicMaterial({ color: colorHex, transparent: true, opacity: 0.4, depthWrite: false })
+          new THREE.SphereGeometry(0.012, 10, 10),
+          new THREE.MeshBasicMaterial({
+            color: colorHex, transparent: true, opacity: 0.55,
+            depthWrite: false, blending: THREE.AdditiveBlending
+          })
         );
         core.position.copy(pos);
         glow.position.copy(pos);
