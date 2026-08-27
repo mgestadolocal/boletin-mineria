@@ -627,6 +627,18 @@
     color:var(--ink-soft);
   }
   .hallazgo-hero__l a{ color:var(--accent-ink); }
+  .hallazgo-hero__split{
+    display:flex; gap:36px; flex-wrap:wrap;
+    margin-top:22px; padding-top:18px;
+    border-top:1px solid var(--line);
+  }
+  .hallazgo-split{ display:flex; flex-direction:column; gap:3px; }
+  .hallazgo-split__n{
+    font-family:var(--font-mono);
+    font-variant-numeric:tabular-nums;
+    font-size:1.4rem;
+  }
+  .hallazgo-split__l{ font-size:0.78rem; color:var(--ink-faint); }
   .tipobars{ display:flex; flex-direction:column; gap:16px; }
   .tipobar{
     display:grid;
@@ -964,7 +976,17 @@
 
         <div class="hallazgo-hero spot reveal-item pending" data-reveal>
           <div class="hallazgo-hero__n">104.147</div>
-          <div class="hallazgo-hero__l">concesiones mineras en el catastro completo de SERNAGEOMIN (exploración + explotación, corte 05-06-2026) — algunas de los años 80. <a href="data/sernageomin_concesiones_completo.gpkg">Descargar catastro completo (GPKG)</a></div>
+          <div class="hallazgo-hero__l">concesiones mineras en el catastro completo de SERNAGEOMIN (corte 05-06-2026) — algunas de los años 80. <a href="data/sernageomin_concesiones_completo.gpkg">Descargar catastro completo (GPKG)</a></div>
+          <div class="hallazgo-hero__split">
+            <div class="hallazgo-split">
+              <span class="hallazgo-split__n" style="color:var(--c-sexpl)">70.338</span>
+              <span class="hallazgo-split__l">Concesiones de Explotación</span>
+            </div>
+            <div class="hallazgo-split">
+              <span class="hallazgo-split__n" style="color:var(--c-sexp)">33.809</span>
+              <span class="hallazgo-split__l">Concesiones de Exploración</span>
+            </div>
+          </div>
         </div>
 
         <div class="tipobars reveal-item pending" data-reveal id="tipobars"></div>
