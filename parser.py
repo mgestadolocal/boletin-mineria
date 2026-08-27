@@ -67,7 +67,14 @@ def find_datum(t):
     # numero (cubre "UTM", "o Huso UTM", "N°", etc.) en vez de exigir que
     # el numero vaya inmediatamente pegado.
     huso_m = re.search(r'(?:Huso|[Zz]ona)[^0-9]{0,25}?(\d{1,2})\s*(?:S|Sur|N|Norte)?', t, F)
-    huso = int(huso_m.group(1)) if huso_m else 19
+    # Tercer hallazgo el 27-08-2026 (CVEs 2831515, 2859100-01, 2840656):
+    # estos documentos NO mencionan Huso/Zona en absoluto -- no hay nada que
+    # un regex pueda encontrar. Antes esto caia en silencio al default (19),
+    # que resulta ser la zona equivocada para Arauco/Nuble (zona 18). Ahora
+    # se devuelve None explicito para que build_geometry.py decida probando
+    # ambas zonas candidatas y quedandose con la que cae dentro de Chile,
+    # en vez de adivinar aca sin ninguna evidencia geografica.
+    huso = int(huso_m.group(1)) if huso_m else None
     hemis_m = re.search(r'(?:Huso|[Zz]ona)[^0-9]{0,25}?\d{1,2}\s*(S|Sur|N|Norte)', t, F)
     hemis = 'S'
     if hemis_m and hemis_m.group(1).upper().startswith('N'):
