@@ -1,0 +1,13 @@
+{
+ "fecha": "10-06-2026",
+ "edicion": "44471",
+ "total_publicaciones": 58,
+ "georreferenciadas": 58,
+ "por_tipo": {
+  "manifestacion": 14,
+  "mensura": 32,
+  "pedimento": 12
+ },
+ "sin_georreferenciar": [],
+ "historico_total_acumulado": 888
+}
