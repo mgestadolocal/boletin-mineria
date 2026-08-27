@@ -40,7 +40,6 @@ from datetime import date, timedelta
 from playwright.sync_api import sync_playwright
 
 import run_pipeline as RP
-import scraper as S
 
 STATE_PATH = ".backfill_state.json"
 # Contador de reintentos entre corridas SEPARADAS (a diferencia de
@@ -208,7 +207,7 @@ def main():
     # que hizo fallar el 97% del backfill del 26-08-2026.
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True)
-        context = browser.new_context(user_agent=S.USER_AGENT)
+        context = browser.new_context()  # UA real de Playwright, no uno fijo/desactualizado
         page = context.new_page()
         try:
             for d in days:

@@ -33,8 +33,13 @@ from bs4 import BeautifulSoup
 from playwright.sync_api import sync_playwright
 
 BASE = "https://www.boletinoficialdemineria.cl/"
-USER_AGENT = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
-              "(KHTML, like Gecko) Chrome/124.0 Safari/537.36")
+# NO fijamos un user_agent a mano en browser.new_context() (ver mas abajo):
+# un UA hardcodeado (ej. "Chrome/124.0" de mediados de 2024) que no coincide
+# con la version real de Chromium que Playwright esta corriendo (ni con sus
+# headers Sec-CH-UA, que si delatan la version real) es exactamente el tipo
+# de inconsistencia que un anti-bot mas sofisticado que un simple challenge
+# JS puede usar para detectar automatizacion -- mejor dejar que Playwright
+# use su UA real y consistente por defecto.
 
 # Nombre visible en el menu -> tipo interno usado en el resto del pipeline.
 CATEGORIES = {
@@ -347,7 +352,7 @@ def scrape_day(date_str, edition=None, out_dir="pdfs", sleep_between_pdfs=0.3):
     sesion entre muchas fechas seguidas, ver scrape_day_with_page()."""
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True)
-        context = browser.new_context(user_agent=USER_AGENT)
+        context = browser.new_context()
         page = context.new_page()
         try:
             return scrape_day_with_page(page, context, date_str, edition,
