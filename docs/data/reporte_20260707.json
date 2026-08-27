@@ -1,0 +1,38 @@
+{
+ "fecha": "07-07-2026",
+ "edicion": "44493",
+ "total_publicaciones": 48,
+ "georreferenciadas": 44,
+ "por_tipo": {
+  "manifestacion": 10,
+  "mensura": 10,
+  "pedimento": 24
+ },
+ "sin_georreferenciar": [
+  {
+   "cve": "2833689",
+   "tipo": "mensura",
+   "archivo": "gm_mensura_2833689.pdf",
+   "motivo": "geometria invalida o area cero"
+  },
+  {
+   "cve": "2833644",
+   "tipo": "pedimento",
+   "archivo": "gm_pedimento_2833644.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2833645",
+   "tipo": "pedimento",
+   "archivo": "gm_pedimento_2833645.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2833646",
+   "tipo": "pedimento",
+   "archivo": "gm_pedimento_2833646.pdf",
+   "motivo": "parseo_incompleto"
+  }
+ ],
+ "historico_total_acumulado": 1810
+}
