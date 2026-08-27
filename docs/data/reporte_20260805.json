@@ -1,0 +1,140 @@
+{
+ "fecha": "05-08-2026",
+ "edicion": "44517",
+ "total_publicaciones": 85,
+ "georreferenciadas": 64,
+ "por_tipo": {
+  "manifestacion": 6,
+  "mensura": 7,
+  "pedimento": 51
+ },
+ "sin_georreferenciar": [
+  {
+   "cve": "2848750",
+   "tipo": "mensura",
+   "archivo": "gm_mensura_2848750.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2848521",
+   "tipo": "mensura",
+   "archivo": "gm_mensura_2848521.pdf",
+   "motivo": "geometria invalida o area cero"
+  },
+  {
+   "cve": "2850687",
+   "tipo": "pedimento",
+   "archivo": "gm_pedimento_2850687.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2848564",
+   "tipo": "pedimento",
+   "archivo": "gm_pedimento_2848564.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2848565",
+   "tipo": "pedimento",
+   "archivo": "gm_pedimento_2848565.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2848566",
+   "tipo": "pedimento",
+   "archivo": "gm_pedimento_2848566.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2848567",
+   "tipo": "pedimento",
+   "archivo": "gm_pedimento_2848567.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2848571",
+   "tipo": "pedimento",
+   "archivo": "gm_pedimento_2848571.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2848568",
+   "tipo": "pedimento",
+   "archivo": "gm_pedimento_2848568.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2848569",
+   "tipo": "pedimento",
+   "archivo": "gm_pedimento_2848569.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2848570",
+   "tipo": "pedimento",
+   "archivo": "gm_pedimento_2848570.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2848572",
+   "tipo": "pedimento",
+   "archivo": "gm_pedimento_2848572.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2848573",
+   "tipo": "pedimento",
+   "archivo": "gm_pedimento_2848573.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2848574",
+   "tipo": "pedimento",
+   "archivo": "gm_pedimento_2848574.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2848575",
+   "tipo": "pedimento",
+   "archivo": "gm_pedimento_2848575.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2848576",
+   "tipo": "pedimento",
+   "archivo": "gm_pedimento_2848576.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2848346",
+   "tipo": "pedimento",
+   "archivo": "gm_pedimento_2848346.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2848348",
+   "tipo": "pedimento",
+   "archivo": "gm_pedimento_2848348.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2848349",
+   "tipo": "pedimento",
+   "archivo": "gm_pedimento_2848349.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2848360",
+   "tipo": "pedimento",
+   "archivo": "gm_pedimento_2848360.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2848361",
+   "tipo": "pedimento",
+   "archivo": "gm_pedimento_2848361.pdf",
+   "motivo": "parseo_incompleto"
+  }
+ ],
+ "historico_total_acumulado": 3077
+}
