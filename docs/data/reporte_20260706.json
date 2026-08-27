@@ -1,0 +1,98 @@
+{
+ "fecha": "06-07-2026",
+ "edicion": "44492",
+ "total_publicaciones": 173,
+ "georreferenciadas": 159,
+ "por_tipo": {
+  "manifestacion": 98,
+  "mensura": 12,
+  "pedimento": 49
+ },
+ "sin_georreferenciar": [
+  {
+   "cve": "2833090",
+   "tipo": "manifestacion",
+   "archivo": "gm_manifestacion_2833090.pdf",
+   "motivo": "rectificacion_sin_geometria"
+  },
+  {
+   "cve": "2832710",
+   "tipo": "manifestacion",
+   "archivo": "gm_manifestacion_2832710.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2832186",
+   "tipo": "manifestacion",
+   "archivo": "gm_manifestacion_2832186.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2832397",
+   "tipo": "mensura",
+   "archivo": "gm_mensura_2832397.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2833170",
+   "tipo": "mensura",
+   "archivo": "gm_mensura_2833170.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2833172",
+   "tipo": "mensura",
+   "archivo": "gm_mensura_2833172.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2833173",
+   "tipo": "mensura",
+   "archivo": "gm_mensura_2833173.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2833171",
+   "tipo": "mensura",
+   "archivo": "gm_mensura_2833171.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2832422",
+   "tipo": "mensura",
+   "archivo": "gm_mensura_2832422.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2833167",
+   "tipo": "mensura",
+   "archivo": "gm_mensura_2833167.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2832651",
+   "tipo": "mensura",
+   "archivo": "gm_mensura_2832651.pdf",
+   "motivo": "geometria invalida o area cero"
+  },
+  {
+   "cve": "2832724",
+   "tipo": "mensura",
+   "archivo": "gm_mensura_2832724.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2833046",
+   "tipo": "mensura",
+   "archivo": "gm_mensura_2833046.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2832757",
+   "tipo": "mensura",
+   "archivo": "gm_mensura_2832757.pdf",
+   "motivo": "parseo_incompleto"
+  }
+ ],
+ "historico_total_acumulado": 1766
+}
