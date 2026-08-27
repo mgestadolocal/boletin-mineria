@@ -227,16 +227,72 @@ def build_map_html(rows, fecha, edicion, out_path):
             "data/boletin_mineria_latest.geojson", nav, out_path)
 
 
-def build_historico_html(rows, out_path):
+def _valid_fecha(v):
+    """True si v es una fecha string usable (DD-MM-AAAA). Filtra tanto None
+    como NaN -- algunas filas (ej. concesiones SERNAGEOMIN sin ano de
+    inscripcion conocido) traen fecha=None, pero pandas puede silenciosamente
+    convertir ese None en NaN (float) al inferir dtype 'str' para la columna
+    al pasar por un GeoDataFrame; un simple `if fecha:` no detecta eso porque
+    NaN es truthy en Python. Bug encontrado el 27-08-2026 al fusionar el
+    catastro completo (21.5k registros sin ano de inscripcion)."""
+    return isinstance(v, str) and bool(v)
+
+
+def filter_for_map(rows):
+    """Filtra que filas del historico acumulado van al mapa interactivo.
+
+    Desde la fusion del catastro OFICIAL completo de SERNAGEOMIN (27-08-2026,
+    104.147 concesiones), el historico acumulado (para descarga) y lo que es
+    razonable cargar en un mapa Leaflet en el navegador dejaron de ser lo
+    mismo. Se queda con:
+      - todo lo que NO es sentencia (pedimentos/manifestaciones/mensuras,
+        ~8mil filas, sin problema para el navegador);
+      - sentencias detectadas de verdad en el Boletin Oficial (tienen
+        fuente_pdf -- son pocas, el Boletin casi nunca publica sentencias);
+      - sentencias del catastro SERNAGEOMIN de una ventana reciente (año
+        actual y el anterior). La ventana es relativa a "hoy", no un rango
+        fijo -- se corre sola cada año sin tener que volver a tocar esto.
+    El resto (grueso del catastro, decadas hacia atras) sigue disponible
+    completo en el archivo descargable, solo no se renderiza en el mapa."""
+    cutoff_year = datetime.now().year - 1
+    out = []
+    for r in rows:
+        tipo = r.get('tipo_publicacion')
+        if tipo not in ('sentencia_exploracion', 'sentencia_explotacion'):
+            out.append(r)
+            continue
+        if r.get('fuente_pdf'):
+            out.append(r)
+            continue
+        fecha = r.get('fecha')
+        if _valid_fecha(fecha):
+            try:
+                if int(fecha.split('-')[-1]) >= cutoff_year:
+                    out.append(r)
+            except (ValueError, IndexError):
+                pass
+        # sin fecha (año de inscripcion desconocido) -> se queda solo en el
+        # descargable, no entra al mapa.
+    return out
+
+
+def build_historico_html(rows, out_path, stats_rows=None):
     """Mapa acumulado con todas las publicaciones georreferenciadas hasta la
-    fecha (todas las corridas diarias combinadas, sin duplicar por CVE)."""
+    fecha (todas las corridas diarias combinadas, sin duplicar por CVE).
+
+    rows: lo que efectivamente se renderiza en el mapa Leaflet (normalmente
+    ya pasado por filter_for_map).
+    stats_rows: el total real acumulado (incluyendo lo que no entra al mapa,
+    ej. el grueso del catastro SERNAGEOMIN) -- lo que se escribe en
+    historico_stats.json para la landing. Si no se pasa, se usa `rows` (caso
+    de build_map_html, donde ambos coinciden)."""
     # Ordenar por fecha real, NO como texto: las fechas vienen en formato
     # DD-MM-AAAA, y un sort de string compara el dia primero -- una vez que
     # el historico mezcla varios meses (ej. tras el backfill de 2026), eso
     # da un rango "primera a ultima" incorrecto (ej. "26-01-2026" ordenaba
     # despues de "05-06-2026" como texto, aunque enero sea cronologicamente
     # anterior). Bug detectado el 26-08-2026 al revisar el backfill.
-    fechas_unicas = {r.get('fecha') for r in rows if r.get('fecha')}
+    fechas_unicas = {r.get('fecha') for r in rows if _valid_fecha(r.get('fecha'))}
     fechas = sorted(fechas_unicas, key=lambda f: datetime.strptime(f, '%d-%m-%Y'))
     rango = f"{fechas[0]} a {fechas[-1]}" if fechas else "sin datos"
     title = "Boletin Oficial de Mineria - Historico completo"
@@ -249,16 +305,19 @@ def build_historico_html(rows, out_path):
     # pueda graficar el acumulado por tipo sin descargar el historico
     # entero -- se regenera solas cada vez que corre el pipeline (diario o
     # backfill), asi el grafico de la landing no queda desactualizado.
+    stats_rows = rows if stats_rows is None else stats_rows
+    stats_fechas_unicas = {r.get('fecha') for r in stats_rows if _valid_fecha(r.get('fecha'))}
+    stats_fechas = sorted(stats_fechas_unicas, key=lambda f: datetime.strptime(f, '%d-%m-%Y'))
     por_tipo = {}
-    for r in rows:
+    for r in stats_rows:
         t = r.get('tipo_publicacion')
         if t:
             por_tipo[t] = por_tipo.get(t, 0) + 1
     stats = {
-        'total': len(rows),
+        'total': len(stats_rows),
         'por_tipo': por_tipo,
-        'fecha_desde': fechas[0] if fechas else None,
-        'fecha_hasta': fechas[-1] if fechas else None,
+        'fecha_desde': stats_fechas[0] if stats_fechas else None,
+        'fecha_hasta': stats_fechas[-1] if stats_fechas else None,
     }
     import os
     stats_path = os.path.join(os.path.dirname(out_path) or '.', 'data', 'historico_stats.json')

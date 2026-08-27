@@ -157,7 +157,11 @@ def process_date(date_str, update_latest=True, page=None, context=None):
         historico_total = G.export_gpkg_from_records(historico_rows, hist_gpkg)
         gdf_hist = gpd.GeoDataFrame(historico_rows, geometry='geometry', crs='EPSG:4326')
         gdf_hist.to_file(hist_geojson, driver='GeoJSON')
-        M.build_historico_html(historico_rows, "docs/historico.html")
+        # El descargable lleva TODO (incluye el catastro SERNAGEOMIN completo,
+        # 100k+ filas desde la fusion del 27-08-2026); el mapa interactivo se
+        # queda con un subconjunto manejable -- ver make_map.filter_for_map.
+        map_rows = M.filter_for_map(historico_rows)
+        M.build_historico_html(map_rows, "docs/historico.html", stats_rows=historico_rows)
         print(f"Historico acumulado: {historico_total} publicaciones en total -> {hist_gpkg}")
 
     report = {
