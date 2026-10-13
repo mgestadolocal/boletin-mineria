@@ -1,9 +1,86 @@
 {
- "fecha": "10-10-2026",
- "edicion": "44571",
- "total_publicaciones": 0,
- "georreferenciadas": 0,
- "por_tipo": {},
- "sin_georreferenciar": [],
- "historico_total_acumulado": 115066
+ "fecha": "13-10-2026",
+ "edicion": "44572",
+ "total_publicaciones": 119,
+ "georreferenciadas": 107,
+ "por_tipo": {
+  "manifestacion": 43,
+  "mensura": 29,
+  "pedimento": 35
+ },
+ "sin_georreferenciar": [
+  {
+   "cve": "2883597",
+   "tipo": "manifestacion",
+   "archivo": "gm_manifestacion_2883597.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2882582",
+   "tipo": "manifestacion",
+   "archivo": "gm_manifestacion_2882582.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2882842",
+   "tipo": "mensura",
+   "archivo": "gm_mensura_2882842.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2883617",
+   "tipo": "mensura",
+   "archivo": "gm_mensura_2883617.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2883618",
+   "tipo": "mensura",
+   "archivo": "gm_mensura_2883618.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2882515",
+   "tipo": "mensura",
+   "archivo": "gm_mensura_2882515.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2882521",
+   "tipo": "mensura",
+   "archivo": "gm_mensura_2882521.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2882522",
+   "tipo": "mensura",
+   "archivo": "gm_mensura_2882522.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2883719",
+   "tipo": "mensura",
+   "archivo": "gm_mensura_2883719.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2883727",
+   "tipo": "mensura",
+   "archivo": "gm_mensura_2883727.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2883490",
+   "tipo": "mensura",
+   "archivo": "gm_mensura_2883490.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2883266",
+   "tipo": "mensura",
+   "archivo": "gm_mensura_2883266.pdf",
+   "motivo": "parseo_incompleto"
+  }
+ ],
+ "historico_total_acumulado": 115173
 }
