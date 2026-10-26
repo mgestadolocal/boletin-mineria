@@ -1,0 +1,80 @@
+{
+ "fecha": "26-10-2026",
+ "edicion": "44583",
+ "total_publicaciones": 152,
+ "georreferenciadas": 141,
+ "por_tipo": {
+  "manifestacion": 60,
+  "mensura": 23,
+  "pedimento": 58
+ },
+ "sin_georreferenciar": [
+  {
+   "cve": "2888640",
+   "tipo": "manifestacion",
+   "archivo": "gm_manifestacion_2888640.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2888512",
+   "tipo": "manifestacion",
+   "archivo": "gm_manifestacion_2888512.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2888743",
+   "tipo": "mensura",
+   "archivo": "gm_mensura_2888743.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2888744",
+   "tipo": "mensura",
+   "archivo": "gm_mensura_2888744.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2888745",
+   "tipo": "mensura",
+   "archivo": "gm_mensura_2888745.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2889757",
+   "tipo": "mensura",
+   "archivo": "gm_mensura_2889757.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2889666",
+   "tipo": "mensura",
+   "archivo": "gm_mensura_2889666.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2889667",
+   "tipo": "mensura",
+   "archivo": "gm_mensura_2889667.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2889621",
+   "tipo": "mensura",
+   "archivo": "gm_mensura_2889621.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2889820",
+   "tipo": "mensura",
+   "archivo": "gm_mensura_2889820.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2889652",
+   "tipo": "pedimento",
+   "archivo": "gm_pedimento_2889652.pdf",
+   "motivo": "parseo_incompleto"
+  }
+ ],
+ "historico_total_acumulado": 115612
+}
