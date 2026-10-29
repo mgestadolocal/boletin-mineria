@@ -1,12 +1,12 @@
 {
- "total": 115869,
+ "total": 115903,
  "por_tipo": {
-  "manifestacion": 2152,
-  "mensura": 1074,
-  "pedimento": 8492,
+  "manifestacion": 2161,
+  "mensura": 1078,
+  "pedimento": 8513,
   "sentencia_exploracion": 33813,
   "sentencia_explotacion": 70338
  },
  "fecha_desde": "01-01-1830",
- "fecha_hasta": "28-10-2026"
+ "fecha_hasta": "29-10-2026"
 }

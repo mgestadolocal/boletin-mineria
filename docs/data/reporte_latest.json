@@ -1,26 +1,20 @@
 {
- "fecha": "28-10-2026",
- "edicion": "44585",
- "total_publicaciones": 159,
- "georreferenciadas": 157,
+ "fecha": "29-10-2026",
+ "edicion": "44586",
+ "total_publicaciones": 35,
+ "georreferenciadas": 34,
  "por_tipo": {
-  "manifestacion": 11,
-  "mensura": 62,
-  "pedimento": 84
+  "manifestacion": 9,
+  "mensura": 4,
+  "pedimento": 21
  },
  "sin_georreferenciar": [
   {
-   "cve": "2890850",
-   "tipo": "manifestacion",
-   "archivo": "gm_manifestacion_2890850.pdf",
-   "motivo": "parseo_incompleto"
-  },
-  {
-   "cve": "2891339",
+   "cve": "2892441",
    "tipo": "mensura",
-   "archivo": "gm_mensura_2891339.pdf",
+   "archivo": "gm_mensura_2892441.pdf",
    "motivo": "parseo_incompleto"
   }
  ],
- "historico_total_acumulado": 115869
+ "historico_total_acumulado": 115903
 }
