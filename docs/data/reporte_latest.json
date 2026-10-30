@@ -1,20 +1,9 @@
 {
- "fecha": "29-10-2026",
- "edicion": "44586",
- "total_publicaciones": 35,
- "georreferenciadas": 34,
- "por_tipo": {
-  "manifestacion": 9,
-  "mensura": 4,
-  "pedimento": 21
- },
- "sin_georreferenciar": [
-  {
-   "cve": "2892441",
-   "tipo": "mensura",
-   "archivo": "gm_mensura_2892441.pdf",
-   "motivo": "parseo_incompleto"
-  }
- ],
+ "fecha": "30-10-2026",
+ "edicion": "44587",
+ "total_publicaciones": 0,
+ "georreferenciadas": 0,
+ "por_tipo": {},
+ "sin_georreferenciar": [],
  "historico_total_acumulado": 115903
 }
