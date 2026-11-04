@@ -1,25 +1,26 @@
 {
- "fecha": "03-11-2026",
- "edicion": "44589",
- "total_publicaciones": 27,
- "georreferenciadas": 25,
+ "fecha": "04-11-2026",
+ "edicion": "44590",
+ "total_publicaciones": 131,
+ "georreferenciadas": 129,
  "por_tipo": {
-  "manifestacion": 18,
-  "pedimento": 7
+  "manifestacion": 23,
+  "mensura": 4,
+  "pedimento": 102
  },
  "sin_georreferenciar": [
   {
-   "cve": "2894511",
-   "tipo": "manifestacion",
-   "archivo": "gm_manifestacion_2894511.pdf",
-   "motivo": "rectificacion_sin_geometria"
+   "cve": "2895334",
+   "tipo": "mensura",
+   "archivo": "gm_mensura_2895334.pdf",
+   "motivo": "parseo_incompleto"
   },
   {
-   "cve": "2894564",
-   "tipo": "pedimento",
-   "archivo": "gm_pedimento_2894564.pdf",
+   "cve": "2895335",
+   "tipo": "mensura",
+   "archivo": "gm_mensura_2895335.pdf",
    "motivo": "parseo_incompleto"
   }
  ],
- "historico_total_acumulado": 115928
+ "historico_total_acumulado": 116057
 }
