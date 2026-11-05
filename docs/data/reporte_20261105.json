@@ -1,0 +1,26 @@
+{
+ "fecha": "05-11-2026",
+ "edicion": "44591",
+ "total_publicaciones": 77,
+ "georreferenciadas": 75,
+ "por_tipo": {
+  "manifestacion": 13,
+  "mensura": 10,
+  "pedimento": 52
+ },
+ "sin_georreferenciar": [
+  {
+   "cve": "2895704",
+   "tipo": "mensura",
+   "archivo": "gm_mensura_2895704.pdf",
+   "motivo": "parseo_incompleto"
+  },
+  {
+   "cve": "2895619",
+   "tipo": "pedimento",
+   "archivo": "gm_pedimento_2895619.pdf",
+   "motivo": "parseo_incompleto"
+  }
+ ],
+ "historico_total_acumulado": 116132
+}
